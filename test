@@ -1,0 +1,24 @@
+-> FF: fd: 1 --- sleep
+-> CC: fd: 2
+
+-> mainSet: 1(FF) 2(CC)
+
+-> maxSet: 2
+
+-> select: waiting ...
+    -> new Event -> CC touch FF
+    -> FF event active -> fd 1 === active
+    -> loop : 0 -> 1
+        -> 0 --- 1 !=
+        -> 1 --- 1 ==
+            -> connexion beetween 1 & 2
+                -> 2 + -> mainSet
+                break
+    -> new Event -> CC send Req
+    -> CC event active -> fd 2 === active
+    -> loop: 0 -> 2
+        -> 0 --- 2 !=
+        -> 1 --- 2 !=
+        -> 2 --- 2 ==
+            -> handle request
+            -> handle response
