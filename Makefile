@@ -6,16 +6,16 @@
 #    By: xuwang <xuwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 13:28:29 by xuwang            #+#    #+#              #
-#    Updated: 2022/04/28 15:48:42 by xuwang           ###   ########.fr        #
+#    Updated: 2022/04/28 16:43:26 by xuwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = webserv
+NAME = irc
 
 CC	= clang++
 
 CFLAGES = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
-#CFLAGES = -std=c++98 -fsanitize=address -g3
+
 
 IFLAGES =  -I./inc
 
@@ -28,23 +28,23 @@ SRCS := ./src/main.cpp \
 OBJS := $(SRCS:%.cpp=%.o)
 
 $(NAME): $(OBJS)
-		@printf "$(CL_LINE)compiler>>>>>>>> $(NONE)\r"
+		@echo "compiler>>>>>>>>" 
 		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
-		@echo "webserv done!"
+		@echo "IRC done!"
 		
 
 all: $(NAME)
 
 clean:
 		@rm -rf $(OBJS)
-		@echo "Delete>>>>>>"
+		@echo "Delete"
 
 fclean:clean
 		@rm -rf $(NAME)
-		@echo "Delete all>>>>>>"
+		@echo "Delete all"
 
 %.o: %.cpp
-		$(CC) $(CFLAGES) $(IFLAGES) -c $< -o $@
+		@$(CC) $(CFLAGES) $(IFLAGES) -c $< -o $@
 		
 re: fclean all
 

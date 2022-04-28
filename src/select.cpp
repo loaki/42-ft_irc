@@ -44,7 +44,6 @@ void    Select::serverStart() {
                     break ;
                 }
                 else {
-                    printf("in handle\n");
                     if (this->handleReq(fd) == false)
                         break ;
                     else
@@ -101,7 +100,7 @@ bool    Select::handleReq(const int fd) {
     bzero(this->buff, sizeof(this->buff));
     ret = recv(fd, this->buff, MAX_BUFF, 0);
     // debug
-    std::cout << "===========\nrequest:\n" << this->buff << "\n=============\n" << std::endl;
+    std::cout << "request:\n" << this->buff << std::endl;
     //
     if (ret <= 0) {
         this->clientDisconn(fd);
@@ -109,21 +108,7 @@ bool    Select::handleReq(const int fd) {
     }
     else {
         std::string bufTmp = std::string(this->buff);
-        this->req.parse_Request(bufTmp);
-
-        printf("method: [%s]\n", this->req.getReq().method.c_str());
-        printf("url: [%s]\n", this->req.getReq().url.c_str());
-        printf("host: [%s]\n", this->req.getReq().version.c_str());
-        printf("body: [%s]\n", this->req.getReq().body.c_str());
-
-        std::map<std::string, std::string> tmp = this->req.getReq().header;
-        std::map<std::string, std::string>::iterator it = tmp.begin();
-        std::map<std::string, std::string>::iterator ite = tmp.end();
-        for (; it != ite; it++) {
-            std::cout << it->first << ": " << it->second << std::endl;
-        }
-
-        std::cout << std::endl;
+        this->req.parse_Request();
     }
     return true;
 }
@@ -132,18 +117,7 @@ void    Select::handleRes(const int fd) {
     int ret = -1;
 
    // test response
-    std::string respTest = "\   
-HTTP/1.1 200 OK\r\n\
-Server: Microsoft-IIS/5.1\r\n\
-X-Powered-By: ASP.NET\r\n\
-Date: Fri, 03 Mar 2006 06:34:03 GMT\r\n\
-Content-Type: text/html\r\n\
-Accept-Ranges: bytes\r\n\
-Last-Modified: Fri, 03 Mar 2006 06:33:18 GMT\r\n\
-ETag: \"5ca4f75b8c3ec61:9ee\"\r\n\
-Content-Length: 37\r\n\
-\r\n\
-<html><body>hello world</body></html>";
+    std::string respTest;
 
     ret = send(fd, respTest.c_str(), respTest.length(), 0);
     if (ret == SYSCALL_ERR) {

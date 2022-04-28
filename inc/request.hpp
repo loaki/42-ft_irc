@@ -11,22 +11,14 @@ class Request {
         ~Request();
         Request& operator=(Request const& rhs);
 
-    // public: getter & setter
-        const http_request &        getReq() const;
 
     // public: methode
-        void                        parse_Request(std::string buff);
+        void                        parse_Request();
 
         
     private:
-    // private: method
-        int                         get_content_line();
+    // private: method 
         std::vector<std::string>    string_split(const std::string& s, const std::string& delim);
-        void                        parse_lineRequest(std::vector<std::string> &get_request);
-        void                        parse_header(std::vector<std::string> &get_request);
-        
-    // private: attributs
-        http_request _request;
         
 };
 

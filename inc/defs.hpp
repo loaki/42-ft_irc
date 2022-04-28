@@ -35,12 +35,5 @@
 #define SYSCALL_ERR -1
 
 // structure
-struct http_request {
-    std::map<std::string, std::string>  header;
-    std::string                         method;
-    std::string                         url;
-    std::string                         version;
-    std::string                         body;
-};
 
 #endif
