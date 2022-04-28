@@ -100,7 +100,7 @@ bool    Select::handleReq(const int fd) {
     bzero(this->buff, sizeof(this->buff));
     ret = recv(fd, this->buff, MAX_BUFF, 0);
     // debug
-    std::cout << "request:\n" << this->buff << std::endl;
+    std::cout << "Message from fd:" << fd << "\n" << this->buff << std::endl;
     //
     if (ret <= 0) {
         this->clientDisconn(fd);
