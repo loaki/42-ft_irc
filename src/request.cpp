@@ -41,7 +41,9 @@ void Request::parse_Request(std::string buff) {
     parse_lineRequest(get_request); 
     parse_header(get_request);
     //body is call get_content_line();
-    this->_request.body = tmp.substr(pos + get_content_line());
+    std::cout << pos << std::endl;
+    
+    this->_request.body = tmp.substr(pos);
     //解析结束
     get_request.clear();
 }

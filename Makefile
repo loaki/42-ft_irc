@@ -6,7 +6,7 @@
 #    By: xuwang <xuwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 13:28:29 by xuwang            #+#    #+#              #
-#    Updated: 2022/04/28 11:55:25 by xuwang           ###   ########.fr        #
+#    Updated: 2022/04/28 15:48:42 by xuwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ OBJS := $(SRCS:%.cpp=%.o)
 
 $(NAME): $(OBJS)
 		@printf "$(CL_LINE)compiler>>>>>>>> $(NONE)\r"
-		$(CC) $(CFLAGES) $(OBJS) -o $@ 
+		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
 		@echo "webserv done!"
 		
 
