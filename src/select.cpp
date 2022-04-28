@@ -45,9 +45,9 @@ void    Select::serverStart() {
                 }
                 else {
                     if (this->handleReq(fd) == false)
-                        break ;
-                    else
-                        this->handleRes(fd);
+                        continue; ;
+                    // else
+                    //     this->handleRes(fd); // Tous les messages envoyés par un client dans un channel doivent être transmis à tous les clients ayant rejoint ce channel.
                 }
             }
         }
