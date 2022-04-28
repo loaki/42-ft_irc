@@ -17,15 +17,9 @@ const http_request &       Request::getReq() const { return this->_request; }
 
 // public: method
 void Request::parse_Request(std::string buff) {
-    //接收
+
     std::vector<std::string> get_request;
     size_t pos;
-
-    /*
-        把数据放进get_request:通过是否有空行判断有没有Body信息
-        有body:把body信息放进string,firstline+header放进get_request
-        无body:把所有信息放进get_request
-    */
     std::string tmp = buff;
     if ((pos = tmp.find("\r\n\r\n"))!= std::string::npos) {  
         std::string header = tmp.substr(0, pos);   
@@ -37,14 +31,9 @@ void Request::parse_Request(std::string buff) {
         perror("request info is wrong");
         return;
     }
-    //开始parser所有部分
     parse_lineRequest(get_request); 
     parse_header(get_request);
-    //body is call get_content_line();
-    std::cout << pos << std::endl;
-    
     this->_request.body = tmp.substr(pos);
-    //解析结束
     get_request.clear();
 }
 

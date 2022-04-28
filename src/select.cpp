@@ -130,8 +130,8 @@ bool    Select::handleReq(const int fd) {
 
 void    Select::handleRes(const int fd) {
     int ret = -1;
-    
-    //test response
+
+   // test response
     std::string respTest = "\   
 HTTP/1.1 200 OK\r\n\
 Server: Microsoft-IIS/5.1\r\n\
