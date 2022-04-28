@@ -25,7 +25,7 @@ class Select {
         void    clientConn();
         void    clientDisconn(const int clientFd);
         bool    handleReq(const int fd);
-        void    handleRes(const int fd);
+        void    sentToAll(const int fd,  std::string str);
 
     // private: attributs
         Socket              serverSock;

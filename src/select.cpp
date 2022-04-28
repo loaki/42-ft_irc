@@ -45,13 +45,10 @@ void    Select::serverStart() {
                 }
                 else {
                     if (this->handleReq(fd) == false)
-                        continue; ;
-                    // else
-                    //     this->handleRes(fd); // Tous les messages envoyés par un client dans un channel doivent être transmis à tous les clients ayant rejoint ce channel.
+                        continue;
                 }
             }
         }
-
     }
 }
 
@@ -98,36 +95,33 @@ bool    Select::handleReq(const int fd) {
     int	ret = -1;
 
     bzero(this->buff, sizeof(this->buff));
-    ret = recv(fd, this->buff, MAX_BUFF, 0);
+    ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd 
     // debug
     std::cout << "Message from fd:" << fd << "\n" << this->buff << std::endl;
     //
-    if (ret <= 0) {
+    if (ret <= 0) { 
         this->clientDisconn(fd);
         return false;
     }
     else {
         std::string bufTmp = std::string(this->buff);
-        this->req.parse_Request();
+        sentToAll(fd, bufTmp);
     }
     return true;
 }
 
-void    Select::handleRes(const int fd) {
+void Select::sentToAll(const int fd, std::string str) {
     int ret = -1;
-
-   // test response
-    std::string respTest;
-
-    ret = send(fd, respTest.c_str(), respTest.length(), 0);
-    if (ret == SYSCALL_ERR) {
-        // debug
-        std::cout << "[Send response failed]" << std::endl;
-        
-        this->clientDisconn(fd);
+    for(unsigned int i = 0; i < this->clientFd.size(); i++) {
+        if (this->clientFd.at(i) != fd ) {
+            ret = send(this->clientFd.at(i), str.c_str(), str.length(), 0);
+            if (ret == SYSCALL_ERR) {
+            // debug
+            std::cout << "[Send response failed]" << std::endl;
+            this->clientDisconn(i);
+            }
+        }
     }
-    this->clientDisconn(fd);
 }
 
-// ns end
 }
