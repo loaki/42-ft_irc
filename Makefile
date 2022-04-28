@@ -6,7 +6,7 @@
 #    By: xuwang <xuwang@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 13:28:29 by xuwang            #+#    #+#              #
-#    Updated: 2022/04/27 22:14:00 by xuwang           ###   ########.fr        #
+#    Updated: 2022/04/28 11:55:25 by xuwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = webserv
 
 CC	= clang++
 
-# CFLAGES = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
-CFLAGES = -std=c++98 -fsanitize=address -g3
+CFLAGES = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
+#CFLAGES = -std=c++98 -fsanitize=address -g3
 
 IFLAGES =  -I./inc
 

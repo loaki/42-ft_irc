@@ -114,7 +114,7 @@ bool    Select::handleReq(const int fd) {
         printf("method: [%s]\n", this->req.getReq().method.c_str());
         printf("url: [%s]\n", this->req.getReq().url.c_str());
         printf("host: [%s]\n", this->req.getReq().version.c_str());
-        printf("body: [%s]\n", this->req.getReq().body.c_str());
+        //printf("body: [%s]\n", this->req.getReq().body.c_str());
 
         std::map<std::string, std::string> tmp = this->req.getReq().header;
         std::map<std::string, std::string>::iterator it = tmp.begin();

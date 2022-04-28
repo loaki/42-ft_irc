@@ -81,13 +81,18 @@ void Request::parse_lineRequest(std::vector<std::string> &get_request){
 //parser header
 void Request::parse_header(std::vector<std::string> &get_request){
     std::vector<std::string> tmp;
-    for (unsigned int i = 1; i < get_request.size(); i++) {
-        tmp = string_split(get_request.at(i), ":");
-        this->_request.header[tmp[0]] = tmp[1];
-        //this->_request->header.insert(std::pair<std::string, std::string>(tmp[0], tmp[1]));
-        tmp.clear();
+    for (unsigned int i = 1; i < get_request.size(); i++) { 
+        tmp = string_split(get_request.at(i), ":"); 
+        if (tmp.size() > 2) {
+            std::string tmp_value = tmp[1];
+            for(unsigned int j = 2; j < tmp.size(); j++)
+                tmp_value += ":" + tmp[j];
+            this->_request.header[tmp[0]] = tmp_value;
+        }
+        else
+            this->_request.header[tmp[0]] = tmp[1];
     }
-
+    tmp.clear();
 }
 
 int Request::get_content_line(){
