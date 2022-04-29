@@ -1,6 +1,6 @@
 #include "socket.hpp"
 
-namespace webserv {
+namespace irc {
 // ns begin
 
 /*
@@ -11,7 +11,7 @@ namespace webserv {
 Socket::Socket():
     _serverFd(-1),
     _port(SERVER_PORT) {
-    std::memset(&this->_serverAddr, 0, sizeof(struct sockaddr_in));
+    memset(&this->_serverAddr, 0, sizeof(struct sockaddr_in));
 }
 Socket::Socket(Socket const & src) { *this = src; }
 Socket::~Socket() {}

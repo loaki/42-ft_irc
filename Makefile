@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: xuwang <xuwang@student.42.fr>              +#+  +:+       +#+         #
+#    By: xuwang <xuwang@42.student.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 13:28:29 by xuwang            #+#    #+#              #
-#    Updated: 2022/04/28 17:14:20 by xuwang           ###   ########.fr        #
+#    Updated: 2022/04/29 16:05:59 by xuwang           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,6 @@ IFLAGES =  -I./inc
 SRCS := ./src/main.cpp \
 		./src/socket.cpp \
 		./src/select.cpp \
-		./src/request.cpp \
 		./src/utils.cpp
 
 OBJS := $(SRCS:%.cpp=%.o)

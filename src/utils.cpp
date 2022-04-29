@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-namespace webserv {
+namespace irc {
 // ns begin
 
 void    exitFailure(const std::string & str) {

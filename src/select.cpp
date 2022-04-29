@@ -1,6 +1,6 @@
 #include "select.hpp"
 
-namespace webserv {
+namespace irc {
 // ns begin
 
 /*

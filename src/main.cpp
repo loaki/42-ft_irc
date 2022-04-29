@@ -6,6 +6,6 @@ int main(int ac, char **av) {
     (void)av;
     (void)ac;
 
-    webserv::Select select;
+    irc::Select select;
     select.serverStart();
 }

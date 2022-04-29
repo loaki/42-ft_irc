@@ -3,9 +3,8 @@
 
 #include "defs.hpp"
 #include "socket.hpp"
-#include "request.hpp"
 
-namespace webserv {
+namespace irc {
 // ns begin
 
 class Select {
@@ -35,7 +34,7 @@ class Select {
         fd_set              wSet; // currently no use
 
         char                buff[MAX_BUFF];
-        Request             req;
+        
 };
 
 // ns end
