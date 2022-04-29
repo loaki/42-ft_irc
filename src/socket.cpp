@@ -50,6 +50,7 @@ void Socket::serverInit(const short & port) {
     this->_serverAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0, all ip can acces, but need change later with a precise ip address (ex: inet_addr(localhost?))
 
     int	optval = 1;
+    // int  setsockopt(int  s, int level, int optname, void* optval, socklen_t* optlen);
 	if (SYSCALL_ERR == setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int))) { // can rebind port
 		close(this->_serverFd);
 		exitFailure("setsockopt()");
@@ -63,7 +64,7 @@ void Socket::serverBind() {
 
 void Socket::serverListen() {
     if (listen(this->_serverFd, SOMAXCONN) == SYSCALL_ERR)
-        exitFailure("bind function failed");
+        exitFailure("listen function failed");
 }
 
 

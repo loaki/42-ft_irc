@@ -9,3 +9,7 @@ int main(int ac, char **av) {
     irc::Select select;
     select.serverStart();
 }
+
+//----users
+//----#channel
+//----commandes
