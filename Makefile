@@ -1,51 +1,43 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: xuwang <xuwang@42.student.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/10 13:28:29 by xuwang            #+#    #+#              #
-#    Updated: 2022/04/29 16:05:59 by xuwang           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+NAME		= ft_irc
 
-NAME = irc
+CC			= c++
+FLAGS		= -Wall -Wextra -Werror -std=c++98
+RM			= rm -rf
 
-CC	= clang++
+INCS_DIR	= ./inc/
+MAIN_INC	= -I$(INCS_DIR)
+INCS		= $(shell find $(INCS_DIR) -type f -name "*.hpp")
 
-CFLAGES = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
+SRCS_DIR 	= ./src/
+SRCS		= $(shell find $(SRCS_DIR) -type f -name "*.cpp")
 
+OBJS_DIR	= ./obj/
+OBJS		= $(SRCS:$(SRCS_DIR)%.cpp=$(OBJS_DIR)%.o)
 
-IFLAGES =  -I./inc
+_CLEAR		= \033[0K\r\c
+_OK			= [\033[32mOK\033[0m]
+_CLEAN		= [\033[31mCLEAN\033[0m]
 
-SRCS := ./src/main.cpp \
-		./src/socket.cpp \
-		./src/select.cpp \
-		./src/utils.cpp
-
-OBJS := $(SRCS:%.cpp=%.o)
-
-$(NAME): $(OBJS)
-		@echo "compiler>>>>>>>>" 
-		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
-		@echo "IRC done!"
-		
+$(OBJS_DIR)%.o	: $(SRCS_DIR)%.cpp
+			@mkdir -p $(OBJS_DIR)
+			@echo "[..] compiling $*.cpp\r\c"
+			@$(CC) $(MAIN_INC) -c $< -o $@
+			@echo "$(_CLEAR)"
 
 all: $(NAME)
 
+$(NAME): $(OBJS) $(INCS)
+		@$(CC) $(FLAGS) -o $@ $(OBJS) $(MAIN_INC)
+		@echo "$(_OK) $(NAME) compiled"
+
 clean:
-		@rm -rf $(OBJS)
-		@echo "Delete"
+	@$(RM) $(OBJS_DIR)
 
-fclean:clean
-		@rm -rf $(NAME)
-		@echo "Delete all"
 
-%.o: %.cpp
-		@$(CC) $(CFLAGES) $(IFLAGES) -c $< -o $@
-		
+fclean: clean
+	@$(RM) $(NAME)
+	@echo "$(_CLEAN) $(NAME) Executable removed!"
+
 re: fclean all
 
-.PHONY: all clean fclean re
-	
+.PHONY : clean fclean re
