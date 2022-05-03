@@ -39,7 +39,7 @@ void    Select::serverStart() {
 
         for (int fd = 0; fd <= this->max_fd(); fd++) {
             if (FD_ISSET(fd, &this->rSet)) {                //which fd event
-                if (fd == this->serverSock.getServerFd()) { //new client nconnect 
+                if (fd == this->serverSock.getServerFd()) { //new client connect 
                     this->clientConn(); 
                     break ;
                 }
@@ -73,7 +73,7 @@ void    Select::clientConn() { //get client fd
 
     clientConnFd = accept(this->serverSock.getServerFd(), (struct sockaddr *)&cli, &len);
     if (clientConnFd == SYSCALL_ERR)
-        exitFailure("accept function failed");
+        exitFailure("accept failed");
 
     this->clientFd.push_back(clientConnFd);// push_back clientFd 
     FD_SET(clientConnFd, &this->mainSet);  //add new clientfd to mainset
@@ -97,7 +97,7 @@ bool    Select::handleReq(const int fd) {
     bzero(this->buff, sizeof(this->buff));
     ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd 
     // debug
-    std::cout << "Message from fd:" << fd << "\n" << this->buff << std::endl;
+    std::cout << "Message from fd:" << fd << "\n" << "[" << this->buff << "]" << "\nwith ret: " << ret << std::endl;
     //
     if (ret <= 0) { 
         this->clientDisconn(fd);

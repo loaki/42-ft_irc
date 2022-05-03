@@ -43,28 +43,33 @@ void Socket::createServer(const short & port) {
 void Socket::serverInit(const short & port) {
     this->_serverFd = socket(AF_INET, SOCK_STREAM, 0);
     if (this->_serverFd == SYSCALL_ERR)
-        exitFailure("socket function failed");
+        exitFailure("socket failed");
     
     this->_serverAddr.sin_family = AF_INET;
-    this->_serverAddr.sin_port = htons(port);
-    this->_serverAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0, all ip can acces, but need change later with a precise ip address (ex: inet_addr(localhost?))
+    this->_serverAddr.sin_port = htons(port); // (host to net)
+    this->_serverAddr.sin_addr.s_addr = htonl(INADDR_ANY); // 0.0.0.0, all ip can acces, (host to net)
 
     int	optval = 1;
     // int  setsockopt(int  s, int level, int optname, void* optval, socklen_t* optlen);
 	if (SYSCALL_ERR == setsockopt(this->_serverFd, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int))) { // can rebind port
 		close(this->_serverFd);
-		exitFailure("setsockopt()");
+		exitFailure("setsockopt failed");
 	}
+    if (fcntl(this->_serverFd, F_SETFL, O_NONBLOCK) == SYSCALL_ERR)
+    {
+        close(this->_serverFd);
+        exitFailure("fcntl failed");
+    }
 }
 
 void Socket::serverBind() {
     if (bind(this->_serverFd, (struct sockaddr *)&this->_serverAddr, sizeof(struct sockaddr)) == SYSCALL_ERR)
-        exitFailure("bind function failed");
+        exitFailure("bind failed");
 }
 
 void Socket::serverListen() {
     if (listen(this->_serverFd, SOMAXCONN) == SYSCALL_ERR)
-        exitFailure("listen function failed");
+        exitFailure("listen failed");
 }
 
 
