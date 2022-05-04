@@ -1,8 +1,10 @@
+<<<<<<< HEAD
 NAME		= ft_irc
 
-CC			= c++
-FLAGS		= -Wall -Wextra -Werror -std=c++98
-RM			= rm -rf
+CC		= c++
+FLAGS	= -Wall -Wextra -Werror -std=c++98
+RM		= rm -rf
+NAME	= ircserv
 
 INCS_DIR	= ./inc/
 MAIN_INC	= -I$(INCS_DIR)
@@ -23,6 +25,18 @@ $(OBJS_DIR)%.o	: $(SRCS_DIR)%.cpp
 			@echo "[..] compiling $*.cpp\r\c"
 			@$(CC) $(MAIN_INC) -c $< -o $@
 			@echo "$(_CLEAR)"
+
+SRCS := ./src/main.cpp \
+		./src/socket.cpp \
+		./src/select.cpp \
+		./src/utils.cpp \
+
+OBJS := $(SRCS:%.cpp=%.o)
+
+$(NAME): $(OBJS)
+		@echo "compiler>>>>>>>>" 
+		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
+		@echo "IRC done!"
 
 all: $(NAME)
 
