@@ -23,7 +23,7 @@ Select& Select::operator=(Select const& rhs) {
 }
 
 // public: method
-void    Select::serverStart() {
+void    Select::serverStart(int code) {
     this->serverSock.createServer(SERVER_PORT);
 
     FD_ZERO(&this->mainSet);
@@ -34,22 +34,26 @@ void    Select::serverStart() {
 
         int event = select(this->max_fd() + 1, &this->rSet, NULL, NULL, NULL);
         if (event < 0) {
-            continue ;
+            return;
+           // continue ;
         }
-
         for (int fd = 0; fd <= this->max_fd(); fd++) {
-            if (FD_ISSET(fd, &this->rSet)) {                //which fd event
+            if (FD_ISSET(fd, &this->rSet)) {               //which fd event
                 if (fd == this->serverSock.getServerFd()) { //new client connect 
                     this->clientConn(); 
                     break ;
                 }
                 else {
-                    if (this->handleReq(fd) == false)
-                        continue;
+                    if (code == 1)
+                        this->handleReq(fd, code);
+                    // { 
+                    //     continue;
+                    // }
                 }
             }
         }
     }
+    
 }
 
 // private: method
@@ -91,37 +95,33 @@ void    Select::clientDisconn(const int clientFd) {
     this->clientFd.erase(it);
 }
 
-bool    Select::handleReq(const int fd) {
+void    Select::handleReq(const int fd, int code) {
     int	ret = -1;
 
     bzero(this->buff, sizeof(this->buff));
-    ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd 
+    ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
+    std::cout << this->buff << std::endl; 
     // debug
-    std::cout << "Message from fd:" << fd << "\n" << "[" << this->buff << "]" << "\nwith ret: " << ret << std::endl;
-    //
     if (ret <= 0) { 
         this->clientDisconn(fd);
-        return false;
+        return ;
     }
     else {
-        std::string bufTmp = std::string(this->buff);
-        sentToAll(fd, bufTmp);
-    }
-    return true;
-}
-
-void Select::sentToAll(const int fd, std::string str) {
-    int ret = -1;
-    for(unsigned int i = 0; i < this->clientFd.size(); i++) {
-        if (this->clientFd.at(i) != fd ) {
-            ret = send(this->clientFd.at(i), str.c_str(), str.length(), 0);
+        if (code == 1) {
+            std::string bufTmp = ":xueming 001 wang :Welcome to the Internet Relay Networkxuemingwang!xuemingwang@localhost\r\n"; //+  nick + "!" + username + "@" + host
+            ret = send(fd, bufTmp.c_str(), bufTmp.length(), 0);
+    
             if (ret == SYSCALL_ERR) {
             // debug
-            std::cout << "[Send response failed]" << std::endl;
-            this->clientDisconn(i);
+                std::cout << "[Send response failed]" << std::endl;
+                this->clientDisconn(fd);
+                return;
             }
         }
     }
+   // return true;
 }
+
+
 
 }

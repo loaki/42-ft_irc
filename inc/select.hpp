@@ -16,14 +16,14 @@ class Select {
         Select& operator=(Select const& rhs);
 
     // public: method
-        void    serverStart();
+        void    serverStart(int code);
 
     private:
     // private: method
         int     max_fd();
         void    clientConn();
         void    clientDisconn(const int clientFd);
-        bool    handleReq(const int fd);
+        void    handleReq(const int fd, int code);
         void    sentToAll(const int fd,  std::string str);
 
     // private: attributs

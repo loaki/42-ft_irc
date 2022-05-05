@@ -13,7 +13,7 @@ int main(int ac, char **av) {
     // }
 
     irc::Select select;
-    select.serverStart();
+    select.serverStart(1);
     return (0);
 }
 

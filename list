@@ -1,3 +1,11 @@
+//reply messages to client
+// The prefix:  ":bar.example.com" (: +  hostname);
+// The numeric code: 001 , for RPL_WELCOME.
+// The first parameter : must always be the "nick" of the user this reply is intended for
+// The second parameter:  "Welcome to the Internet Relay Network 
+//                         <nick>!<user>@<host>"
+
+
 -> FF: fd: 1 --- sleep
 -> CC: fd: 2
 
@@ -21,3 +29,4 @@
         -> 1 --- 2 !=
         -> 2 --- 2 ==
             -> handle request
+

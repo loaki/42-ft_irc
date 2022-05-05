@@ -55,6 +55,8 @@ void Socket::serverInit(const short & port) {
 		close(this->_serverFd);
 		exitFailure("setsockopt failed");
 	}
+    // get／set mutex 设置给arg描述符状态标志
+    // O_NONBLOCK   非阻塞I/O，如果read(2)调用没有可读取的数据，或者如果write(2)操作将阻塞，则read或write调用将返回-1和EAGAIN错误
     if (fcntl(this->_serverFd, F_SETFL, O_NONBLOCK) == SYSCALL_ERR)
     {
         close(this->_serverFd);
