@@ -36,6 +36,9 @@
 #define INVALID_FD -1
 #define SYSCALL_ERR -1
 
+
+#define RPL_WELCOME 
+
 // structure
 
 #endif

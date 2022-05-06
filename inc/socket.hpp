@@ -19,9 +19,11 @@ class Socket {
 
     // public: getter & setter
         const int & getServerFd() const;
+        const std::string & getPassword() const;
+        void setPassword(std::string password);
 
     // public: method
-        void    createServer(const short & port);
+        void    createServer(const short & port, const std::string&  password);
 
     private:
     // private: method
@@ -32,7 +34,9 @@ class Socket {
     // private: attributs
         int                 _serverFd;
         short               _port;
+        std::string         _password;
         struct sockaddr_in  _serverAddr;
+    
 };
 
 // ns end

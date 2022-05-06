@@ -23,8 +23,8 @@ Select& Select::operator=(Select const& rhs) {
 }
 
 // public: method
-void    Select::serverStart(int code) {
-    this->serverSock.createServer(SERVER_PORT);
+void    Select::serverStart(const short& port, const std::string&  password) {
+    this->serverSock.createServer(port, password);
 
     FD_ZERO(&this->mainSet);
     FD_SET(this->serverSock.getServerFd(), &this->mainSet);//SET servfd to mainset
@@ -44,17 +44,17 @@ void    Select::serverStart(int code) {
                     break ;
                 }
                 else {
-                    if (code == 1)
-                        this->handleReq(fd, code);
+                    this->handleReq(fd, 1);
+                }
                     // { 
                     //     continue;
                     // }
                 }
             }
         }
-    }
-    
 }
+    
+
 
 // private: method
 int    Select::max_fd() {
@@ -95,19 +95,38 @@ void    Select::clientDisconn(const int clientFd) {
     this->clientFd.erase(it);
 }
 
+bool Select::PasswordConnect(){
+
+    size_t pos = 0;
+    size_t pos2 = 0;
+    std::string tmp = this->buff;
+    if (tmp.find("PASS") != std::string::npos)
+        pos = tmp.find("PASS");
+    std::string pass = tmp.substr(pos);
+
+    if (pass.find("\r\n") != std::string::npos)
+        pos2 = pass.find("\r\n");
+    std::string tmp2 = pass.substr(0, pos2);
+    std::string password = tmp2.substr(5);
+
+    if (password == this->serverSock.getPassword())
+        return true;
+    return false;
+}
 void    Select::handleReq(const int fd, int code) {
     int	ret = -1;
 
     bzero(this->buff, sizeof(this->buff));
     ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
-    std::cout << this->buff << std::endl; 
+    std::cout   << this->buff << std::endl;
     // debug
     if (ret <= 0) { 
         this->clientDisconn(fd);
         return ;
     }
     else {
-        if (code == 1) {
+        if (PasswordConnect()== true && code == 1)
+        {
             std::string bufTmp = ":xueming 001 wang :Welcome to the Internet Relay Networkxuemingwang!xuemingwang@localhost\r\n"; //+  nick + "!" + username + "@" + host
             ret = send(fd, bufTmp.c_str(), bufTmp.length(), 0);
     
@@ -119,7 +138,6 @@ void    Select::handleReq(const int fd, int code) {
             }
         }
     }
-   // return true;
 }
 
 

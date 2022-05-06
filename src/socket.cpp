@@ -10,7 +10,8 @@ namespace irc {
 // public: class init
 Socket::Socket():
     _serverFd(-1),
-    _port(SERVER_PORT) {
+    _port(SERVER_PORT),
+    _password() {
     memset(&this->_serverAddr, 0, sizeof(struct sockaddr_in));
 }
 Socket::Socket(Socket const & src) { *this = src; }
@@ -27,9 +28,12 @@ Socket & Socket::operator=(const Socket & rhs) {
 
 // public: getter & setter
 const int & Socket::getServerFd() const { return this->_serverFd; }
+const std::string & Socket::getPassword() const {return this->_password;}
+void Socket::setPassword(std::string password) { this->_password = password;}
 
 // public: method
-void Socket::createServer(const short & port) {
+void Socket::createServer(const short & port, const std::string&  password) {
+    this->_password = password;
     this->serverInit(port);
     this->serverBind();
     this->serverListen();
