@@ -26,8 +26,9 @@ class Select {
         int     max_fd();
         void    clientConn();
         void    clientDisconn(const int clientFd);
-        bool    PasswordConnect();
+        bool    PasswordConnect(std::vector<std::string> buff);
         void    handleReq(const int fd, int code);
+        std::vector<std::string>  configBuff();
         void    sentToAll(const int fd,  std::string str);
 
     // private: attributs

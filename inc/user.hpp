@@ -18,6 +18,8 @@ class User {
         std::string const& getUsername()const;
         int const& getUserFd()const;
 
+       
+
     private:
         int _fd;
         std::string _nickname;

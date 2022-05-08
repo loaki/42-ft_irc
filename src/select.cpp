@@ -35,22 +35,22 @@ void    Select::serverStart(const short& port, const std::string&  password) {
         this->rSet = this->mainSet;
         int event = select(this->max_fd() + 1, &this->rSet, NULL, NULL, NULL);
         if (event < 0) {
-            return;
-            //continue ;
+            //return;
+            continue ;
         }
         for (int fd = 0; fd <= this->max_fd(); fd++) {
-            if (FD_ISSET(fd, &this->rSet)) {               //which fd event
-                if (fd == this->serverSocket.getServerFd()) { //new client connect 
+            if (FD_ISSET(fd, &this->rSet)) {    // which fd event
+                if (fd == this->serverSocket.getServerFd()) { //connect:new client connect 
                     this->clientConn(); 
                     break ;
                 }
-                else {
+                else {                     //recv
                     this->handleReq(fd, 1);
                     continue;
                 }
-                }
             }
         }
+    }
 }
     
 
@@ -68,6 +68,7 @@ int    Select::max_fd() {
     return max;
 }
 
+
 void    Select::clientConn() { //get client fd  
     int                 clientConnFd = -1;
     struct sockaddr_in	clientAddr;
@@ -78,11 +79,8 @@ void    Select::clientConn() { //get client fd
         exitFailure("accept failed");
 
     User *newuser = new User(clientConnFd);
-    std::cout <<"add new user" << newuser->getUserFd() << std::endl;
-
     this->users.push_back(newuser);// add new user
     this->clientfds.push_back(clientConnFd); //add new fd
-
     FD_SET(clientConnFd, &this->mainSet);  //add new clientfd to mainset
 }
 
@@ -99,50 +97,55 @@ void    Select::clientDisconn(const int clientFd) {
     this->clientfds.erase(it);
 }
 
-bool Select::PasswordConnect(){
-
-    size_t pos = 0;
-    size_t pos2 = 0;
-    std::string tmp = this->buff;
-    if (tmp.find("PASS") != std::string::npos)
-        pos = tmp.find("PASS");
-    std::string pass = tmp.substr(pos);
-
-    if (pass.find("\r\n") != std::string::npos)
-        pos2 = pass.find("\r\n");
-    std::string tmp2 = pass.substr(0, pos2);
-    std::string password = tmp2.substr(5);
-
-    if (password == this->serverSocket.getPassword())
-        return true;
-    return false;
+std::vector<std::string> Select::configBuff() {
+    std::vector<std::string> vecBuff;
+    std::string buf = this->buff;
+    vecBuff = ft_split(buf, "\r\n");
+    return vecBuff;
 }
 
-
+bool Select::PasswordConnect(std::vector<std::string> buff){
+    size_t pos = 0;
+    std::vector<std::string>::iterator it = buff.begin();
+    for(;it != buff.end(); it++){
+        if ((*it).find("PASS") != std::string::npos) {
+            pos = (*it).find("PASS");
+            std::string password = (*it).substr(5);
+            if (password == this->serverSocket.getPassword()){
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 void    Select::handleReq(const int fd, int code) {
     int	ret = -1;
 
     bzero(this->buff, sizeof(this->buff));
     ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
-     std::cout << fd << std::endl;
+    std::cout << fd << std::endl;
     std::cout << this->buff << std::endl;
     // debug
     if (ret <= 0) { 
         this->clientDisconn(fd);
         return ;
     }
-    else {
-        if (PasswordConnect()== true && code == 1)
+    else {  //set msg to vec
+        std::vector<std::string> Buff = configBuff();
+        if (PasswordConnect(Buff)== true && code == 1)
         {
-            std::string bufTmp = ":xueming 001 wang :Welcome to the Internet Relay Network!xuemingwang@localhost\r\n"; //+  nick + "!" + username + "@" + host
-            ret = send(fd, bufTmp.c_str(), bufTmp.length(), 0);
+            std::string	sendMsg = RPL_WELCOME;
+             ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
             if (ret == SYSCALL_ERR) {
-            // debug
                 std::cout << "[Send response failed]" << std::endl;
                 this->clientDisconn(fd);
                 return;
             }
+        }
+        else {
+            //reply();
+            // another cmd ;
         }
     }
 }

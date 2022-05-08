@@ -37,7 +37,7 @@
 # define SYSCALL_ERR -1
 
 
-#define RPL_WELCOME 
+#define RPL_WELCOME ":xueming 001 wang :Welcome to the Internet Relay Network!xuemingwang@localhost\r\n"
 
 // structure
 
