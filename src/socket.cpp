@@ -3,14 +3,10 @@
 namespace irc {
 // ns begin
 
-/*
-* public
-*/
-
 // public: class init
 Socket::Socket():
     _serverFd(-1),
-    _port(SERVER_PORT),
+    _port(),
     _password() {
     memset(&this->_serverAddr, 0, sizeof(struct sockaddr_in));
 }

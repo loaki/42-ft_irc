@@ -5,8 +5,6 @@
 
 namespace irc {
 
-
-
 class channel {
     public:
         channel();

@@ -31,10 +31,10 @@
 # define RED     "\e[1;31m"
 # define GREEN   "\e[1;32m"
 
-#define SERVER_PORT 8080
-#define MAX_BUFF  4096
-#define INVALID_FD -1
-#define SYSCALL_ERR -1
+# define SERVER_PORT 8080
+# define MAX_BUFF 4096
+# define INVALID_FD -1
+# define SYSCALL_ERR -1
 
 
 #define RPL_WELCOME 

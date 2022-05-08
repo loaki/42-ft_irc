@@ -2,15 +2,17 @@ NAME = ircserv
 
 CC	= clang++
 
-CFLAGES = -Wall -Wextra -Werror -std=c++98 -fsanitize=address -g3
+CFLAGES = -Wall -Wextra -Werror #-std=c++98 -fsanitize=address -g3
 
 
 IFLAGES =  -I./inc
 
 SRCS := ./src/main.cpp \
 		./src/socket.cpp \
-		./src/select.cpp \
 		./src/utils.cpp \
+		./src/select.cpp \
+		./src/user.cpp 
+		
 		
 
 OBJS := $(SRCS:%.cpp=%.o)

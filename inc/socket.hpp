@@ -2,13 +2,12 @@
 # define SOCKET_HPP
 
 #include "defs.hpp"
+#include "socket.hpp"
 
 namespace irc {
 // ns begin
 
-/*
- * Socket class
- */
+
 class Socket {
     public:
     // public: class init

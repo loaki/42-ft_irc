@@ -3,9 +3,12 @@
 
 #include "defs.hpp"
 #include "socket.hpp"
+#include "user.hpp"
 
 namespace irc {
 // ns begin
+class User;
+class Socket;
 
 class Select {
     public:
@@ -28,14 +31,13 @@ class Select {
         void    sentToAll(const int fd,  std::string str);
 
     // private: attributs
-        Socket              serverSock;
-        std::vector<int>    clientFd;
+        Socket              serverSocket;
+        std::vector<User *> users;
+        std::vector<int>    clientfds;
         fd_set              mainSet;
         fd_set              rSet;
         fd_set              wSet; // currently no use
-
-        char                buff[MAX_BUFF];
-        
+        char                buff[4096];
 };
 
 // ns end
