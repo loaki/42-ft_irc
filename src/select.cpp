@@ -166,12 +166,32 @@ void    Select::handleReq(const int fd, int code) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-		std::cout << Buff[0] << "|----\n";
-		if (Buff[0] == static_cast<std::string>("NICK jules"))
-			addNewUsr(this->users, Buff);
+		/*cap
+			pass
+			NIcK
+			*/
+		std::string nick; 
+		std::vector<std::string>::iterator it = Buff.begin();
+		for(; it != Buff.end(); it++) {
+			if ((*it).find("NICK") != std::string::npos) 
+			{
+				nick = (*it).substr(5);
+				for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+					if ((*it)->getNickname() == nick) {
+						nick = nick+'_';
+						it = users.begin();
+					}
+				}
+				this->users.back()->setNickname(nick);
+			}
+		}
+		// this->users[this->users.size() -1 ]->setNickname(nick);
+		// 	std::cout << Buff[0] << "|----\n";
+			// if (Buff[0] == static_cast<std::string>("NICK dada"))
+			// 	std::string nick = parser(Buff[0], );
 		if (PasswordConnect(Buff)== true && code == 1)
 		{
-			std::string	sendMsg = RPL_WELCOME;
+			std::string	sendMsg = RPL_WELCOME(nick);
 			 ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
