@@ -2,6 +2,7 @@
 # define UTILS_HPP
 
 #include "defs.hpp"
+#include <cstdlib>
 
 namespace irc {
 // ns begin

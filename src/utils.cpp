@@ -8,6 +8,12 @@ void    exitFailure(const std::string & str) {
     exit(EXIT_FAILURE);
 }
 
+int		createId() {
+	srand(time(NULL));
+
+	return (rand());
+}
+
 std::vector<std::string> ft_split(std::string str, std::string del){
     std::vector<std::string> values;
 	size_t pos;

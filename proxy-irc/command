@@ -1,0 +1,1 @@
+python proxy.py testnet.ergo.chat 6667 8888
