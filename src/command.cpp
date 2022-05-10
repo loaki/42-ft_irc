@@ -13,12 +13,8 @@ std::string part(std::string line, User * user)
         return("err");
     //remove user from channel
     //set user channel to null
-<<<<<<< HEAD
-    return (":"+ user->getNickname() + "!@irc.42team" + " " + line+"\r\n");
-=======
     // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
     return (":"+ user->getNickname() + " PART #lobby"+"\n");
->>>>>>> 5dbaccc70d85af2152ba1f02c7c91e74a1ffbca7
 }
 
 
