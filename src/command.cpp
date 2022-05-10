@@ -13,7 +13,7 @@ std::string part(std::string line, User * user)
         return("err");
     //remove user from channel
     //set user channel to null
-    return (":"+ user->getNickname() + "!~u@localhost" + " " + line+"\r\n");
+    return (":"+ user->getNickname() + "!@irc.42team" + " " + line+"\r\n");
 }
 
 
@@ -28,7 +28,7 @@ std::string Command::parser(std::vector<std::string> Buff, User * user)
         std::vector<std::string> cmd = irc::ft_split(*it, " ");
         if  (commands.find(cmd[0]) != commands.end())
         {
-            std::cout << "cmd :" << (commands[cmd[0]](*it, user))<<std::endl;
+            std::cout << "cmd:" << (commands[cmd[0]](*it, user))<<std::endl;
             return (commands[cmd[0]](*it, user));
         }
     }

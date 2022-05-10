@@ -208,8 +208,6 @@ void    Select::handleReq(const int fd, int code) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-		// if ((this)->users.back()->getNickname() == "")
-			// std::string nick = addNewUsr((this)->users, Buff);
 		if (PasswordConnect(Buff)== true && code == 1)
 		{
 			std::string nick = addNewUsr((this)->users, Buff);
