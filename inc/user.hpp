@@ -15,7 +15,7 @@ class User {
 		void setUserFd(int fd);
 		void setUserId(int Id);
 		
-		std::string const& getNickename()const;
+		std::string const& getNickname()const;
 		std::string const& getUsername()const;
 		int const& getUserFd()const;
 		int const & getUserId() const;

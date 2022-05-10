@@ -37,8 +37,9 @@
 # define SYSCALL_ERR -1
 
 
-#define RPL_WELCOME(nickname) ":irc.42team 001" + nickname + ":Welcome to the Internet Relay Network!xuemingwang@localhost\r\n";
-	
+// #define RPL_WELCOME ":irc.42team 001 ming :Welcome to the Internet Relay Network!xuemingwang@localhost\r\n"
+#define RPL_WELCOME(nickname) ":irc.42team 001 " + nickname + " :Welcome to the Internet Relay Network!xuemingwang@localhost\r\n"
+
 // structure
 
 #endif

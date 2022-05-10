@@ -119,16 +119,37 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	return false;
 }
 
-std::string		parser(std::vector<std::string> Buff, std::string str) {
+// std::string		parser(std::vector<std::string> Buff, std::string str) {
 
-	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
-		if ((*it).find(str) != std::string::npos) {
-			// size_t pos = (*it).find(str);
-			std::string ret = (*it).substr(str.length() + 1);
-			return (ret);
+// 	for (unsigned int i = 0; i < Buff.size(); i++) {
+// 		if (Buff[i].find(str) != std::string::npos) {
+// 			std::cout << "************* find *****************\n";
+// 			// size_t pos = (*it).find(str);
+// 			std::string ret = Buff[i].substr(Buff[i].find(" ") + 1, Buff[i].length());
+// 			return (ret);
+// 		}
+// 	}
+// 	return ("jules");
+// }
+
+std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
+
+	std::string nick; 
+	std::vector<std::string>::iterator it = Buff.begin();
+	for(; it != Buff.end(); it++) {
+		if ((*it).find("NICK") != std::string::npos) 
+		{
+			nick = (*it).substr(5);
+			for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+				if ((*it)->getNickname() == nick) {
+					nick = nick+'_';
+					it = users.begin();
+				}
+			}
+			users.back()->setNickname(nick);
 		}
 	}
-	return (NULL);
+	return (nick);
 }
 
 void    Select::handleReq(const int fd, int code) {
@@ -139,11 +160,6 @@ void    Select::handleReq(const int fd, int code) {
 	std::cout << fd << std::endl;
 	std::cout << this->buff << std::endl;
 
-///// verif new nick 
-////// set new id
-
-//////
-	std::string nn = "no"; 
 	// debug
 	if (ret <= 0) { 
 		this->clientDisconn(fd);
@@ -151,18 +167,10 @@ void    Select::handleReq(const int fd, int code) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-			if ((*(*it)).getNickename() == parser(Buff, "NICK")) {
-				std::string newStr = parser(Buff, "NICK") + "_";
-				(*(*it)).setNickname(newStr);
-				std::cout << newStr << std::endl;
-				it = users.begin();
-				nn = newStr;
-			}
-		}
+		std::string nick = addNewUsr((this)->users, Buff);
 		if (PasswordConnect(Buff)== true && code == 1)
 		{
-			std::string	sendMsg = RPL_WELCOME(nn);
+			std::string	sendMsg = RPL_WELCOME(nick);
 			 ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
