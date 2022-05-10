@@ -40,7 +40,7 @@ class Select {
         fd_set              wSet; // currently no use
         char                buff[4096];
 };
-
+	// std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 // ns end
 }
 

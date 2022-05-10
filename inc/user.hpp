@@ -12,17 +12,17 @@ class User {
 
 		void setNickname(std::string name);
 		void setUsername(std::string name);
+		void setUserId(std::string Id);
 		void setUserFd(int fd);
-		void setUserId(int Id);
 		
 		std::string const& getNickname()const;
 		std::string const& getUsername()const;
-		int const& getUserFd()const;
-		int const & getUserId() const;
+		std::string const & getUserId() const;
+		int const& getUserFd()const;		
 
 	private:
 		int _fd;
-		int _id;
+		std::string _id;
 		std::string _nickname;
 		std::string _username;
 

@@ -132,6 +132,44 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 // 	return ("jules");
 // }
 
+std::string		craftId() {
+	std::string s;
+
+	static const char alphanum[] =
+			"0123456789"
+			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+			"abcdefghijklmnopqrstuvwxyz";
+	srand( time( 0 ) );
+	for (int i = 0; i < 10; ++i) {
+		s += alphanum[rand() % (sizeof(alphanum) - 1)];
+	}
+	return (s);
+}
+
+void		setId(std::vector<User *> users, User * user) {
+
+	user->setUserId(craftId());
+	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+		if ((user->getUserId() == (*(*it)).getUserId()) && user != (*it)) {
+			user->setUserId(craftId());
+			it = users.begin();
+		}
+	}
+}
+
+void		setName(User *user, std::vector<std::string> Buff) {
+
+	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
+		if ((*it).find("USER") != std::string::npos) 
+		{
+			
+			std::string temp = (*it).substr(5);
+			int end = temp.find(" ");
+			user->setUsername(temp.substr(0, end));
+		}
+	}
+}
+
 std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 
 	std::string nick; 
@@ -149,6 +187,9 @@ std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff)
 			users.back()->setNickname(nick);
 		}
 	}
+	setId(users, users.back());
+	setName(users.back(), Buff);
+	std::cout << "USER ID: " << users.back()->getUserId() << "    USER NAME: " << users.back()->getUsername() << "\n";
 	return (nick);
 }
 
@@ -167,9 +208,11 @@ void    Select::handleReq(const int fd, int code) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-		std::string nick = addNewUsr((this)->users, Buff);
+		// if ((this)->users.back()->getNickname() == "")
+			// std::string nick = addNewUsr((this)->users, Buff);
 		if (PasswordConnect(Buff)== true && code == 1)
 		{
+			std::string nick = addNewUsr((this)->users, Buff);
 			std::string	sendMsg = RPL_WELCOME(nick);
 			 ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {

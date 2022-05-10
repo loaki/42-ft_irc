@@ -1,1 +1,9 @@
 python proxy.py testnet.ergo.chat 6667 8888
+
+Docker
+Pull the latest version of Ergo: 
+    docker pull ghcr.io/ergochat/ergo:stable
+Create a volume for persistent data: 
+    docker volume create ergo-data
+Run the container, exposing the default ports: 
+    docker run -d --name ergo -v ergo-data:/ircd -p 6667:6667 -p 6697:6697 ghcr.io/ergochat/ergo:stable
