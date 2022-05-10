@@ -14,7 +14,7 @@ std::string part(std::string line, User * user)
     //remove user from channel
     //set user channel to null
     // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
-    return (":"+ user->getNickname() + " PART #lobby"+"\n");
+    return (":"+ user->getNickname() + " PART #lobby\n");
 }
 
 

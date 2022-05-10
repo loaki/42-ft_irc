@@ -42,7 +42,7 @@
 /*
 ** Reply + ERROR
 */
-#define RPL_WELCOME(nickname, username, host) host + "001 :Welcome to the Internet Relay Network " +  nick + "!" + username + "@" + host + delimiter
+// #define RPL_WELCOME(nickname, username, host) host + "001 :Welcome to the Internet Relay Network " +  nick + "!" + username + "@" + host + delimiter
 #define RPL_YOURHOST(servername, version, host) host + "002 :Your host is " + servername + ", running version" +  "ver" + delimiter
 #define RPL_CREATED(date, host) host + "003 :This server was created" + date + delimiter
 #define RPL_MYINFO(servername, version, umonde, cmonde) host + "004" + "<servername> <version> <available user modes>  <available channel modes>" + delimiter       
