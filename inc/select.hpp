@@ -4,11 +4,13 @@
 #include "defs.hpp"
 #include "socket.hpp"
 #include "user.hpp"
+#include "command.hpp"
 
 namespace irc {
 // ns begin
 class User;
 class Socket;
+class Command;
 
 class Select {
     public:

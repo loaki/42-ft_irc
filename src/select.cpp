@@ -222,8 +222,23 @@ void    Select::handleReq(const int fd, int code) {
 			}
 		}
 		else {
-			//reply();
-			// another cmd ;
+			Command cmd;
+			// std::cout << "........->" <<(this)->users[0]->getNickname()<<std::endl;
+			for (unsigned int i = 0; i < users.size(); i++)
+			{
+				if (users[i]->getUserFd() == fd)
+				{
+					std::string	sendMsg =cmd.parser(Buff, users[i]);
+					ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+					if (ret == SYSCALL_ERR) {
+						std::cout << "[Send response failed]" << std::endl;
+						this->clientDisconn(fd);
+						return;
+					}
+				}
+			}
+			// std::cout << "----->" << std::find(this->users.begin(), this->users.end(), User(fd, false)) << std::endl;
+			// parser(Buff, (*(this)->users.find(fd)))
 		}
 	}
 }

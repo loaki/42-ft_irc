@@ -11,7 +11,8 @@ SRCS := ./src/main.cpp \
 		./src/socket.cpp \
 		./src/utils.cpp \
 		./src/select.cpp \
-		./src/user.cpp 
+		./src/user.cpp \
+		./src/command.cpp \
 		
 		
 
