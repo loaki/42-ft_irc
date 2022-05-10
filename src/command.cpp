@@ -13,7 +13,7 @@ std::string part(std::string line, User * user)
         return("err");
     //remove user from channel
     //set user channel to null
-    return (":"+ user->getNickname() + "!~u@localhost" + " " + line+"\r\n");
+     return (":"+ user->getNickname() + " PART #lobby\n");
 }
 
 
