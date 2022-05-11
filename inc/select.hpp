@@ -5,6 +5,8 @@
 #include "socket.hpp"
 #include "user.hpp"
 #include "command.hpp"
+#include "channel.hpp"
+#include "invoker.hpp"
 
 namespace irc {
 // ns begin
@@ -35,12 +37,18 @@ class Select {
 
     // private: attributs
         Socket              serverSocket;
+		const std::string	_host;
         std::vector<User *> users;
         std::vector<int>    clientfds;
         fd_set              mainSet;
         fd_set              rSet;
         fd_set              wSet; // currently no use
         char                buff[4096];
+
+		//define
+		std::vector<Channel *>	_channels;
+		Invoker					*_Invoker;
+
        
 };
 	// std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);

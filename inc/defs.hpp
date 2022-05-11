@@ -23,6 +23,7 @@
 #include <iterator>
 #include <algorithm>
 #include <fcntl.h>
+#include <sstream>
 
 // my lib
 #include "utils.hpp"
@@ -37,7 +38,7 @@
 # define INVALID_FD -1
 # define SYSCALL_ERR -1
 # define delimiter "\r\n"
-//# define HOST ":irc.42team "
+# define host ":irc.42team "
 
 /*
 ** Reply + ERROR
