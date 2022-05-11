@@ -15,7 +15,7 @@ std::string Ping::_ping(std::string line, User * user) {
         msg += delimiter;
         return msg;
     }
-    return std::string("PONG :" + v_cmd[1]);
+    return std::string("PONG :" + v_cmd[1] + delimiter);
 }
 
 } 

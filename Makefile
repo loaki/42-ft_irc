@@ -12,7 +12,7 @@ SRCS := ./src/main.cpp \
 		./src/utils.cpp \
 		./src/select.cpp \
 		./src/user.cpp \
-		./src/ping.cpp \
+		./src/command/ping.cpp \
 		./src/command.cpp
 		
 		
