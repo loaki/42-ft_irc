@@ -214,7 +214,7 @@
 
 //Command: PING
 //#define ERR_NOSUCHSERVER() 
-#define ERR_NOORIGIN() ":irc.42team 409 * " + ":No origin specified" + delimiter
+#define ERR_NOORIGIN ":irc.42team 409 * :No origin specified" 
 
 
 //Command: PONG

@@ -23,13 +23,13 @@ std::string Command::parser(std::vector<std::string> Buff, User * user)
 {
     std::map<std::string, fct_ptr> commands;
     commands["PART"] = part;
-
+    commands["PING"] = cmd_ping._ping;
     std::vector<std::string>::iterator it = Buff.begin();
     for(;it != Buff.end(); it++) {
         std::vector<std::string> cmd = irc::ft_split(*it, " ");
         if  (commands.find(cmd[0]) != commands.end())
         {
-            std::cout << "cmd:" << (commands[cmd[0]](*it, user))<<std::endl;
+            //std::cout << "cmd:" << (commands[cmd[0]](*it, user))<<std::endl;
             return (commands[cmd[0]](*it, user));
         }
     }
