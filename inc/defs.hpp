@@ -54,7 +54,7 @@
 #define ERR_ALREADYREGISTRED()  ":irc.42team 462 * :Unauthorized command (already registered)" + delimiter
 
 //Command: NICK
-#define ERR_NONICKNAMEGIVEN() host+ "431 * :No nickname given" + delimiter
+#define ERR_NONICKNAMEGIVEN ":irc.42team 431 * :No nickname given" 
 #define ERR_ERRONEUSNICKNAME(nick) ":irc.42team 432 * " + nick + " :Erroneus nickname" + delimiter
 #define ERR_NICKNAMEINUSE(nick) ":irc.42team 433 * " + nick + " :Nickname is already in use" + delimiter
 #define ERR_NICKCOLLISION(nick) ":irc.42team 436 * " + nick + " :Nickname collision KILL" + delimiter

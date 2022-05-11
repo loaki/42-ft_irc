@@ -5,7 +5,7 @@ CC	= clang++
 CFLAGES = -Wall -Wextra -Werror -std=c++98 #-fsanitize=address -g3
 
 
-IFLAGES =  -I./inc
+IFLAGES =  -I./inc -I./inc/cmd
 
 SRCS := ./src/main.cpp \
 		./src/socket.cpp \
@@ -13,7 +13,8 @@ SRCS := ./src/main.cpp \
 		./src/select.cpp \
 		./src/user.cpp \
 		./src/command/ping.cpp \
-		./src/command.cpp
+		./src/command.cpp \
+		./src/command/nick.cpp 
 		
 		
 
