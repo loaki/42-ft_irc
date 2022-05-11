@@ -12,8 +12,8 @@ std::string Nick::_nick(std::string line, Select &sel) {
     std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
     std::string nickname = v_cmd[1];
-    if (v_cmd.size() != 2 || nickname.leght() == 0) {
-        msg = ERR_NONICKNAMEGIVE;
+    if (v_cmd.size() != 2 || nickname.length() == 0) {
+        msg = ERR_NONICKNAMEGIVEN;
         msg += delimiter;
         return msg;
     }
@@ -25,7 +25,7 @@ std::string Nick::_nick(std::string line, Select &sel) {
             return msg;
         }
     }
-    
+
 
 
     return msg;
