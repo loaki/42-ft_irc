@@ -226,6 +226,8 @@ void    Select::handleReq(const int fd, int code) {
 		{
 			if (users[i]->getUserFd() == fd)
 			{
+				std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
+				send(fd, sM.c_str(), sM.length(), 0);
 				std::string	sendMsg =cmd.parser(Buff, users[i]);
 				std::cout << "[" << sendMsg << "]" << std::endl;
 				ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);

@@ -5,10 +5,10 @@
 
 namespace irc {
 
-class channel {
+class Channel {
     public:
-        channel();
-        ~channel();
+        Channel();
+        ~Channel();
     
         void setChannelName(std::string channelName);
         bool isChannelName(std::string Name);
