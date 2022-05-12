@@ -4,6 +4,8 @@
 #include "defs.hpp"
 #include "select.hpp"
 
+#define MAX_SIZE 9
+
 namespace irc {
 
 class Select;
@@ -13,7 +15,9 @@ class Nick{
         Nick(/* args */);
         ~Nick();
 
-        std::string _nick(std::string line, Select &sel);
+        bool nickinUse(std::string name, Select &select);
+        bool nameError(std::string name);
+        std::string _nick(std::string line, User *user, Select &select);
 
 };
 

@@ -3,6 +3,8 @@
 
 #include "defs.hpp"
 #include "ping.hpp"
+#include "nick.hpp"
+#include "select.hpp"
 
 namespace irc {
 
@@ -17,7 +19,7 @@ class Command {
 
     private:
         Ping cmd_ping;
-
+        Nick cmd_nick;
     };
 }
 

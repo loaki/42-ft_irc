@@ -24,6 +24,7 @@ std::string Command::parser(std::vector<std::string> Buff, User * user)
     std::map<std::string, fct_ptr> commands;
     commands["PART"] = part;
     commands["PING"] = cmd_ping._ping;
+    commands["NICK"] = cmd_nick._nick;
     std::vector<std::string>::iterator it = Buff.begin();
     for(;it != Buff.end(); it++) {
         std::vector<std::string> cmd = irc::ft_split(*it, " ");
