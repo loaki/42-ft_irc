@@ -3,7 +3,7 @@
 
 #include "defs.hpp"
 
-namespace irc {
+_BEGIN_NS_IRC
 
 class Part {
     public:

@@ -6,54 +6,44 @@
 #include "user.hpp"
 #include "command.hpp"
 #include "channel.hpp"
-#include "invoker.hpp"
 
-namespace irc {
-// ns begin
+_BEGIN_NS_IRC
+
 class User;
 class Socket;
 class Command;
 
 class Select {
-    public:
-    // public: class init
-        Select();
-        Select(Select const& src);
-        ~Select();
-        Select& operator=(Select const& rhs);
+	public:
+	// public: class init
+		Select();
+		Select(Select const& src);
+		~Select();
+		Select& operator=(Select const& rhs);
 
-    // public: method
-        void    serverStart(const short& port, const std::string&  password);
-        std::vector<User *> &getUsers();
+	// public: method
+		void				serverStart(const short& port, const std::string&  password);
 
-    private:
-    // private: method
-        int     max_fd();
-        void    clientConn();
-        void    clientDisconn(const int clientFd);
-        bool    PasswordConnect(std::vector<std::string> buff);
-        void    handleReq(const int fd, int code);
-        std::vector<std::string>  configBuff();
-        void    sentToAll(const int fd,  std::string str);
+	// public: attributs
+		std::map<int, User> users;
 
-    // private: attributs
-        Socket              serverSocket;
+	private:
+	// private: method
+		int							max_fd();
+		void						clientConn();
+		void						clientDisconn(const int clientFd);
+		bool						PasswordConnect(std::vector<std::string> buff);
+		void						handleReq(const int fd);
+		std::vector<std::string>	configBuff();
+
+	// private: attributs
+		Socket				serverSocket;
 		const std::string	_host;
-        std::vector<User *> users;
-        std::vector<int>    clientfds;
-        fd_set              mainSet;
-        fd_set              rSet;
-        fd_set              wSet; // currently no use
-        char                buff[4096];
-
-		//define
-		std::vector<Channel *>	_channels;
-		// Invoker					*_Invoker;
-
-       
+		fd_set				mainSet;
+		fd_set				rSet;
+		char				buff[4096];
 };
-	// std::string		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
-// ns end
-}
+
+_END_NS_IRC
 
 #endif

@@ -18,8 +18,7 @@ SRC				:= main.cpp \
 				   utils.cpp \
 				   select.cpp \
 				   user.cpp \
-				   command.cpp \
-				   invoker.cpp
+				   command.cpp
 SUB_SRC			:= ping.cpp \
 				   nick.cpp
 SRC				+= $(addprefix command/, $(SUB_SRC))
@@ -40,7 +39,7 @@ B_CYAN 			= \033[1;36m
 $(NAME): $(OBJ)
 	@printf "$(CL_LINE)"
 	@echo "[1 / 1] - $(B_MAGENTA)$@$(NONE)"
-	@$(CC) $(CFLAGS) $(OBJ) -o $@
+	@$(CC) $(IFLAGS) $(CFLAGS) $(OBJ) -o $@
 	@echo "$(B_GREEN)Compilation done !$(NONE)"
 
 all: $(NAME)

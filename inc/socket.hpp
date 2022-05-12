@@ -4,9 +4,7 @@
 #include "defs.hpp"
 #include "socket.hpp"
 
-namespace irc {
-// ns begin
-
+_BEGIN_NS_IRC
 
 class Socket {
     public:
@@ -38,7 +36,6 @@ class Socket {
     
 };
 
-// ns end
-}
+_END_NS_IRC
 
 #endif

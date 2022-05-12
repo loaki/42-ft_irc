@@ -5,16 +5,13 @@
 #include "user.hpp"
 #include <cstdlib>
 
-namespace irc {
-// ns begin
+_BEGIN_NS_IRC
 
-    void    exitFailure(const std::string & str);
-    std::vector<std::string> ft_split(std::string str, std::string del);
-	// std::string		craftId();
-	// void		createId(std::vector<User *> users, User * user);
+void    exitFailure(const std::string & str);
+std::vector<std::string> ft_split(std::string str, std::string del);
+// std::string		craftId();
+// void		createId(std::vector<User *> users, User * user);
 
-
-// ns end
-}
+_END_NS_IRC
 
 #endif

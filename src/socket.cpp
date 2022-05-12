@@ -1,7 +1,6 @@
 #include "socket.hpp"
 
-namespace irc {
-// ns begin
+_BEGIN_NS_IRC
 
 // public: class init
 Socket::Socket():
@@ -74,6 +73,4 @@ void Socket::serverListen() {
         exitFailure("listen failed");
 }
 
-
-// ns end
-}
+_END_NS_IRC

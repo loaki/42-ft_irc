@@ -3,7 +3,7 @@
 
 #include "defs.hpp"
 
-namespace irc {
+_BEGIN_NS_IRC
 
 class Channel {
     public:
@@ -21,8 +21,7 @@ class Channel {
 
 };
 
-}
-
+_END_NS_IRC
 
 
 #endif

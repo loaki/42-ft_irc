@@ -4,25 +4,27 @@
 #include "defs.hpp"
 #include "select.hpp"
 #include "user.hpp"
-namespace irc {
+
+_BEGIN_NS_IRC
 
 class Select;
 
 class Command {
-    public:
-        Command() ;
-        virtual ~Command();
-		std::string getName() const;
-		virtual std::string execute(std::string line, User * user, Select *select) = 0;
+	public:
+		Command();
+		virtual ~Command();
 
-    protected:
+		std::string			getName() const;
+		virtual std::string	execute(std::string line, std::map<int, User> users, User user) = 0;
+
+	protected:
 		std::string			_name;
 		std::string			_description;
-		// Server*			_server;
-		User*		    	_sender;
-		std::string      	_args;
+		User				_sender;
+		std::string			_args;
 
-    };
-}
+};
+
+_END_NS_IRC
 
 #endif

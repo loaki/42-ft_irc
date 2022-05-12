@@ -7,17 +7,16 @@
 
 #define MAX_SIZE 9
 
-namespace irc {
+_BEGIN_NS_IRC
 
 class Nick: public Command{
-    public:
-        Nick(/* args */);
-        ~Nick();
+	public:
+		Nick();
+		~Nick();
 
-        bool nickinUse(std::string name, Select &select);
-        bool nameError(std::string name);
-        std::string execute(std::string line, User *user, Select *select);
-
+		bool 		nickInUse(std::string name, std::map<int, User> users);
+		bool 		nameError(std::string name);
+		std::string	execute(std::string line, std::map<int, User> users, User user);
 };
 
 
