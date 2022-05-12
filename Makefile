@@ -14,7 +14,9 @@ SRCS := ./src/main.cpp \
 		./src/user.cpp \
 		./src/command/ping.cpp \
 		./src/command.cpp \
-		./src/command/nick.cpp 
+		./src/command/nick.cpp \
+		./src/invoker.cpp \
+
 		
 		
 

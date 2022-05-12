@@ -2,24 +2,26 @@
 # define COMMAND_HPP
 
 #include "defs.hpp"
-#include "ping.hpp"
-#include "nick.hpp"
 #include "select.hpp"
-
+#include "user.hpp"
 namespace irc {
 
-        std::string part(std::string line, User * user);
+class Select;
 
 class Command {
     public:
-        Command();
-        ~Command();
-        std::string parser(std::vector<std::string> Buff, User * user);
-        typedef std::string (*fct_ptr)(std::string, User *);
+        Command() ;
+        virtual ~Command();
+		std::string getName() const;
+		virtual std::string execute(std::string line, User * user, Select *select) = 0;
 
-    private:
-        Ping cmd_ping;
-        Nick cmd_nick;
+    protected:
+		std::string			_name;
+		std::string			_description;
+		// Server*			_server;
+		User*		    	_sender;
+		std::string      	_args;
+
     };
 }
 
