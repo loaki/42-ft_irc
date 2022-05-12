@@ -14,6 +14,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <exception>
+#include <cctype>
 
 // C++ lib
 #include <iostream>  
@@ -40,6 +41,11 @@
 # define delimiter "\r\n"
 # define host ":irc.42team "
 
+/*
+from 2812
+//The extended prefix (servername / ( nickname ["!" user "@" host ])
+[ ":" prefix SPACE ] command [ params ] crlf
+*/
 /*
 ** Reply + ERROR
 */
