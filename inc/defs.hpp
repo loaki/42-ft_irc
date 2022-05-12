@@ -22,8 +22,8 @@ from 2812
 /*
 ** Reply + ERROR
 */
-// #define RPL_WELCOME(nick) ":irc.42team 001 " + nick + " :Welcome to the Internet Relay Network!xuemingwang@localhost" + DELIM
-#define RPL_WELCOME(nick,user,host) ":" + nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay" + DELIM
+#define RPL_WELCOME(nick) ":irc.42team 001 " + nick + " :Welcome to the Internet Relay Network!xuemingwang@localhost" + DELIM
+// #define RPL_WELCOME(nick,user,host) ":" + nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay" + DELIM
 #define RPL_YOURHOST(servername, version) ":irc.42team 002 :Your host is " + servername + ", running version" +  "ver" + DELIM
 #define RPL_CREATED(date) ":irc.42team 003 :This server was created" + date + DELIM
 #define RPL_MYINFO(servername, version, umonde, cmonde) ":irc.42team 004 " + " " + servername + " " +version + " " + umond +  " " +cmonde + DELIM

@@ -83,6 +83,8 @@ void    Select::clientConn() {
 
 	this->users[clientConnFd] = newUser;
 
+	std::cout << "add in co: " << clientConnFd << std::endl;
+
 	FD_SET(clientConnFd, &this->mainSet);
 }
 
@@ -133,7 +135,19 @@ void	Select::handleReq(const int fd) {
 		std::vector<std::string> Buff = configBuff();
 
 		if (PasswordConnect(Buff) == true) {
-			std::string	sendMsg = RPL_WELCOME(this->users[fd].getNickname(), this->users[fd].getUsername(),this->users[fd].getHostname());
+			std::string new_nick_name("");
+
+			for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
+				std::string	tmp = *it;
+				std::string	get = tmp.substr(0, tmp.find(" "));
+
+				if (get == "NICK") {
+					this->users[fd].setNickname(tmp.substr(tmp.find(" "), tmp.length()));
+					break ;
+				}
+			}
+
+			std::string	sendMsg = RPL_WELCOME(this->users[fd].getNickname());
 		
 			std::cout << "debug send msg: " << sendMsg <<std::endl;
 
@@ -147,7 +161,26 @@ void	Select::handleReq(const int fd) {
 		}
 
 		if (this->users[fd].getJoinServer() == true) {
-			// do command
+			std::string parseTmp = Buff[0];
+		
+			if (parseTmp.substr(0, parseTmp.find(" ")) == "NICK") {
+				std::string newNick = parseTmp.substr(parseTmp.find(" "), parseTmp.find("\r\n"));
+
+				std::cout << "newnick: " << parseTmp << std::endl;
+			
+				// std::string	sendMsg = ":" + this->users[fd].getNickname() + "!" + this->users[fd].getUsername() + "@" + this->users[fd].getHostname() + "  " + parseTmp;
+				std::string sendMsg("");
+
+				sendMsg += ":";
+				sendMsg += "test";
+				sendMsg += "!";
+				sendMsg += this->users[fd].getUsername();
+				sendMsg += "@";
+				sendMsg += this->users[fd].getHostname();
+				std::cout << "debug send msg: " << sendMsg <<std::endl;
+
+				ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+			}
 		}
 	}
 }
