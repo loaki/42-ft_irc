@@ -20,7 +20,7 @@ Invoker::~Invoker() {
 	}
 }
 
-std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select *select)
+std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select &select)
 {
     // commands["NICK"] = cmd_nick._nick;
     // std::vector<std::string>::iterator it = Buff.begin();

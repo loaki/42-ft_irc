@@ -6,7 +6,7 @@ namespace irc {
 Ping::Ping() { _name = "PING";}
 Ping::~Ping() {}
 
-std::string	Ping::execute(std::string line, User * user, Select *select) {
+std::string	Ping::execute(std::string line, User * user, Select &select) {
     std::string msg;
     (void)user;
     (void)select;
