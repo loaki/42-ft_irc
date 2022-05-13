@@ -10,9 +10,13 @@ namespace irc {
 class Ping: public Command {
     public:
         Ping();
-        ~Ping();
+        virtual ~Ping();
+
         std::string execute(std::string line, User * user, Select *select);
+
 };
+
+
 }
 
 #endif

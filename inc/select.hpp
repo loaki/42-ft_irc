@@ -48,7 +48,7 @@ class Select {
 
 		//define
 		std::vector<Channel *>	_channels;
-		// Invoker					*_Invoker;
+		Invoker					_Invoker;
 
        
 };

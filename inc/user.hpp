@@ -20,7 +20,8 @@ class User {
 		std::string const& getUsername()const;
 		std::string const& getHostname()const;
 		std::string const & getUserId() const;
-		int const& getUserFd()const;		
+		int const& getUserFd()const;	
+		void setJoinServer(bool join);	
 
 	private:
 		int _fd;
@@ -28,6 +29,7 @@ class User {
 		std::string _nickname;
 		std::string _username;
 		std::string _hostname;
+		bool		_joinServer;
 
 };
 
