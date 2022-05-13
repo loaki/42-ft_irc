@@ -40,18 +40,13 @@
 # define INVALID_FD -1
 # define SYSCALL_ERR -1
 # define delimiter "\r\n"
-# define host ":irc.42team "
 
 /*
-from 2812
-//The extended prefix (servername / ( nickname ["!" user "@" host ])
-[ ":" prefix SPACE ] command [ params ] crlf
-*/
-/*
 ** Reply + ERROR
-*/
-// #define RPL_WELCOME(nick) ":irc.42team 001 " + nick + " :Welcome to the Internet Relay Network!xuemingwang@localhost" + delimiter
-#define RPL_WELCOME(nick,user,host) ":" + nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay" + delimiter
+*/ 
+// <nick>!<user>@<host>"  full client identifier
+#define RPL_WELCOME(nick, user, host) ":irc.42team 001 " + nick + " :Welcome to the Internet Relay Network " + nick + "!" + user + "@" + host + delimiter
+//#define RPL_WELCOME(nick,user,host) ":" + nick + "!" + user + "@" + host + " 001 " + nick + " :Welcome to the Internet Relay" + delimiter
 #define RPL_YOURHOST(servername, version) ":irc.42team 002 :Your host is " + servername + ", running version" +  "ver" + delimiter
 #define RPL_CREATED(date) ":irc.42team 003 :This server was created" + date + delimiter
 #define RPL_MYINFO(servername, version, umonde, cmonde) ":irc.42team 004 " + " " + servername + " " +version + " " + umond +  " " +cmonde + delimiter       

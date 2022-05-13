@@ -50,7 +50,7 @@ std::string	Nick::execute(std::string line, User *user, Select *select) {
             msg += delimiter;
             return msg;
     }
-    msg = ":" + user->getNickname() +"!"+user->getUsername()+"@"+user->getHostname()+ "  " +line ;
+    msg = ":" + user->getHostname() + " 001 " + nickname + "\r\n";
     user->setNickname(nickname);
     //msg=":jfeuilla!jfeuilla@127.0.0.1 NICK jules\r\n";
     return msg;

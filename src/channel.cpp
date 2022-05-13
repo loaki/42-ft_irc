@@ -70,7 +70,10 @@ bool	Channel::isUser(User *user){
 void	Channel::MsgToUser(User* user, std::string message){
 	send(user->getUserFd(), message.c_str(), message.length(), 0);
 }
-// void	Channel::MsgToChannel(std::string message){
+
+
+
+// void	Channel::MsgToAChannel(std::string message){
 
 // }
 
