@@ -24,7 +24,7 @@ class Select {
         Select& operator=(Select const& rhs);
 
     // public: method
-        void    serverStart(const short& port, const std::string&  password);
+        void    			serverStart(const short& port, const std::string&  password);
         std::vector<User *> &getUsers();
 
     private:
@@ -46,8 +46,6 @@ class Select {
         fd_set              rSet;
         fd_set              wSet; // currently no use
         char                buff[4096];
-
-		//define
 		std::vector<Channel *>	_channels;
 		//Invoker					_Invoker;
 

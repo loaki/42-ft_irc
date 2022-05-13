@@ -214,10 +214,10 @@ void    Select::handleReq(const int fd) {
 
 		if (PasswordConnect(Buff)== true) {
 			addNewUsr((this)->users, Buff);
-
-			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), 
-			users.back()->getUsername(),users.back()->getHostname());
-
+			
+			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getHostname(),
+			users.back()->getUsername());
+			std::cout << sendMsg << std::endl;
 			ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;

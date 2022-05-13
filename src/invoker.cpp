@@ -45,7 +45,7 @@ std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select *
     }
         
     // }
-    return ("command not found");
+    return ("");
 }
 
 }
