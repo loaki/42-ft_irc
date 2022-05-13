@@ -17,18 +17,18 @@ class Socket {
         Socket& operator=(Socket const& rhs);
 
     // public: getter & setter
-        const int & getServerFd() const;
-        const std::string & getPassword() const;
-        void setPassword(std::string password);
+        int const&          getServerFd() const;
+        std::string const&  getPassword() const;
+        void                setPassword(std::string password);
 
     // public: method
-        void    createServer(const short & port, const std::string&  password);
+        void                createServer(const short & port, const std::string&  password);
 
     private:
     // private: method
-        void    serverInit(const short & port);
-        void    serverBind();
-        void    serverListen();
+        void                serverInit(const short & port);
+        void                serverBind();
+        void                serverListen();
 
     // private: attributs
         int                 _serverFd;

@@ -3,9 +3,7 @@
 //英文字母，數字
 namespace irc {
 
-Nick::Nick() {
-    _name = "NICK";
-}
+Nick::Nick() {}
 Nick::~Nick() {}
 
 //ERR_NICKNAMEINUSE :aleardy use in user
@@ -21,6 +19,7 @@ bool	Nick::nickinUse(std::string name, Select &select) {
 bool	Nick::nameError(std::string name){
     if(name.length() > MAX_SIZE)
         return false;
+		
     for(size_t i = 0; i < name.size(); i++){
         if (!isalnum(name[i]))
             return false;
@@ -32,6 +31,7 @@ std::string	Nick::execute(std::string line, User *user, Select *select) {
     std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
     std::string nickname = v_cmd[1];
+
     //ERR_ERRONEUSNICKNAME: erro nickname
     if (nameError(nickname) == false) {
          msg = ERR_ERRONEUSNICKNAME(nickname);
@@ -50,9 +50,9 @@ std::string	Nick::execute(std::string line, User *user, Select *select) {
             msg += delimiter;
             return msg;
     }
+
     msg = ":" + user->getHostname() + " 001 " + nickname + "\r\n";
     user->setNickname(nickname);
-    //msg=":jfeuilla!jfeuilla@127.0.0.1 NICK jules\r\n";
     return msg;
 }
 

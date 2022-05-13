@@ -24,7 +24,7 @@ Select& Select::operator=(Select const& rhs) {
 	return *this;
 }
 
-std::vector<User *> &Select::getUsers(){return this->users;}
+std::vector<User *> Select::getUsers(){return this->users;}
 
 // public: serveur creat 
 void    Select::serverStart(const short& port, const std::string&  password) {

@@ -12,7 +12,8 @@ class Command {
     public:
         Command() ;
         virtual ~Command();
-		std::string getName() const;
+		
+		std::string 		getName() const;
 		virtual std::string execute(std::string line, User * user, Select *select) = 0;
 
     protected:

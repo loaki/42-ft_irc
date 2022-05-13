@@ -14,7 +14,7 @@ class Invoker {
 
     public:
         Invoker();
-        virtual ~Invoker();
+        virtual~Invoker();
         std::string parser(std::vector<std::string> Buff, User * user, Select *select);
 
     private:
