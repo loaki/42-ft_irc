@@ -5,16 +5,17 @@ namespace irc {
 Part::Part() {}
 Part::~Part() {}
 
-// void Ping::timeout()
-
-std::string Part::_part(std::string line, User * user) {
-    std::vector<std::string> v_cmd = ft_split(line, " ");
-    if (v_cmd.size() < 2) {
-        std::string msg = ERR_NOORIGIN;
-        msg += delimiter;
-        return msg;
-    }
-    return std::string("PONG :" + v_cmd[1] + delimiter);
+std::string part(std::string line, User * user, Select *select)
+{
+    (void)select;
+    std::vector<std::string> cmd = irc::ft_split(line, " ");
+    (void)user;
+    if (cmd.size() < 2)
+        return("err");
+    //remove user from channel
+    //set user channel to null
+    // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
+    return (":"+ user->getNickname() + " PART #lobby\n");
 }
 
 } 

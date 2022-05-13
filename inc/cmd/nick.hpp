@@ -11,11 +11,11 @@ namespace irc {
 
 class Nick: public Command{
     public:
-        Nick(/* args */);
-        ~Nick();
+        Nick();
+        virtual ~Nick();
 
-        bool nickinUse(std::string name, Select &select);
-        bool nameError(std::string name);
+        bool 		nickinUse(std::string name, Select &select);
+        bool 		nameError(std::string name);
         std::string execute(std::string line, User *user, Select *select);
 
 };

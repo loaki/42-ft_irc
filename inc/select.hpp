@@ -13,6 +13,7 @@ namespace irc {
 class User;
 class Socket;
 class Command;
+//class Invoker;
 
 class Select {
     public:
@@ -32,7 +33,7 @@ class Select {
         void    clientConn();
         void    clientDisconn(const int clientFd);
         bool    PasswordConnect(std::vector<std::string> buff);
-        void    handleReq(const int fd, int code);
+        void    handleReq(const int fd);
         std::vector<std::string>  configBuff();
         void    sentToAll(const int fd,  std::string str);
 
@@ -48,7 +49,7 @@ class Select {
 
 		//define
 		std::vector<Channel *>	_channels;
-		// Invoker					*_Invoker;
+		//Invoker					_Invoker;
 
        
 };

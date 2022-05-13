@@ -9,7 +9,7 @@ Nick::Nick() {
 Nick::~Nick() {}
 
 //ERR_NICKNAMEINUSE :aleardy use in user
-bool Nick::nickinUse(std::string name, Select &select) {
+bool	Nick::nickinUse(std::string name, Select &select) {
     std::vector<User *>::iterator it = select.getUsers().begin();
     for(; it != select.getUsers().begin(); it++) \
         if ((*it)->getNickname() == name)
@@ -18,7 +18,7 @@ bool Nick::nickinUse(std::string name, Select &select) {
 }
 
 //ERR_ERRONEUSNICKNAME: erro nickname
-bool Nick::nameError(std::string name){
+bool	Nick::nameError(std::string name){
     if(name.length() > MAX_SIZE)
         return false;
     for(size_t i = 0; i < name.size(); i++){
@@ -28,7 +28,7 @@ bool Nick::nameError(std::string name){
     return true;
 }
 
-std::string Nick::execute(std::string line, User *user, Select *select) {
+std::string	Nick::execute(std::string line, User *user, Select *select) {
     std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
     std::string nickname = v_cmd[1];

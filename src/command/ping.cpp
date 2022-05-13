@@ -10,7 +10,7 @@ Ping::~Ping() {}
 
 // void Ping::timeout()
 
-std::string Ping::execute(std::string line, User * user, Select *select) {
+std::string	Ping::execute(std::string line, User * user, Select *select) {
     std::string msg;
     (void)user;
     (void)select;

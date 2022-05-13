@@ -47,7 +47,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 					break ;
 				}
 				else {                     //recv
-					this->handleReq(fd, 1);
+					this->handleReq(fd);
 					continue;
 				}
 			}
@@ -82,6 +82,7 @@ void    Select::clientConn() { //get client fd
 
 	User *newuser = new User(clientConnFd);
 	newuser->setHostname(std::string(inet_ntoa(clientAddr.sin_addr)));
+	newuser->setJoinServer(false);
 	// std::cout<<"hostname: "<<newuser->getHostname()<<std::endl; 
 	this->users.push_back(newuser);// add new user
 	this->clientfds.push_back(clientConnFd); //add new fd
@@ -166,7 +167,6 @@ void		setName(User *user, std::vector<std::string> Buff) {
 	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
 		if ((*it).find("USER") != std::string::npos) 
 		{
-			
 			std::string temp = (*it).substr(5);
 			int end = temp.find(" ");
 			user->setUsername(temp.substr(0, end));
@@ -191,13 +191,12 @@ void		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 			users.back()->setNickname(nick);
 		}
 	}
+	
 	setId(users, users.back());
 	setName(users.back(), Buff);
-	// std::cout << "USER ID: " << users.back()->getUserId() << "    USER NAME: " << users.back()->getUsername() << "\n";
-	// return (nick);
 }
 
-void    Select::handleReq(const int fd, int code) {
+void    Select::handleReq(const int fd) {
 	int	ret = -1;
 
 	bzero(this->buff, sizeof(this->buff));
@@ -213,44 +212,54 @@ void    Select::handleReq(const int fd, int code) {
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
 
-		if (PasswordConnect(Buff)== true && code == 1)
-		{
+		if (PasswordConnect(Buff)== true) {
 			addNewUsr((this)->users, Buff);
-			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(),users.back()->getHostname());
-			std::cout << sendMsg <<std::endl;
+
+			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), 
+			users.back()->getUsername(),users.back()->getHostname());
+
 			ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
 				this->clientDisconn(fd);
 				return;
 			}
+			
+			//add this->users[fd]->setJoinServer(true);
 		}
-		else{
-		// std::cout << "........->" <<(this)->users[0]->getNickname()<<std::endl;
-		Invoker invoker;
-		for (unsigned int i = 0; i < users.size(); i++)
-		{
-			if (users[i]->getUserFd() == fd)
-			{
-				// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
-				// send(fd, sM.c_str(), sM.length(), 0);
-				Select *tmp = this;
-				std::string	sendMsg = invoker.parser(Buff, users[i], tmp);
-				std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-				ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
-				if (ret == SYSCALL_ERR) {
-					std::cout << "[Send response failed]" << std::endl;
-					this->clientDisconn(fd);
-					return;
+		/*after lucien changer vector to std::map<int, user> user;*/
+		//if (this->users[fd]->setJoinServer(true) {
+			/*already connecter we can parser commands
+				Msg += ":";
+				Msg += nickname;
+				Msg += "!";
+				Msg += username;
+				Msg += "@";
+				Msg += hostname;
+			*/
+			Invoker _Invoker;
+			for (unsigned int i = 0; i < users.size(); i++) {
+				if (users[i]->getUserFd() == fd)
+				{
+					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
+					// send(fd, sM.c_str(), sM.length(), 0);
+					Select *tmp = this;
+					std::string	sendMsg = _Invoker.parser(Buff, users[i], tmp);
+					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+					ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+					if (ret == SYSCALL_ERR) {
+						std::cout << "[Send response failed]" << std::endl;
+						this->clientDisconn(fd);
+						return;
+					}
 				}
 			}
-		}
+		//}
 		}
 			// std::cout << "----->" << std::find(this->users.begin(), this->users.end(), User(fd, false)) << std::endl;
 			// parser(Buff, (*(this)->users.find(fd)))
-	}
-
 }
+
 
 
 
