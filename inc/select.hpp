@@ -24,29 +24,29 @@ class Select {
         Select& operator=(Select const& rhs);
 
     // public: method
-        void    			serverStart(const short& port, const std::string&  password);
-        std::vector<User *> &getUsers();
+        void    			        serverStart(const short& port, const std::string&  password);
+        std::vector<User *>         getUsers();
 
     private:
     // private: method
-        int     max_fd();
-        void    clientConn();
-        void    clientDisconn(const int clientFd);
-        bool    PasswordConnect(std::vector<std::string> buff);
-        void    handleReq(const int fd);
-        std::vector<std::string>  configBuff();
-        void    sentToAll(const int fd,  std::string str);
+        int                         max_fd();
+        void                        clientConn();
+        void                        clientDisconn(const int clientFd);
+        bool                        PasswordConnect(std::vector<std::string> buff);
+        void                        handleReq(const int fd);
+        std::vector<std::string>    configBuff();
+        void                        sentToAll(const int fd,  std::string str);
 
     // private: attributs
-        Socket              serverSocket;
-		const std::string	_host;
-        std::vector<User *> users;
-        std::vector<int>    clientfds;
-        fd_set              mainSet;
-        fd_set              rSet;
-        fd_set              wSet; // currently no use
-        char                buff[4096];
-		std::vector<Channel *>	_channels;
+        Socket                      serverSocket;
+		const std::string	        _host;
+        std::vector<User *>         users;
+        std::vector<int>            clientfds;
+        fd_set                      mainSet;
+        fd_set                      rSet;
+        fd_set                      wSet; // currently no use
+        char                        buff[4096];
+		std::vector<Channel *>	    _channels;
 		//Invoker					_Invoker;
 
        
