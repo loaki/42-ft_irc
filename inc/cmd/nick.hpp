@@ -14,9 +14,9 @@ class Nick: public Command{
         Nick();
         virtual ~Nick();
 
-        bool 		nickinUse(std::string name, Select &select);
+        bool 		nickinUse(std::string name, std::vector<User *> users);
         bool 		nameError(std::string name);
-        std::string execute(std::string line, User *user, Select *select);
+        std::string execute(std::string line, User *user, Select &select);
 
 };
 

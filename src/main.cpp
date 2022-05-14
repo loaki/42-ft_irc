@@ -3,11 +3,8 @@
 #include "select.hpp"
 
 int main(int ac, char **av) {
-    (void)av;
-    (void)ac;
-
-    if (ac != 3)
-    {
+	
+    if (ac != 3) {
         std::cout << "./ircserv <port> <password>" << std::endl;
         return (1);
     }
@@ -17,7 +14,3 @@ int main(int ac, char **av) {
     
     return (0);
 }
-
-//----users
-//----#channel
-//----commandes

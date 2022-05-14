@@ -24,7 +24,7 @@ Select& Select::operator=(Select const& rhs) {
 	return *this;
 }
 
-std::vector<User *> &Select::getUsers(){return this->users;}
+std::vector<User *> Select::getUsers(){return this->users;}
 
 // public: serveur creat 
 void    Select::serverStart(const short& port, const std::string&  password) {
@@ -237,14 +237,15 @@ void    Select::handleReq(const int fd) {
 				Msg += "@";
 				Msg += hostname;
 			*/
+		else {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
 				if (users[i]->getUserFd() == fd)
 				{
 					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
 					// send(fd, sM.c_str(), sM.length(), 0);
-					Select *tmp = this;
-					std::string	sendMsg = _Invoker.parser(Buff, users[i], tmp);
+					//Select *tmp = this;
+					std::string	sendMsg = _Invoker.parser(Buff, users[i], *this);
 					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
 					ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 					if (ret == SYSCALL_ERR) {
@@ -254,6 +255,7 @@ void    Select::handleReq(const int fd) {
 					}
 				}
 			}
+		}
 		//}
 		}
 			// std::cout << "----->" << std::find(this->users.begin(), this->users.end(), User(fd, false)) << std::endl;
