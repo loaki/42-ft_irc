@@ -4,6 +4,8 @@
 #include "defs.hpp"
 #include "select.hpp"
 #include "user.hpp"
+#include "channel.hpp"
+
 namespace irc {
 
 class Select;

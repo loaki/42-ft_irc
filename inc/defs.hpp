@@ -101,7 +101,7 @@
 #define ERR_BADCHANMASK (channel) ":irc.42team 476 * #" + channel + ":Bad Channel Mask" + delimiter
 #define ERR_TOOMANYTARGETS (target) ":irc.42team 407 * " target + " :Duplicate recipients. No message delivered" + delimiter //
 #define ERR_TOOMANYCHANNELS(channel) ":irc.42team 405 * #" + channel + ":You have joined too many channels" + delimiter
-#define RPL_TOPIC(channel, topic) host +  "332 * " + channel + " :" + topic + delimiter
+#define RPL_TOPIC(channel, topic) host +  "332 * " + channel + " :" + topic
 
 //Command: PART 
 //#define ERR_NEEDMOREPARAMS()          

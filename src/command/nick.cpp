@@ -33,8 +33,6 @@ bool	Nick::nameError(std::string name){
 std::string	Nick::execute(std::string line, User *user, Select &select) {
     std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
-    std::cout <<"command is: " << v_cmd[0] << std::endl;
-    std::cout <<"command is: " << v_cmd[1] << std::endl;
     std::string nickname = v_cmd[1];
 
     //ERR_ERRONEUSNICKNAME: erro nickname
