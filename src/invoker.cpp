@@ -4,6 +4,7 @@
 #include "ping.hpp"
 #include "nick.hpp"
 #include "part.hpp"
+#include "privmsg.hpp"
 
 namespace irc {
 
@@ -12,6 +13,7 @@ Invoker::Invoker() {
 	_commands.push_back(new Ping());
 	_commands.push_back(new Nick());
 	_commands.push_back(new Part());
+	_commands.push_back(new Privmsg());
 }
 
 Invoker::~Invoker() {
