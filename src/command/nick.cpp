@@ -56,7 +56,7 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
             msg += delimiter;
             return msg;
     }
-
+    
     msg = ":" + user->getHostname() + " 001 " + nickname + "\r\n";
     user->setNickname(nickname);
     return msg;
