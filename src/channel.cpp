@@ -39,7 +39,7 @@ User*	Channel::getUserInchannel(int fd){
 		if((*it)->getUserFd() == fd)
 			return *it;
 	}
-	return nullptr;
+	return NULL;
 }
 
 void	Channel::addUser(User *user){

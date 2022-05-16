@@ -3,7 +3,7 @@
 namespace irc {
 
 // public: class init
-Select::Select():serverSocket(), users(), clientfds(), mainSet(), rSet(),wSet() {}
+Select::Select():_serverSocket(), users(), clientfds(), mainSet(), rSet(),wSet() {}
 Select::Select(Select const& src) { *this = src; }
 Select::~Select() {
 	std::vector<User *>::iterator it = this->users.begin();
@@ -15,7 +15,7 @@ Select::~Select() {
 
 Select& Select::operator=(Select const& rhs) {
 	if (this == &rhs) return *this;
-	this->serverSocket = rhs.serverSocket;
+	this->_serverSocket = rhs._serverSocket;
 	this->users = rhs.users;
 	this->clientfds = rhs.clientfds;
 	this->mainSet = rhs.mainSet;
@@ -29,10 +29,10 @@ std::vector<User *> Select::getUsers(){return this->users;}
  
 // public: serveur creat 
 void    Select::serverStart(const short& port, const std::string&  password) {
-	this->serverSocket.createServer(port, password);
+	this->_serverSocket.createServer(port, password);
 
 	FD_ZERO(&this->mainSet); 
-	FD_SET(this->serverSocket.getServerFd(), &this->mainSet);//SET servfd to mainset
+	FD_SET(this->_serverSocket.getServerFd(), &this->mainSet);//SET servfd to mainset
 
 	for(;;) {
 		this->rSet = this->mainSet;
@@ -43,7 +43,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 		}
 		for (int fd = 0; fd <= this->max_fd(); fd++) {
 			if (FD_ISSET(fd, &this->rSet)) {    // which fd event
-				if (fd == this->serverSocket.getServerFd()) { //connect:new client connect 
+				if (fd == this->_serverSocket.getServerFd()) { //connect:new client connect 
 					this->clientConn();
 					break ;
 				}
@@ -55,12 +55,10 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 		}
 	}
 }
-	
-
 
 // private: get max fd
 int    Select::max_fd() {
-	int max = this->serverSocket.getServerFd();
+	int max = this->_serverSocket.getServerFd();
 	if (this->clientfds.empty())
 		return max;
 	
@@ -71,13 +69,12 @@ int    Select::max_fd() {
 	return max;
 }
 
-
 void    Select::clientConn() { //get client fd  
 	int                 clientConnFd = -1;
 	struct sockaddr_in	clientAddr;
 	socklen_t			len = sizeof(clientAddr);
 
-	clientConnFd = accept(this->serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
+	clientConnFd = accept(this->_serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
 	if (clientConnFd == SYSCALL_ERR)
 		exitFailure("accept failed");
 
@@ -117,7 +114,7 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 		if ((*it).find("PASS") != std::string::npos) {
 			pos = (*it).find("PASS");
 			std::string password = (*it).substr(5);
-			if (password == this->serverSocket.getPassword()){
+			if (password == this->_serverSocket.getPassword()){
 				return true;
 			}
 		}
@@ -125,57 +122,7 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	return false;
 }
 
-// std::string		parser(std::vector<std::string> Buff, std::string str) {
-
-// 	for (unsigned int i = 0; i < Buff.size(); i++) {
-// 		if (Buff[i].find(str) != std::string::npos) {
-// 			std::cout << "************* find *****************\n";
-// 			// size_t pos = (*it).find(str);
-// 			std::string ret = Buff[i].substr(Buff[i].find(" ") + 1, Buff[i].length());
-// 			return (ret);
-// 		}
-// 	}
-// 	return ("jules");
-// }
-
-std::string		craftId() {
-	std::string s;
-
-	static const char alphanum[] =
-			"0123456789"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
-	srand( time( 0 ) );
-	for (int i = 0; i < 10; ++i) {
-		s += alphanum[rand() % (sizeof(alphanum) - 1)];
-	}
-	return (s);
-}
-
-void		setId(std::vector<User *> users, User * user) {
-
-	user->setUserId(craftId());
-	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-		if ((user->getUserId() == (*(*it)).getUserId()) && user != (*it)) {
-			user->setUserId(craftId());
-			it = users.begin();
-		}
-	}
-}
-
-void		setName(User *user, std::vector<std::string> Buff) {
-
-	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
-		if ((*it).find("USER") != std::string::npos) 
-		{
-			std::string temp = (*it).substr(5);
-			int end = temp.find(" ");
-			user->setUsername(temp.substr(0, end));
-		}
-	}
-}
-
-void		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
+void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
@@ -192,9 +139,9 @@ void		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 			users.back()->setNickname(nick);
 		}
 	}
-	
-	setId(users, users.back());
-	setName(users.back(), Buff);
+
+	(users.back())->setId(users);
+	(users.back())->setName(Buff);
 }
 
 void    Select::handleReq(const int fd) {
@@ -213,7 +160,7 @@ void    Select::handleReq(const int fd) {
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
 
-		if (PasswordConnect(Buff)== true) {
+		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
 			
 			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getHostname(),
@@ -241,14 +188,14 @@ void    Select::handleReq(const int fd) {
 		else {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd)
+				if (users[i]->getUserFd() == fd )
 				{
 					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
 					// send(fd, sM.c_str(), sM.length(), 0);
 					//Select *tmp = this;
 					std::string	sendMsg = _Invoker.parser(Buff, users[i], *this);
 					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-					ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+					// ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 					if (ret == SYSCALL_ERR) {
 						std::cout << "[Send response failed]" << std::endl;
 						this->clientDisconn(fd);
@@ -262,8 +209,5 @@ void    Select::handleReq(const int fd) {
 			// std::cout << "----->" << std::find(this->users.begin(), this->users.end(), User(fd, false)) << std::endl;
 			// parser(Buff, (*(this)->users.find(fd)))
 }
-
-
-
 
 }

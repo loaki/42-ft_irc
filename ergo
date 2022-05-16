@@ -1,0 +1,430 @@
+➜  proxy-irc git:(master) ✗ sh launch_proxy.sh 
+[Awaiting connection on port 8888]
+
+[Connection established with testnet.ergo.chat on port 6667
+[client:8888]
+CAP LS
+PASS 123
+NICK dada
+USER lucien lucien localhost :Lucien-alexandre SANCHEZ-ZUBER
+
+[Awaiting connection on port 8888]
+[server:6667]
+:testnet.ergo.chat CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/account-registration draft/channel-rename draft/chathistory draft/event-playback draft/extended-monitor draft/languages draft/multiline draft/read-marker draft/relaymsg echo-message ergo.chat/nope extended-join invite-notify labeled-response message-tags multi-prefix sasl server-time setname sts userhost-in-names znc.in/playback znc.in/self-message
+
+[client:8888]
+CAP REQ :multi-prefix
+
+[server:6667]
+:testnet.ergo.chat CAP * ACK multi-prefix
+
+[client:8888]
+CAP END
+
+[server:6667]
+:testnet.ergo.chat 001 dada :Welcome to the ErgoTestnet IRC Network dada
+:testnet.ergo.chat 002 dada :Your host is testnet.ergo.chat, running version ergo-v2.10.0-rc1
+:testnet.ergo.chat 003 dada :This server was created Mon, 16 May 2022 06:22:35 UTC
+:testnet.ergo.chat 004 dada testnet.ergo.chat ergo-v2.10.0-rc1 BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv
+:testnet.ergo.chat 005 dada AWAYLEN=390 BOT=B CASEMAPPING=ascii CHANLIMIT=#:100 CHANMODES=Ibe,k,fl,CEMRUimnstu CHANNELLEN=64 CHANTYPES=# ELIST=U EXCEPTS EXTBAN=,m EXTJWT=1 FORWARD=f INVEX :are supported by this server
+
+[client:8888]
+MODE dada +i
+
+[server:6667]
+:testnet.ergo.chat 005 dada KICKLEN=390 MAXLIST=beI:60 MAXTARGETS=4 MODES MONITOR=100 NETWORK=ErgoTestnet NICKLEN=32 PREFIX=(qaohv)~&@%+ RPCHAN=E RPUSER=E STATUSMSG=~&@%+ TARGMAX=NAMES:1,LIST:1,KICK:,WHOIS:1,USERHOST:10,PRIVMSG:4,TAGMSG:4,NOTICE:4,MONITOR:100 TOPICLEN=390 :are supported by this server
+:testnet.ergo.chat 005 dada UTF8MAPPING=rfc8265 UTF8ONLY WHOX draft/CHATHISTORY=100 :are supported by this server
+:testnet.ergo.chat 251 dada :There are 2 users and 18 invisible on 1 server(s)
+:testnet.ergo.chat 252 dada 1 :IRC Operators online
+:testnet.ergo.chat 253 dada 0 :unregistered connections
+:testnet.ergo.chat 254 dada 62 :channels formed
+:testnet.ergo.chat 255 dada :I have 20 clients and 0 servers
+:testnet.ergo.chat 265 dada 20 21 :Current local users 20, max 21
+:testnet.ergo.chat 266 dada 20 21 :Current global users 20, max 21
+:testnet.ergo.chat 375 dada :- testnet.ergo.chat Message of the day - 
+:testnet.ergo.chat 372 dada :-      __ __  ______ ___  ______ ___ 
+:testnet.ergo.chat 372 dada :-   __/ // /_/ ____/ __ \/ ____/ __ \
+:testnet.ergo.chat 372 dada :-  /_  // __/ __/ / /_/ / / __/ / / /
+
+[server:6667]
+:testnet.ergo.chat 372 dada :- /_  // __/ /___/ _, _/ /_/ / /_/ / 
+:testnet.ergo.chat 372 dada :-  /_//_/ /_____/_/ |_|\____/\____/  
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- This is the default Ergo MOTD.
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- If motd-formatting is enabled in the config file, you can use the dollarsign character to
+:testnet.ergo.chat 372 dada :- create special formatting such as bold, italics and color codes.
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- For example, here are a few formatted lines (enable motd-formatting to see these in action):
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- - this is bold text.
+:testnet.ergo.chat 372 dada :- - this is italics text.
+:testnet.ergo.chat 372 dada :- - this is 4red and 2blue text.
+:testnet.ergo.chat 372 dada :- - this is 4,12red text with a light blue background.
+:testnet.ergo.chat 372 dada :- - this is a normal escaped dollarsign: $
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- And now a few fun colour charts!
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- 1,0 00 0,1 01 0,2 02 0,3 03 1,4 04 0,5 05 0,6 06 1,7 07 
+:testnet.ergo.chat 372 dada :- 1,8 08 1,9 09 0,10 10 1,11 11 0,12 12 1,13 13 1,14 14 1,15 15 
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- 0,16 16 0,17 17 0,18 18 0,19 19 0,20 20 0,21 21 0,22 22 0,23 23 0,24 24 0,25 25 0,26 26 0,27 27 
+:testnet.ergo.chat 372 dada :- 0,28 28 0,29 29 0,30 30 0,31 31 0,32 32 0,33 33 0,34 34 0,35 35 0,36 36 0,37 37 0,38 38 0,39 39 
+:testnet.ergo.chat 372 dada :- 0,40 40 0,41 41 0,42 42 0,43 43 0,44 44 0,45 45 0,46 46 0,47 47 0,48 48 0,49 49 0,50 50 0,51 51 
+:testnet.ergo.chat 372 dada :- 0,52 52 0,53 53 1,54 54 1,55 55 1,56 56 1,57 57 1,58 58 0,59 59 0,60 60 0,61 61 0,62 62 0,63 63 
+:testnet.ergo.chat 372 dada :- 0,64 64 1,65 65 1,66 66 1,67 67 1,68 68 1,69 69 1,70 70 1,71 71 0,72 72 0,73 73 0,74 74 0,75 75 
+:testnet.ergo.chat 372 dada :- 1,76 76 1,77 77 1,78 78 1,79 79 1,80 80 1,81 81 1,82 82 1,83 83 1,84 84 1,85 85 1,86 86 1,87 87 
+:testnet.ergo.chat 372 dada :- 0,88 88 0,89 89 0,90 90 0,91 91 0,92 92 0,93 93 0,94 94 0,95 95 1,96 96 1,97 97 1,98 98 99,99 99 
+:testnet.ergo.chat 372 dada :- 
+:testnet.ergo.chat 372 dada :- For more information on using these, see MOTDFORMATTING.md
+:testnet.ergo.chat 376 dada :End of MOTD command
+:testnet.ergo.chat 221 dada +i
+:testnet.ergo.chat NOTICE dada :This server is in debug mode and is logging all user I/O. If you do not wish for everything you send to be readable by the server owner(s), please disconnect.
+
+[server:6667]
+:testnet.ergo.chat 221 dada +i
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[Connection established with testnet.ergo.chat on port 6667
+[client:8888]
+CAP LS
+PASS 123
+NICK dada
+USER lucien lucien localhost :Lucien-alexandre SANCHEZ-ZUBER
+
+[Awaiting connection on port 8888]
+[server:6667]
+:testnet.ergo.chat CAP * LS :account-notify account-tag away-notify batch cap-notify chghost draft/account-registration draft/channel-rename draft/chathistory draft/event-playback draft/extended-monitor draft/languages draft/multiline draft/read-marker draft/relaymsg echo-message ergo.chat/nope extended-join invite-notify labeled-response message-tags multi-prefix sasl server-time setname sts userhost-in-names znc.in/playback znc.in/self-message
+
+[client:8888]
+CAP REQ :multi-prefix
+
+[server:6667]
+:testnet.ergo.chat CAP * ACK multi-prefix
+
+[client:8888]
+CAP END
+
+[server:6667]
+:testnet.ergo.chat 433 * dada :Nickname is already in use
+
+[client:8888]
+NICK dada_
+
+[server:6667]
+:testnet.ergo.chat 001 dada_ :Welcome to the ErgoTestnet IRC Network dada_
+:testnet.ergo.chat 002 dada_ :Your host is testnet.ergo.chat, running version ergo-v2.10.0-rc1
+
+[server:6667]
+:testnet.ergo.chat 003 dada_ :This server was created Mon, 16 May 2022 06:22:35 UTC
+:testnet.ergo.chat 004 dada_ testnet.ergo.chat ergo-v2.10.0-rc1 BERTZios CEIMRUabefhiklmnoqstuv Iabefhkloqv
+:testnet.ergo.chat 005 dada_ AWAYLEN=390 BOT=B CASEMAPPING=ascii CHANLIMIT=#:100 CHANMODES=Ibe,k,fl,CEMRUimnstu CHANNELLEN=64 CHANTYPES=# ELIST=U EXCEPTS EXTBAN=,m EXTJWT=1 FORWARD=f INVEX :are supported by this server
+:testnet.ergo.chat 005 dada_ KICKLEN=390 MAXLIST=beI:60 MAXTARGETS=4 MODES MONITOR=100 NETWORK=ErgoTestnet NICKLEN=32 PREFIX=(qaohv)~&@%+ RPCHAN=E RPUSER=E STATUSMSG=~&@%+ TARGMAX=NAMES:1,LIST:1,KICK:,WHOIS:1,USERHOST:10,PRIVMSG:4,TAGMSG:4,NOTICE:4,MONITOR:100 TOPICLEN=390 :are supported by this server
+:testnet.ergo.chat 005 dada_ UTF8MAPPING=rfc8265 UTF8ONLY WHOX draft/CHATHISTORY=100 :are supported by this server
+:testnet.ergo.chat 251 dada_ :There are 2 users and 19 invisible on 1 server(s)
+:testnet.ergo.chat 252 dada_ 1 :IRC Operators online
+:testnet.ergo.chat 253 dada_ 0 :unregistered connections
+:testnet.ergo.chat 254 dada_ 62 :channels formed
+:testnet.ergo.chat 255 dada_ :I have 21 clients and 0 servers
+:testnet.ergo.chat 265 dada_ 21 21 :Current local users 21, max 21
+:testnet.ergo.chat 266 dada_ 21 21 :Current global users 21, max 21
+:testnet.ergo.chat 375 dada_ :- testnet.ergo.chat Message of the day - 
+:testnet.ergo.chat 372 dada_ :-      __ __  ______ ___  ______ ___ 
+:testnet.ergo.chat 372 dada_ :-   __/ // /_/ ____/ __ \/ ____/ __ \
+:testnet.ergo.chat 372 dada_ :-  /_  // __/ __/ / /_/ / / __/ / / /
+:testnet.ergo.chat 372 dada_ :- /_  // __/ /___/ _, _/ /_/ / /_/ / 
+:testnet.ergo.chat 372 dada_ :-  /_//_/ /_____/_/ |_|\____/\____/  
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- This is the default Ergo MOTD.
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- 
+
+[client:8888]
+MODE dada_ +i
+
+[client:8888]
+WHOIS dada
+
+[server:6667]
+:testnet.ergo.chat 372 dada_ :- If motd-formatting is enabled in the config file, you can use the dollarsign character to
+:testnet.ergo.chat 372 dada_ :- create special formatting such as bold, italics and color codes.
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- For example, here are a few formatted lines (enable motd-formatting to see these in action):
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- - this is bold text.
+:testnet.ergo.chat 372 dada_ :- - this is italics text.
+:testnet.ergo.chat 372 dada_ :- - this is 4red and 2blue text.
+:testnet.ergo.chat 372 dada_ :- - this is 4,12red text with a light blue background.
+:testnet.ergo.chat 372 dada_ :- - this is a normal escaped dollarsign: $
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- And now a few fun colour charts!
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- 1,0 00 0,1 01 0,2 02 0,3 03 1,4 04 0,5 05 0,6 06 1,7 07 
+:testnet.ergo.chat 372 dada_ :- 1,8 08 1,9 09 0,10 10 1,11 11 0,12 12 1,13 13 1,14 14 1,15 15 
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- 0,16 16 0,17 17 0,18 18 0,19 19 0,20 20 0,21 21 0,22 22 0,23 23 0,24 24 0,25 25 0,26 26 0,27 27 
+:testnet.ergo.chat 372 dada_ :- 0,28 28 0,29 29 0,30 30 0,31 31 0,32 32 0,33 33 0,34 34 0,35 35 0,36 36 0,37 37 0,38 38 0,39 39 
+:testnet.ergo.chat 372 dada_ :- 0,40 40 0,41 41 0,42 42 0,43 43 0,44 44 0,45 45 0,46 46 0,47 47 0,48 48 0,49 49 0,50 50 0,51 51 
+:testnet.ergo.chat 372 dada_ :- 0,52 52 0,53 53 1,54 54 1,55 55 1,56 56 1,57 57 1,58 58 0,59 59 0,60 60 0,61 61 0,62 62 0,63 63 
+:testnet.ergo.chat 372 dada_ :- 0,64 64 1,65 65 1,66 66 1,67 67 1,68 68 1,69 69 1,70 70 1,71 71 0,72 72 0,73 73 0,74 74 0,75 75 
+:testnet.ergo.chat 372 dada_ :- 1,76 76 1,77 77 1,78 78 1,79 79 1,80 80 1,81 81 1,82 82 1,83 83 1,84 84 1,85 85 1,86 86 1,87 87 
+:testnet.ergo.chat 372 dada_ :- 0,88 88 0,89 89 0,90 90 0,91 91 0,92 92 0,93 93 0,94 94 0,95 95 1,96 96 1,97 97 1,98 98 99,99 99 
+:testnet.ergo.chat 372 dada_ :- 
+:testnet.ergo.chat 372 dada_ :- For more information on using these, see MOTDFORMATTING.md
+:testnet.ergo.chat 376 dada_ :End of MOTD command
+:testnet.ergo.chat 221 dada_ +i
+:testnet.ergo.chat NOTICE dada_ :This server is in debug mode and is logging all user I/O. If you do not wish for everything you send to be readable by the server owner(s), please disconnect.
+
+[server:6667]
+:testnet.ergo.chat 221 dada_ +i
+
+[server:6667]
+:testnet.ergo.chat 311 dada_ dada ~u hcsqfhpm66ezg.oragono * :Lucien-alexandre SANCHEZ-ZUBER
+:testnet.ergo.chat 317 dada_ dada 20 1652690569 :seconds idle, signon time
+
+[server:6667]
+:testnet.ergo.chat 318 dada_ dada :End of /WHOIS list
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+JOIN #lobby
+
+[server:6667]
+:dada!~u@hcsqfhpm66ezg.oragono JOIN #lobby
+:testnet.ergo.chat 353 dada = #lobby :@dada
+
+[server:6667]
+:testnet.ergo.chat 366 dada #lobby :End of NAMES list
+
+[client:8888]
+MODE #lobby
+
+[server:6667]
+:testnet.ergo.chat 324 dada #lobby +nt
+:testnet.ergo.chat 329 dada #lobby 1652691180
+
+[client:8888]
+WHO #lobby
+
+[server:6667]
+:testnet.ergo.chat 352 dada #lobby ~u hcsqfhpm66ezg.oragono testnet.ergo.chat dada H@ :0 Lucien-alexandre SANCHEZ-ZUBER
+:testnet.ergo.chat 315 dada #lobby :End of WHO list
+
+[client:8888]
+MODE #lobby b
+
+[server:6667]
+:testnet.ergo.chat 368 dada #lobby :End of list
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+JOIN #lobby
+
+[server:6667]
+:dada_!~u@hcsqfhpm66ezg.oragono JOIN #lobby
+
+[server:6667]
+:dada_!~u@hcsqfhpm66ezg.oragono JOIN #lobby
+:testnet.ergo.chat 353 dada_ = #lobby :@dada dada_
+:testnet.ergo.chat 366 dada_ #lobby :End of NAMES list
+
+[client:8888]
+MODE #lobby
+
+[server:6667]
+:testnet.ergo.chat 324 dada_ #lobby +nt
+:testnet.ergo.chat 329 dada_ #lobby 1652691180
+
+[client:8888]
+WHO #lobby
+
+[server:6667]
+:testnet.ergo.chat 352 dada_ #lobby ~u hcsqfhpm66ezg.oragono testnet.ergo.chat dada H@ :0 Lucien-alexandre SANCHEZ-ZUBER
+:testnet.ergo.chat 352 dada_ #lobby ~u hcsqfhpm66ezg.oragono testnet.ergo.chat dada_ H :0 Lucien-alexandre SANCHEZ-ZUBER
+
+[server:6667]
+:testnet.ergo.chat 315 dada_ #lobby :End of WHO list
+
+[client:8888]
+MODE #lobby b
+
+[server:6667]
+:testnet.ergo.chat 368 dada_ #lobby :End of list
+
+[client:8888]
+NICK toto
+
+[server:6667]
+:dada!~u@hcsqfhpm66ezg.oragono NICK toto
+
+[server:6667]
+:dada!~u@hcsqfhpm66ezg.oragono NICK toto
+
+[client:8888]
+NICK toto
+
+[server:6667]
+:testnet.ergo.chat 433 dada_ toto :Nickname is already in use
+
+[client:8888]
+PING testnet.ergo.chat
+
+[server:6667]
+:testnet.ergo.chat PONG testnet.ergo.chat testnet.ergo.chat
+
+[client:8888]
+PRIVMSG #lobby :hi
+
+[server:6667]
+:dada_!~u@hcsqfhpm66ezg.oragono PRIVMSG #lobby :hi
+
+[client:8888]
+PRIVMSG #lobby :hello
+
+[server:6667]
+:toto!~u@hcsqfhpm66ezg.oragono PRIVMSG #lobby :hello
+
+[client:8888]
+QUIT :leaving
+
+[server:6667]
+:toto!~u@hcsqfhpm66ezg.oragono QUIT :Quit: leaving
+ERROR :Quit: leaving
+[server:6667]
+:toto!~u@hcsqfhpm66ezg.oragono QUIT :Quit: leaving
+
+
+[client:8888]
+QUIT :leaving
+
+[server:6667]
+:dada_!~u@hcsqfhpm66ezg.oragono QUIT :Quit: leaving
+ERROR :Quit: leaving
+
+  

@@ -1,15 +1,15 @@
-#ifndef PART_HPP
-# define PART_HPP
+#ifndef PRIVMSG_HPP
+# define PRIVMSG_HPP
 
 #include "defs.hpp"
 #include "select.hpp"
 #include "command.hpp"
 namespace irc {
 
-class Part :public Command {
+class Privmsg :public Command {
     public:
-        Part();
-        virtual ~Part();
+        Privmsg();
+        virtual ~Privmsg();
 
         std::string execute(std::string line, User *user, Select &select);
 };

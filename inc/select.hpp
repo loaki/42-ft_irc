@@ -27,19 +27,23 @@ class Select {
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
         std::vector<Channel *>      getAllChannel();
+		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
+
+        void    					clientDisconn(const int clientFd);
+
 
     private:
     // private: method
         int     					max_fd();
         void    					clientConn();
-        void    					clientDisconn(const int clientFd);
+        // void    					clientDisconn(const int clientFd);
         bool    					PasswordConnect(std::vector<std::string> buff);
         void    					handleReq(const int fd);
         void    					sentToAll(const int fd,  std::string str);
 		std::vector<std::string> 	configBuff();
 
     // private: attributs
-        Socket              		serverSocket;
+        Socket              		_serverSocket;
 		const std::string			_host;
         std::vector<User *> 		users;
         std::vector<int>   			clientfds;
