@@ -15,8 +15,9 @@ SRCS := ./src/main.cpp \
 		./src/command/ping.cpp \
 		./src/command.cpp \
 		./src/command/nick.cpp \
+		./src/command/part.cpp \
 		./src/invoker.cpp \
-		./src/channel.cpp 
+		./src/channel.cpp \
 
 		
 		

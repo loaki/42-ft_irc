@@ -7,7 +7,7 @@ Part::Part() {
 }
 Part::~Part() {}
 
-std::string execute(std::string line, User * user, Select *select)
+std::string	Part::execute(std::string line, User *user, Select &select)
 {
     (void)select;
     std::vector<std::string> cmd = irc::ft_split(line, " ");
