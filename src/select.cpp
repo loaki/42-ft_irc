@@ -194,7 +194,7 @@ void    Select::handleReq(const int fd) {
 					//Select *tmp = this;
 					std::string	sendMsg = _Invoker.parser(Buff, users[i], *this);
 					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-					ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+					// ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 					if (ret == SYSCALL_ERR) {
 						std::cout << "[Send response failed]" << std::endl;
 						this->clientDisconn(fd);

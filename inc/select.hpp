@@ -28,12 +28,14 @@ class Select {
         std::vector<User *> 		getUsers();
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 
+        void    					clientDisconn(const int clientFd);
+
 
     private:
     // private: method
         int     					max_fd();
         void    					clientConn();
-        void    					clientDisconn(const int clientFd);
+        // void    					clientDisconn(const int clientFd);
         bool    					PasswordConnect(std::vector<std::string> buff);
         void    					handleReq(const int fd);
         void    					sentToAll(const int fd,  std::string str);
