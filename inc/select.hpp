@@ -26,6 +26,8 @@ class Select {
     // public: method
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
+		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
+
 
     private:
     // private: method

@@ -54,8 +54,6 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 		}
 	}
 }
-	
-
 
 // private: get max fd
 int    Select::max_fd() {
@@ -69,7 +67,6 @@ int    Select::max_fd() {
 	}
 	return max;
 }
-
 
 void    Select::clientConn() { //get client fd  
 	int                 clientConnFd = -1;
@@ -124,57 +121,7 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	return false;
 }
 
-// std::string		parser(std::vector<std::string> Buff, std::string str) {
-
-// 	for (unsigned int i = 0; i < Buff.size(); i++) {
-// 		if (Buff[i].find(str) != std::string::npos) {
-// 			std::cout << "************* find *****************\n";
-// 			// size_t pos = (*it).find(str);
-// 			std::string ret = Buff[i].substr(Buff[i].find(" ") + 1, Buff[i].length());
-// 			return (ret);
-// 		}
-// 	}
-// 	return ("jules");
-// }
-
-std::string		craftId() {
-	std::string s;
-
-	static const char alphanum[] =
-			"0123456789"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
-	srand( time( 0 ) );
-	for (int i = 0; i < 10; ++i) {
-		s += alphanum[rand() % (sizeof(alphanum) - 1)];
-	}
-	return (s);
-}
-
-void		setId(std::vector<User *> users, User * user) {
-
-	user->setUserId(craftId());
-	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-		if ((user->getUserId() == (*(*it)).getUserId()) && user != (*it)) {
-			user->setUserId(craftId());
-			it = users.begin();
-		}
-	}
-}
-
-void		setName(User *user, std::vector<std::string> Buff) {
-
-	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
-		if ((*it).find("USER") != std::string::npos) 
-		{
-			std::string temp = (*it).substr(5);
-			int end = temp.find(" ");
-			user->setUsername(temp.substr(0, end));
-		}
-	}
-}
-
-void		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
+void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
@@ -192,8 +139,9 @@ void		addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 		}
 	}
 	
-	setId(users, users.back());
-	setName(users.back(), Buff);
+	// (users.back())->setId(users, users.back());
+	(users.back())->setId(users);
+	(users.back())->setName(Buff);
 }
 
 void    Select::handleReq(const int fd) {
@@ -212,7 +160,7 @@ void    Select::handleReq(const int fd) {
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
 
-		if (PasswordConnect(Buff)== true) {
+		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
 			
 			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getHostname(),
@@ -240,7 +188,7 @@ void    Select::handleReq(const int fd) {
 		else {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd)
+				if (users[i]->getUserFd() == fd && (strcmp(this->buff, "CAP LS")))
 				{
 					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
 					// send(fd, sM.c_str(), sM.length(), 0);
@@ -261,8 +209,5 @@ void    Select::handleReq(const int fd) {
 			// std::cout << "----->" << std::find(this->users.begin(), this->users.end(), User(fd, false)) << std::endl;
 			// parser(Buff, (*(this)->users.find(fd)))
 }
-
-
-
 
 }

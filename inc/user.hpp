@@ -10,27 +10,31 @@ class User {
 		User(int fd);
 		~User();
 
+		void				setId(std::vector<User *> users);
+		void				setName(std::vector<std::string> Buff);
+		std::string			craftId();
+
 		void 				setNickname(std::string name);
 		void				setUsername(std::string name);
 		void 				setHostname(std::string name);
-		void 				setUserId(std::string Id);
 		void 				setUserFd(int fd);
 		void 				setJoinServer(bool join);
-		
+
+		std::pair<size_t, std::string> const& 	getUserId() const;
+
 		std::string const&	getNickname()const;
 		std::string const& 	getUsername()const;
 		std::string const& 	getHostname()const;
-		std::string const& 	getUserId() const;
 		int const& 			getUserFd()const;	
 		
 
 	private:
-		int 				_fd;
-		std::string 		_id;
-		std::string 		_nickname;
-		std::string 		_username;
-		std::string 		_hostname;
-		bool				_joinServer;
+		int 							_fd;
+		std::pair<size_t, std::string>	_id;
+		std::string 					_nickname;
+		std::string 					_username;
+		std::string 					_hostname;
+		bool							_joinServer;
 
 };
 
