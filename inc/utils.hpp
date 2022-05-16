@@ -10,9 +10,6 @@ namespace irc {
 
     void    					exitFailure(const std::string & str);
     std::vector<std::string>	ft_split(std::string str, std::string del);
-	// std::string				craftId();
-	// void						createId(std::vector<User *> users, User * user);
-
 
 // ns end
 }

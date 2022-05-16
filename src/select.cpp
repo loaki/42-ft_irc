@@ -187,7 +187,7 @@ void    Select::handleReq(const int fd) {
 		else {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd && (strcmp(this->buff, "CAP LS")))
+				if (users[i]->getUserFd() == fd )
 				{
 					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
 					// send(fd, sM.c_str(), sM.length(), 0);
