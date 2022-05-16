@@ -138,8 +138,7 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 			users.back()->setNickname(nick);
 		}
 	}
-	
-	// (users.back())->setId(users, users.back());
+
 	(users.back())->setId(users);
 	(users.back())->setName(Buff);
 }
