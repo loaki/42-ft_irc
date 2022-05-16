@@ -40,7 +40,7 @@ class Select {
 		std::vector<std::string> 	configBuff();
 
     // private: attributs
-        Socket              		serverSocket;
+        Socket              		_serverSocket;
 		const std::string			_host;
         std::vector<User *> 		users;
         std::vector<int>   			clientfds;

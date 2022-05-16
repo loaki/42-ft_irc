@@ -3,7 +3,7 @@
 namespace irc {
 
 // public: class init
-Select::Select():serverSocket(), users(), clientfds(), mainSet(), rSet(),wSet() {}
+Select::Select():_serverSocket(), users(), clientfds(), mainSet(), rSet(),wSet() {}
 Select::Select(Select const& src) { *this = src; }
 Select::~Select() {
 	std::vector<User *>::iterator it = this->users.begin();
@@ -15,7 +15,7 @@ Select::~Select() {
 
 Select& Select::operator=(Select const& rhs) {
 	if (this == &rhs) return *this;
-	this->serverSocket = rhs.serverSocket;
+	this->_serverSocket = rhs._serverSocket;
 	this->users = rhs.users;
 	this->clientfds = rhs.clientfds;
 	this->mainSet = rhs.mainSet;
@@ -28,10 +28,10 @@ std::vector<User *> Select::getUsers(){return this->users;}
 
 // public: serveur creat 
 void    Select::serverStart(const short& port, const std::string&  password) {
-	this->serverSocket.createServer(port, password);
+	this->_serverSocket.createServer(port, password);
 
 	FD_ZERO(&this->mainSet); 
-	FD_SET(this->serverSocket.getServerFd(), &this->mainSet);//SET servfd to mainset
+	FD_SET(this->_serverSocket.getServerFd(), &this->mainSet);//SET servfd to mainset
 
 	for(;;) {
 		this->rSet = this->mainSet;
@@ -42,7 +42,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 		}
 		for (int fd = 0; fd <= this->max_fd(); fd++) {
 			if (FD_ISSET(fd, &this->rSet)) {    // which fd event
-				if (fd == this->serverSocket.getServerFd()) { //connect:new client connect 
+				if (fd == this->_serverSocket.getServerFd()) { //connect:new client connect 
 					this->clientConn();
 					break ;
 				}
@@ -57,7 +57,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 
 // private: get max fd
 int    Select::max_fd() {
-	int max = this->serverSocket.getServerFd();
+	int max = this->_serverSocket.getServerFd();
 	if (this->clientfds.empty())
 		return max;
 	
@@ -73,7 +73,7 @@ void    Select::clientConn() { //get client fd
 	struct sockaddr_in	clientAddr;
 	socklen_t			len = sizeof(clientAddr);
 
-	clientConnFd = accept(this->serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
+	clientConnFd = accept(this->_serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
 	if (clientConnFd == SYSCALL_ERR)
 		exitFailure("accept failed");
 
@@ -113,7 +113,7 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 		if ((*it).find("PASS") != std::string::npos) {
 			pos = (*it).find("PASS");
 			std::string password = (*it).substr(5);
-			if (password == this->serverSocket.getPassword()){
+			if (password == this->_serverSocket.getPassword()){
 				return true;
 			}
 		}
