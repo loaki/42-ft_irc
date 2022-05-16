@@ -2,7 +2,6 @@
 # define NICK_HPP
 
 #include "defs.hpp"
-#include "select.hpp"
 #include "command.hpp"
 
 #define MAX_SIZE 9

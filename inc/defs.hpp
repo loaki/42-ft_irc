@@ -94,14 +94,14 @@
 //#define ERR_NEEDMOREPARAMS()
 //#define ERR_UNAVAILRESOURCE()
 #define ERR_BANNEDFROMCHAN(channel) host +  "474 * " + channel + " :Cannot join channel (+b)" + delimiter
-#define ERR_CHANNELISFULL(channel) host +  "471 * " + channel + " :Cannot join channel (+l)" + delimiter
-#define ERR_INVITEONLYCHAN(channel) host +  "473 * " + channel + " :Cannot join channel (+i)" + delimiter
-#define ERR_BADCHANNELKEY(channel) host +  "475 * " + channel + " :Cannot join channel (+k)" + delimiter
+#define ERR_CHANNELISFULL(channel) host +  "471 * " + channel + " :Cannot join channel (+l)" + delimiter //
+#define ERR_INVITEONLYCHAN(channel) host +  "473 * " + channel + " :Cannot join channel (+i)" + delimiter //
+#define ERR_BADCHANNELKEY(channel) host +  "475 * " + channel + " :Cannot join channel (+k)" + delimiter //
 #define ERR_NOSUCHCHANNEL(channel) ":irc.42team 403 * #" + channel + ":No such channel" + delimiter
 #define ERR_BADCHANMASK (channel) ":irc.42team 476 * #" + channel + ":Bad Channel Mask" + delimiter
-#define ERR_TOOMANYTARGETS (target) ":irc.42team 407 * " target + " :Duplicate recipients. No message delivered" + delimiter
+#define ERR_TOOMANYTARGETS (target) ":irc.42team 407 * " target + " :Duplicate recipients. No message delivered" + delimiter //
 #define ERR_TOOMANYCHANNELS(channel) ":irc.42team 405 * #" + channel + ":You have joined too many channels" + delimiter
-#define RPL_TOPIC(channel, topic) host +  "332 * " + channel + " :" + topic + delimiter
+#define RPL_TOPIC(channel, topic) host +  "332 * " + channel + " :" + topic
 
 //Command: PART 
 //#define ERR_NEEDMOREPARAMS()          
@@ -137,8 +137,8 @@
 //Command: NAMES             
 //#define ERR_NOSUCHSERVER() 
 #define ERR_TOOMANYMATCHES() ":irc.42team  * " ///???????????
-#define RPL_NAMREPLY(chan_mod, channel, nick_list ) host+ "353 * " + chan_mod + " " + channel + " :" + nick_list + delimiter   
-#define RPL_ENDOFNAMES(channel) ":irc.42team 366 * " + channel + " :End of /NAMES list" + delimiter
+#define RPL_NAMREPLY(chan_mod, channel, nick_list ) host+ "353 * " + chan_mod + " " + channel + " :" + nick_list + delimiter   //
+#define RPL_ENDOFNAMES(channel) ":irc.42team 366 * " + channel + " :End of /NAMES list" + delimiter //
 
 //Command: LISTStart
 //#define ERR_TOOMANYMATCHES()  

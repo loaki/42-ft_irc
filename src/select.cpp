@@ -25,7 +25,8 @@ Select& Select::operator=(Select const& rhs) {
 }
 
 std::vector<User *> Select::getUsers(){return this->users;}
-
+ std::vector<Channel *> Select::getAllChannel() {return this->_channels;}
+ 
 // public: serveur creat 
 void    Select::serverStart(const short& port, const std::string&  password) {
 	this->_serverSocket.createServer(port, password);

@@ -16,6 +16,10 @@ Channel::~Channel(){
 
 std::vector<User *>	Channel::getUsers(){ return this->_users;}
 
+ std::string        Channel:: getChannelName(){ return this->_channelName;}
+
+ std::string         Channel:: getTopic(){return this->_topic;}
+
 void	Channel::setChannelName(std::string name){ this->_channelName = name;}
 
 User*	Channel::getUserInchannel(std::string name){

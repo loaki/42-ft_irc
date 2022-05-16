@@ -26,6 +26,7 @@ class Select {
     // public: method
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
+        std::vector<Channel *>      getAllChannel();
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 
         void    					clientDisconn(const int clientFd);
