@@ -3,15 +3,15 @@
 
 #include "defs.hpp"
 #include "select.hpp"
-
+#include "command.hpp"
 namespace irc {
 
-class Part {
+class Part :public Command {
     public:
         Part();
         virtual ~Part();
 
-        std::string _part(std::string line, User * user);
+        std::string execute(std::string line, User * user, Select &select);
 };
 
 }
