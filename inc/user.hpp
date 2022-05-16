@@ -30,7 +30,7 @@ class User {
 
 	private:
 		int 							_fd;
-		std::pair<size_t, std::string>	_id;
+		std::pair<size_t, int>			_id; // .first = id .second = +i
 		std::string 					_nickname;
 		std::string 					_username;
 		std::string 					_hostname;

@@ -16,31 +16,32 @@ void		User::setId(std::vector<User *> users) {
 			continue;
 		}
 	}
-	this->_id.second = craftId();
-	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-		if ((this->getUserId().second == (*(*it)).getUserId().second) && this != (*it)) {
-			this->_id.second = craftId();
-			it = users.begin();
-		}
-	}
-	std::cout << "This is user id first: " << (*this)._id.first << std::endl;
-	std::cout << "This is user id second: " << (*this)._id.second << std::endl;
+	this->_id.second = 0;
+	// this->_id.second = craftId();
+	// for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+	// 	if ((this->getUserId().second == (*(*it)).getUserId().second) && this != (*it)) {
+	// 		this->_id.second = craftId();
+	// 		it = users.begin();
+	// 	}
+	// }
+	// std::cout << "This is user id first: " << (*this)._id.first << std::endl;
+	// std::cout << "This is user id second: " << (*this)._id.second << std::endl;
 
 }
 
-std::string		User::craftId() {
-	std::string s;
+// std::string		User::craftId() {
+// 	std::string s;
 
-	static const char alphanum[] =
-			"0123456789"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
-	srand( time( 0 ) );
-	for (int i = 0; i < 10; ++i) {
-		s += alphanum[rand() % (sizeof(alphanum) - 1)];
-	}
-	return (s);
-}
+// 	static const char alphanum[] =
+// 			"0123456789"
+// 			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+// 			"abcdefghijklmnopqrstuvwxyz";
+// 	srand( time( 0 ) );
+// 	for (int i = 0; i < 10; ++i) {
+// 		s += alphanum[rand() % (sizeof(alphanum) - 1)];
+// 	}
+// 	return (s);
+// }
 
 void			User::setName(std::vector<std::string> Buff) {
 
