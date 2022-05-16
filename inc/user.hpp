@@ -20,7 +20,7 @@ class User {
 		void 				setUserFd(int fd);
 		void 				setJoinServer(bool join);
 
-		std::pair<size_t, std::string> const& 	getUserId() const;
+		std::pair<size_t, int> const& 	getUserId() const;
 
 		std::string const&	getNickname()const;
 		std::string const& 	getUsername()const;
@@ -30,7 +30,7 @@ class User {
 
 	private:
 		int 							_fd;
-		std::pair<size_t, int>			_id; // .first = id .second = +i
+		std::pair<size_t, int>		_id; // .first = id .second = +i
 		std::string 					_nickname;
 		std::string 					_username;
 		std::string 					_hostname;

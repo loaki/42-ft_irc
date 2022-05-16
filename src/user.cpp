@@ -83,7 +83,7 @@ std::string const& User::getHostname()const{ return this->_hostname;}
 
 int const& User::getUserFd()const {return this->_fd;}
 
-std::pair<size_t, std::string> const& User::getUserId()const {return this->_id;}
+std::pair<size_t, int> const& User::getUserId()const {return this->_id;}
 
 
 
