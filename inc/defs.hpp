@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <sstream>
 #include <string>
+#include <cstring>
 
 // my lib
 #include "utils.hpp"

@@ -19,7 +19,7 @@ std::string	Part::execute(std::string line, User *user, Select &select)
     //remove user from channel
     //set user channel to null
     // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
-	std::string msg = ":"+ user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " PART #lobby " + ":" + user->getNickname() + "\r\n";
+	std::string msg = ":"+ user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " "+line+" " + ":" + user->getNickname() + "\r\n";
 	ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
 	if (ret == SYSCALL_ERR) {
 		std::cout << "[Send response failed]" << std::endl;

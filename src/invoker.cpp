@@ -5,6 +5,7 @@
 #include "nick.hpp"
 #include "part.hpp"
 #include "privmsg.hpp"
+#include "join.hpp"
 
 namespace irc {
 
@@ -14,6 +15,7 @@ Invoker::Invoker() {
 	_commands.push_back(new Nick());
 	_commands.push_back(new Part());
 	_commands.push_back(new Privmsg());
+	_commands.push_back(new Join());
 }
 
 Invoker::~Invoker() {

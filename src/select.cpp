@@ -121,6 +121,10 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	}
 	return false;
 }
+void                   Select::addChannel(std::string channelName) {
+
+	_channels.push_back(new Channel(channelName));
+}
 
 void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
 

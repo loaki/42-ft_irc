@@ -426,5 +426,43 @@ QUIT :leaving
 [server:6667]
 :dada_!~u@hcsqfhpm66ezg.oragono QUIT :Quit: leaving
 ERROR :Quit: leaving
+//////////////////////////////////////////////////////////////////////
+[client:8888]
+JOIN #lobby
 
-  
+[server:6667]
+:jfeuilla1!~u@7aam2qbcwrhju.oragono JOIN #lobby
+
+[server:6667]
+:jfeuilla1!~u@7aam2qbcwrhju.oragono JOIN #lobby
+
+[server:6667]
+:jfeuilla1!~u@7aam2qbcwrhju.oragono JOIN #lobby
+:testnet.ergo.chat 353 jfeuilla1 = #lobby :@jfeuilla_ jfeuilla jfeuilla1
+
+[server:6667]
+:testnet.ergo.chat 366 jfeuilla1 #lobby :End of NAMES list
+
+[client:8888]
+MODE #lobby
+
+[server:6667]
+:testnet.ergo.chat 324 jfeuilla1 #lobby +nt
+:testnet.ergo.chat 329 jfeuilla1 #lobby 1652714961
+
+[client:8888]
+WHO #lobby
+
+[server:6667]
+:testnet.ergo.chat 352 jfeuilla1 #lobby ~u 7aam2qbcwrhju.oragono testnet.ergo.chat jfeuilla_ H@ :0 Jules FEUILLATRE
+:testnet.ergo.chat 352 jfeuilla1 #lobby ~u 7aam2qbcwrhju.oragono testnet.ergo.chat jfeuilla H :0 Jules FEUILLATRE
+:testnet.ergo.chat 352 jfeuilla1 #lobby ~u 7aam2qbcwrhju.oragono testnet.ergo.chat jfeuilla1 H :0 Jules FEUILLATRE
+
+[server:6667]
+:testnet.ergo.chat 315 jfeuilla1 #lobby :End of WHO list
+
+[client:8888]
+MODE #lobby b
+
+[server:6667]
+:testnet.ergo.chat 368 jfeuilla1 #lobby :End of list
