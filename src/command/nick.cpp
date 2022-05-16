@@ -58,6 +58,7 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
     }
 
     msg = ":" + user->getHostname() + " 001 " + nickname + "\r\n";
+    msg = ":" + user->getNickname() + "!"+user->getUsername()+"@" + user->getHostname() + " NICK " + nickname + "\r\n";
     user->setNickname(nickname);
     return msg;
 }

@@ -2,10 +2,12 @@
 
 namespace irc {
 
-Part::Part() {}
+Part::Part() {
+    _name = "PART";
+}
 Part::~Part() {}
 
-std::string part(std::string line, User * user, Select *select)
+std::string execute(std::string line, User * user, Select *select)
 {
     (void)select;
     std::vector<std::string> cmd = irc::ft_split(line, " ");
@@ -15,7 +17,7 @@ std::string part(std::string line, User * user, Select *select)
     //remove user from channel
     //set user channel to null
     // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
-    return (":"+ user->getNickname() + " PART #lobby\n");
+    return (":"+ user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname()+" PART #lobby " +":"+user->getNickname()+"\r\n");
 }
 
 } 
