@@ -11,7 +11,7 @@ class Part :public Command {
         Part();
         virtual ~Part();
 
-        std::string execute(std::string line, User * user, Select &select);
+        std::string execute(std::string line, User *user, Select &select);
 };
 
 }
