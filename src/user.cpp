@@ -50,6 +50,7 @@ void			User::setName(std::vector<std::string> Buff) {
 		{
 			std::string temp = (*it).substr(5);
 			int end = temp.find(" ");
+			std::cout << "User name: " << temp.substr(0, end) << std::endl;
 			this->setUsername(temp.substr(0, end));
 		}
 	}

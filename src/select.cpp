@@ -148,7 +148,7 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 	(users.back())->setName(Buff);
 }
 
-void Select::sendMsg(std::string msg, User *user){
+void Select::sendReply(std::string msg, User *user){
 	int ret = -1;
 
 	ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
@@ -176,9 +176,9 @@ void    Select::handleReq(const int fd) {
 
 		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
-			
-			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getHostname(),
-			users.back()->getUsername());
+			std::string sendMsg = users.back()->getPrefix();
+			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
+			sendMsg += delimiter;
 			std::cout << sendMsg << std::endl;
 			ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {

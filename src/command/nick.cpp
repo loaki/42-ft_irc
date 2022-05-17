@@ -36,7 +36,7 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 	std::cout <<"command is: " << v_cmd[0] << std::endl;
 	std::cout <<"command is: " << v_cmd[1] << std::endl;
 	std::string newnick = v_cmd[1];
-	//int ret = -1;
+	
 
 	//ERR_ERRONEUSNICKNAME: erro nickname
 	if (nameError(newnick) == false) {
@@ -58,16 +58,9 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 			return msg;
 	}
 
-    //msg = ":" + user->getHostname() + " 001 " + newnick + "\r\n"; //wo
     msg = user->getPrefix() + " NICK " + newnick + delimiter;//tmd
-	select.sendMsg(msg, user);
+	select.sendReply(msg, user);
     user->setNickname(newnick);
-	// ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
-	// if (ret == SYSCALL_ERR) {
-	// 	std::cout << "[Send response failed]" << std::endl;
-	// 	select.clientDisconn(user->getUserFd());
-	// 	return NULL;
-	// }
 	return msg;
 }
 
