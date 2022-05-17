@@ -12,7 +12,7 @@ class Join: public Command {
         Join();
         virtual ~Join();
 
-        void execute(std::string line, User * user, Select &select);
+        std::string execute(std::string line, User * user, Select &select);
 		bool ChannelExist(std::string name, std::vector<Channel *> channels);
 
 };

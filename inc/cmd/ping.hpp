@@ -12,7 +12,7 @@ class Ping: public Command {
         Ping();
         virtual ~Ping();
 
-        void execute(std::string line, User * user, Select &select);
+        std::string execute(std::string line, User * user, Select &select);
 
 };
 

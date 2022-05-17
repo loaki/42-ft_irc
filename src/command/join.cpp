@@ -20,7 +20,7 @@ bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 
 // }
 
-void Join::execute(std::string line, User *user, Select &select){
+std::string Join::execute(std::string line, User *user, Select &select){
 	std::cout << "hello\n";
 
 	int ret = -1;
@@ -76,7 +76,7 @@ void Join::execute(std::string line, User *user, Select &select){
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
 				select.clientDisconn(user->getUserFd());
-				return ;
+				return msg;
 			}
 		}
 		else
@@ -89,11 +89,12 @@ void Join::execute(std::string line, User *user, Select &select){
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
 				select.clientDisconn(user->getUserFd());
-				return ;
+				return msg;
 			}
 		}
 			
 	}
+	return msg;
 
 
 	

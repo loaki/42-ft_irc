@@ -140,11 +140,11 @@
 #define RPL_NAMREPLY(chan_mod, channel, nick_list ) " 353 * " + chan_mod + " " + channel + " :" + nick_list   //
 #define RPL_ENDOFNAMES(channel) " 366 * " + channel + " :End of /NAMES list" //
 
-//Command: LISTStart
+//Command: LIST
 //#define ERR_TOOMANYMATCHES()  
 //#define ERR_NOSUCHSERVER()  
-#define RPL_LIST(channel, nbrUser, topic) " 322 * " +  channel + " " + nbrUser + " :" + topic
-#define RPL_LISTEND() " 323 * " + ":End of /LIST"
+#define RPL_LIST(channel, nbrUser) " 322 * " + channel + " " + nbrUser
+#define RPL_LISTEND() " 323 * :End of LIST"
 
 //Command: INVITE
 //#define ERR_NEEDMOREPARAMS()     

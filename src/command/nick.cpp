@@ -30,7 +30,7 @@ bool	Nick::nameError(std::string name){
 	return true;
 }
 
-void	Nick::execute(std::string line, User *user, Select &select) {
+std::string	Nick::execute(std::string line, User *user, Select &select) {
 	std::string msg;
 	std::vector<std::string> v_cmd = ft_split(line, " ");
 	std::string newnick = v_cmd[1];
@@ -39,25 +39,25 @@ void	Nick::execute(std::string line, User *user, Select &select) {
 	if (nameError(newnick) == false) {
 		msg = ERR_ERRONEUSNICKNAME(newnick) + delimiter;
 		select.sendReply(msg, user);
-		return ;
+		return msg;
 	}
 	//RR_NONICKNAMEGIVEN: don t nickname given
 	if (v_cmd.size() != 2 || newnick.length() == 0) {
 		msg = ERR_NONICKNAMEGIVEN();
 		msg += delimiter;
 		select.sendReply(msg, user);
-		return ;
+		return msg;
 	}
 	//ERR_NICKNAMEINUSE :aleardy use in user
 	if (nickinUse(newnick, select.getUsers()) == true) {
 			msg = ERR_NICKNAMEINUSE(newnick) + delimiter;
 			select.sendReply(msg, user);
-			return ;
+			return msg;
 	}
     msg = user->getPrefix() + " NICK " + newnick + delimiter;
 	select.sendReply(msg, user);
     user->setNickname(newnick);
-	//return msg;
+	return msg;
 }
 
 }

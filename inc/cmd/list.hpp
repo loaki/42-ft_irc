@@ -13,7 +13,7 @@ class List :public Command {
 		List();
 		virtual ~List();
 
-		void execute(std::string line, User *user, Select &select);
+		std::string execute(std::string line, User *user, Select &select);
 
 
 

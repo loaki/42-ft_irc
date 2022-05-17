@@ -21,7 +21,6 @@ class User {
 		void 				setJoinServer(bool join);
 		bool 				getJoinServer();
 		std::string			getPrefix();
-		//std::string 		sendMsg(std::string msg);
 
 		std::pair<size_t, int> const& 	getUserId() const;
 

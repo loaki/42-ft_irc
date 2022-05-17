@@ -12,7 +12,7 @@ class Part :public Command {
         Part();
         virtual ~Part();
 
-        void execute(std::string line, User *user, Select &select);
+        std::string execute(std::string line, User *user, Select &select);
 };
 
 }
