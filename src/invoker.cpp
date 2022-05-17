@@ -13,9 +13,9 @@ namespace irc {
 Invoker::Invoker() {
 	_commands.push_back(new Ping());
 	_commands.push_back(new Nick());
-	_commands.push_back(new Part());
-	_commands.push_back(new Privmsg()); 
-	_commands.push_back(new Join());
+	//_commands.push_back(new Part());
+	//_commands.push_back(new Privmsg()); 
+	//_commands.push_back(new Join());
 }
 
 Invoker::~Invoker() {
@@ -26,7 +26,7 @@ Invoker::~Invoker() {
 	}
 }
 
-std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select &select)
+void Invoker::parser(std::vector<std::string> Buff, User * user, Select &select)
 {
     // commands["NICK"] = cmd_nick._nick;
     // std::vector<std::string>::iterator it = Buff.begin();
@@ -46,12 +46,12 @@ std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select &
         for (std::vector<Command*>::iterator i = _commands.begin(); i != _commands.end(); i++)
         {
             if (cmd[0] == (*i)->getName())
-                return((*i)->execute(*it, user, select));
+                ((*i)->execute(*it, user, select));
         }
     }
         
     // }
-    return ("");
+   
 }
 
 }

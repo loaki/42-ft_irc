@@ -7,7 +7,7 @@ Part::Part() {
 }
 Part::~Part() {}
 
-std::string	Part::execute(std::string line, User *user, Select &select)
+void	Part::execute(std::string line, User *user, Select &select)
 {
     (void)select;
     std::vector<std::string> cmd = irc::ft_split(line, " ");
@@ -15,7 +15,7 @@ std::string	Part::execute(std::string line, User *user, Select &select)
 	int ret = -1;
 
     if (cmd.size() < 2)
-    {    return("err");}
+    {    return ;}
     //remove user from channel
     //set user channel to null
     // toSend = ":" + nick + "!" + user + "@" + host + " " + buf + EOL;
@@ -24,9 +24,9 @@ std::string	Part::execute(std::string line, User *user, Select &select)
 	if (ret == SYSCALL_ERR) {
 		std::cout << "[Send response failed]" << std::endl;
 		select.clientDisconn(user->getUserFd());
-		return NULL;
+		return ;
 	}
-	return msg;
+	//return msg;
 }
 
 } 

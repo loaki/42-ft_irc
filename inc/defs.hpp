@@ -57,7 +57,7 @@
 #define ERR_ALREADYREGISTRED()  " 462 * :Unauthorized command (already registered)"
 
 //Command: NICK
-#define ERR_NONICKNAMEGIVEN " 431 * :No nickname given" 
+#define ERR_NONICKNAMEGIVEN() " 431 * :No nickname given" 
 #define ERR_ERRONEUSNICKNAME(nick) " 432 * " + nick + " :Erroneus nickname"
 #define ERR_NICKNAMEINUSE(nick) " 433 * " + nick + " :Nickname is already in use"
 #define ERR_NICKCOLLISION(nick) " 436 * " + nick + " :Nickname collision KILL"
@@ -217,7 +217,7 @@
 
 //Command: PING
 //#define ERR_NOSUCHSERVER() 
-#define ERR_NOORIGIN " 409 * :No origin specified" 
+#define ERR_NOORIGIN() " 409 * :No origin specified" 
 
 
 //Command: PONG

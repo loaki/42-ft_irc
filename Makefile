@@ -17,9 +17,11 @@ SRCS := ./src/main.cpp \
 		./src/command/nick.cpp \
 		./src/command/part.cpp \
 		./src/command/privmsg.cpp \
+		./src/command/join.cpp \
+		./src/command/list.cpp \
 		./src/invoker.cpp \
-		./src/channel.cpp \
-		./src/command/join.cpp 
+		./src/channel.cpp 
+	
 
 		
 		

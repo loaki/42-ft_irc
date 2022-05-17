@@ -20,7 +20,7 @@ bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 
 // }
 
-std::string Join::execute(std::string line, User *user, Select &select){
+void Join::execute(std::string line, User *user, Select &select){
 	std::cout << "hello\n";
 
 	int ret = -1;
@@ -28,11 +28,11 @@ std::string Join::execute(std::string line, User *user, Select &select){
     std::vector<std::string> v_cmd = ft_split(line, " ");
 	std::string channelname = v_cmd[1];
 
-	if(v_cmd.size() == 0) {
-		// msg = ERR_NEEDMOREPARAMS("JOIN");
-		msg += delimiter;
-		return msg;
-	}
+	// if(v_cmd.size() == 0) {
+	// 	//throw ERR_NEEDMOREPARAMS("JOIN");
+	// 	// msg += delimiter;
+	// 	// return msg;
+	// }
 	// if (v_cmd[1] == "0") {
 	// 	leaveAllChannels();
 	// }
@@ -76,7 +76,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
 				select.clientDisconn(user->getUserFd());
-				return NULL;
+				return ;
 			}
 		}
 		else
@@ -89,14 +89,14 @@ std::string Join::execute(std::string line, User *user, Select &select){
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
 				select.clientDisconn(user->getUserFd());
-				return NULL;
+				return ;
 			}
 		}
 			
 	}
 
 
-	return msg;
+	
 	
 }
 

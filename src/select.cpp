@@ -180,12 +180,14 @@ void    Select::handleReq(const int fd) {
 			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
 			sendMsg += delimiter;
 			std::cout << sendMsg << std::endl;
-			ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
-			if (ret == SYSCALL_ERR) {
-				std::cout << "[Send response failed]" << std::endl;
-				this->clientDisconn(fd);
-				return;
-			}
+			this->sendReply(sendMsg, users.back());
+			// ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+			// if (ret == SYSCALL_ERR) {
+			// 	std::cout << "[Send response failed]" << std::endl;
+			// 	this->clientDisconn(fd);
+			// 	return;
+			// }
+			users.back()->setJoinServer(true);
 		}
 		else {
 			Invoker _Invoker;
@@ -195,14 +197,14 @@ void    Select::handleReq(const int fd) {
 					// std::string sM = ":irc.42team 221 " + users.back()->getNickname(); 
 					// send(fd, sM.c_str(), sM.length(), 0);
 					//Select *tmp = this;
-					std::string	sendMsg = _Invoker.parser(Buff, users[i], *this);
-					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-					// ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
-					if (ret == SYSCALL_ERR) {
-						std::cout << "[Send response failed]" << std::endl;
-						this->clientDisconn(fd);
-						return;
-					}
+					 _Invoker.parser(Buff, users[i], *this);
+					// std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+					// // ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
+					// if (ret == SYSCALL_ERR) {
+					// 	std::cout << "[Send response failed]" << std::endl;
+					// 	this->clientDisconn(fd);
+					// 	return;
+					// }
 				}
 			}
 		}

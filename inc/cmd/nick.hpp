@@ -15,7 +15,7 @@ class Nick: public Command{
 
         bool 		nickinUse(std::string name, std::vector<User *> users);
         bool 		nameError(std::string name);
-        std::string execute(std::string line, User *user, Select &select);
+        void        execute(std::string line, User *user, Select &select);
 
 };
 

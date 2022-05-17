@@ -4,6 +4,7 @@
 #include "defs.hpp"
 #include "select.hpp"
 #include "command.hpp"
+
 namespace irc {
 
 class Part :public Command {
@@ -11,7 +12,7 @@ class Part :public Command {
         Part();
         virtual ~Part();
 
-        std::string execute(std::string line, User *user, Select &select);
+        void execute(std::string line, User *user, Select &select);
 };
 
 }
