@@ -35,38 +35,39 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 	std::vector<std::string> v_cmd = ft_split(line, " ");
 	std::cout <<"command is: " << v_cmd[0] << std::endl;
 	std::cout <<"command is: " << v_cmd[1] << std::endl;
-	std::string nickname = v_cmd[1];
-	int ret = -1;
+	std::string newnick = v_cmd[1];
+	//int ret = -1;
 
 	//ERR_ERRONEUSNICKNAME: erro nickname
-	if (nameError(nickname) == false) {
-		 msg = ERR_ERRONEUSNICKNAME(nickname);
+	if (nameError(newnick) == false) {
+		 msg = ERR_ERRONEUSNICKNAME(newnick);
 		 msg += delimiter;
 		 return msg;
 	}
 	//RR_NONICKNAMEGIVEN: don t nickname given
-	if (v_cmd.size() != 2 || nickname.length() == 0) {
+	if (v_cmd.size() != 2 || newnick.length() == 0) {
 		std::cout << v_cmd.size() << std::endl;
 		msg = ERR_NONICKNAMEGIVEN;
 		msg += delimiter;
 		return msg;
 	}
 	//ERR_NICKNAMEINUSE :aleardy use in user
-	if (nickinUse(nickname, select.getUsers()) == true) {
-			msg = ERR_NICKNAMEINUSE(nickname);
+	if (nickinUse(newnick, select.getUsers()) == true) {
+			msg = ERR_NICKNAMEINUSE(newnick);
 			msg += delimiter;
 			return msg;
 	}
 
-    msg = ":" + user->getHostname() + " 001 " + nickname + "\r\n";
-    msg = ":" + user->getNickname() + "!"+user->getUsername()+"@" + user->getHostname() + " NICK " + nickname + "\r\n";
-    user->setNickname(nickname);
-	ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
-	if (ret == SYSCALL_ERR) {
-		std::cout << "[Send response failed]" << std::endl;
-		select.clientDisconn(user->getUserFd());
-		return NULL;
-	}
+    //msg = ":" + user->getHostname() + " 001 " + newnick + "\r\n"; //wo
+    msg = user->getPrefix() + " NICK " + newnick + delimiter;//tmd
+	select.sendMsg(msg, user);
+    user->setNickname(newnick);
+	// ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
+	// if (ret == SYSCALL_ERR) {
+	// 	std::cout << "[Send response failed]" << std::endl;
+	// 	select.clientDisconn(user->getUserFd());
+	// 	return NULL;
+	// }
 	return msg;
 }
 

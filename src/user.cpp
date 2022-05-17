@@ -55,6 +55,19 @@ void			User::setName(std::vector<std::string> Buff) {
 	}
 }
 
+
+std::string			User::getPrefix(){
+	std::string prefix;
+
+	prefix += ":";
+	prefix += this->_nickname;
+	prefix += "!";
+	prefix += this->_username;
+	prefix += "@";
+	prefix += this->_hostname;
+	return prefix;
+}
+
 void User::setNickname(std::string name){
 	this->_nickname = name;
 }
@@ -74,6 +87,8 @@ void User::setUserFd(int fd){
 void User::setJoinServer(bool join) {
 	this->_joinServer = join;
 }
+
+bool User::getJoinServer(){ return this->_joinServer;}
 
 std::string const& User::getNickname()const{return this->_nickname;}
 
