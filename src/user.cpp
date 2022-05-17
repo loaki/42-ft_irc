@@ -50,9 +50,23 @@ void			User::setName(std::vector<std::string> Buff) {
 		{
 			std::string temp = (*it).substr(5);
 			int end = temp.find(" ");
+			std::cout << "User name: " << temp.substr(0, end) << std::endl;
 			this->setUsername(temp.substr(0, end));
 		}
 	}
+}
+
+
+std::string			User::getPrefix(){
+	std::string prefix;
+
+	prefix += ":";
+	prefix += this->_nickname;
+	prefix += "!";
+	prefix += this->_username;
+	prefix += "@";
+	prefix += this->_hostname;
+	return prefix;
 }
 
 void User::setNickname(std::string name){
@@ -74,6 +88,8 @@ void User::setUserFd(int fd){
 void User::setJoinServer(bool join) {
 	this->_joinServer = join;
 }
+
+bool User::getJoinServer(){ return this->_joinServer;}
 
 std::string const& User::getNickname()const{return this->_nickname;}
 

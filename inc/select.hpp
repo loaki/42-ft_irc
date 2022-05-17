@@ -31,7 +31,7 @@ class Select {
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 
         void    					clientDisconn(const int clientFd);
-
+        void                 sendReply(std::string msg, User *user);
 
     private:
     // private: method

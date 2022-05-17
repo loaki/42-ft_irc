@@ -8,8 +8,6 @@ Privmsg::~Privmsg() {}
 
 std::string	Privmsg::execute(std::string line, User * user, Select &select) {
     std::string msg;
-    (void)user;
-    (void)select;
 	int ret = -1;
 
     msg = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + line + "\r\n";

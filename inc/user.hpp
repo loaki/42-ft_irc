@@ -19,6 +19,9 @@ class User {
 		void 				setHostname(std::string name);
 		void 				setUserFd(int fd);
 		void 				setJoinServer(bool join);
+		bool 				getJoinServer();
+		std::string			getPrefix();
+		//std::string 		sendMsg(std::string msg);
 
 		std::pair<size_t, int> const& 	getUserId() const;
 

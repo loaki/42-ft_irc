@@ -65,8 +65,9 @@ void Socket::serverInit(const short & port) {
 }
 
 void Socket::serverBind() {
-    if (bind(this->_serverFd, (struct sockaddr *)&this->_serverAddr, sizeof(struct sockaddr)) == SYSCALL_ERR)
+    if (bind(this->_serverFd, (struct sockaddr *)&this->_serverAddr, sizeof(struct sockaddr)) == SYSCALL_ERR) {
         exitFailure("bind failed");
+    }
 }
 
 void Socket::serverListen() {

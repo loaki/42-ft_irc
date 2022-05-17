@@ -148,6 +148,17 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 	(users.back())->setName(Buff);
 }
 
+void Select::sendReply(std::string msg, User *user){
+	int ret = -1;
+
+	ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
+	if (ret == SYSCALL_ERR) {
+		std::cout << "[Send response failed]" << std::endl;
+		this->clientDisconn(user->getUserFd());
+		return;
+	}
+}
+
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
 
@@ -155,7 +166,6 @@ void    Select::handleReq(const int fd) {
 	ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
 	// std::cout << fd << std::endl;
 	std::cout << "\n ### client : \n" << this->buff << std::endl;
-
 	// debug
 	if (ret <= 0) { 
 		this->clientDisconn(fd);
@@ -166,9 +176,9 @@ void    Select::handleReq(const int fd) {
 
 		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
-			
-			std::string	sendMsg = RPL_WELCOME(users.back()->getNickname(), users.back()->getHostname(),
-			users.back()->getUsername());
+			std::string sendMsg = users.back()->getPrefix();
+			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
+			sendMsg += delimiter;
 			std::cout << sendMsg << std::endl;
 			ret = send(fd, sendMsg.c_str(), sendMsg.length(), 0);
 			if (ret == SYSCALL_ERR) {
@@ -176,19 +186,7 @@ void    Select::handleReq(const int fd) {
 				this->clientDisconn(fd);
 				return;
 			}
-			
-			//add this->users[fd]->setJoinServer(true);
 		}
-		/*after lucien changer vector to std::map<int, user> user;*/
-		//if (this->users[fd]->setJoinServer(true) {
-			/*already connecter we can parser commands
-				Msg += ":";
-				Msg += nickname;
-				Msg += "!";
-				Msg += username;
-				Msg += "@";
-				Msg += hostname;
-			*/
 		else {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
