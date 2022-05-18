@@ -10,7 +10,7 @@ Join:: ~Join(){}
 bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 	std::vector<Channel *>::iterator it = channels.begin();
 	for(; it != channels.end(); it++) {
-		if ((*it)->getChannelName() == name) 
+		if ((*(*it)).getChannelName() == name) 
 			return true;
 	}
 	return false;
@@ -29,22 +29,23 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	}
 	std::string listname = "";
  	std::vector<Channel *> channels = select.getAllChannel();
-	if (channels.size() == 0)
+	if (select.getChannelByName(channelname) == NULL)
 	{
 		select.addChannel(channelname);
 	}
 	channels = select.getAllChannel();
 	for (std::vector<Channel*>::iterator it = channels.begin(); it != channels.end(); it++)
 	{
-		std::cout <<"chan : "<< (*it)->getChannelName()<<std::endl;
-		if ((*it)->getChannelName() == channelname)
+		if ((*(*it)).getChannelName() == channelname)
 		{
-			(*(*it)).addUser(user);
-			std::vector<User *> chanUsers = (*it)->getUsers();
+			std::cout <<"chan : "<< (*(*it)).getChannelName()<<std::endl;
+			if ((*(*it)).getUserInchannel(user->getNickname()) == NULL)
+				(*(*it)).addUser(user);
+			std::vector<User *> chanUsers = (*(*it)).getUsers();
 			for (std::vector<User*>::iterator it2 = chanUsers.begin(); it2 < chanUsers.end(); it2++)
 			{
-				std::cout <<"nick : "<< (*it2)->getNickname() <<std::endl;
-				listname += (*it2)->getNickname();
+				std::cout <<"nick : "<< (*(*it2)).getNickname() <<std::endl;
+				listname += (*(*it2)).getNickname();
 				if ((it2) == (chanUsers.end() - 1))
 					break;
 				listname += " ";
@@ -58,7 +59,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
  	std::vector<User *> users = select.getUsersInchannel(channelname);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 
-		if ((*it)->getUserFd() != user->getUserFd()) // && listname.find((*it)->getNickname()) = 0)
+		if ((*(*it)).getUserFd() != user->getUserFd()) // && listname.find((*(*it)).getNickname()) = 0)
 		{
 			select.sendReply(msg, *(*it));
 		}

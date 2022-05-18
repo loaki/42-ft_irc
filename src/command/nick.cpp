@@ -53,9 +53,10 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 	}
 	//ERR_NICKNAMEINUSE :aleardy use in user
 	if (nickinUse(newnick, select.getUsers()) == true) {
-			msg = ERR_NICKNAMEINUSE(newnick);
-			msg += delimiter;
-			return msg;
+		msg = user->getHostname() + " 433 " + user->getNickname() + " " + newnick + " :Nickname is already in use" + "\r\n";
+		return msg;
+			// msg = ERR_NICKNAMEINUSE(newnick);
+			// msg += delimiter;
 	}
 
     msg = user->getPrefix() + " NICK " + newnick + delimiter;//tmd

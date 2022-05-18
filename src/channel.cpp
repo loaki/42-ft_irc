@@ -47,12 +47,14 @@ void	Channel::addUser(User *user){
 }
 
 void	Channel::removeUser(User *user){
-	std::vector<User *>::iterator it = this->_users.begin();
-	for (; it < this->_users.end(); it++) {
-		if ((*it) == user) {
-			this->_users.erase(it);
-			break;
+	std::cout << "hello" << std::endl;
+	for (std::vector<User *>::const_iterator it = _users.begin() ; it != _users.end();) {
+		std::cout << "QUIT NICK: " << (*(*it)).getNickname() << std::endl;
+		if ((*(*it)).getNickname() == (*user).getNickname()) {
+			it = _users.erase(it);
 		}
+		else
+			it++;
 	}
 }
 

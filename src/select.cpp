@@ -92,15 +92,21 @@ void    Select::clientDisconn(const int clientFd) {
 	close(clientFd);
 	FD_CLR(clientFd, &this->mainSet);   //delete fd of mainset
 
-	std::vector<int>::iterator it = this->clientfds.begin();
-	for (; it != this->clientfds.end(); it++) {
+	// std::vector<int>::iterator it = this->clientfds.begin();
+	for (std::vector<int>::iterator it = clientfds.begin(); it != clientfds.end(); it++) {
 		if (*it == clientFd)
 		{
-			this->clientfds.erase(it);
+			clientfds.erase(it);
 			break ;}
 	}
-	// if (clientfds.size() > 0)
-	// 	this->clientfds.erase(it);
+	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+		if ((*(*it)).getUserFd() == clientFd)
+		{
+			delete (*it);
+			users.erase(it);
+			break ;
+		}
+	}
 }
 
 std::vector<std::string> Select::configBuff() {
@@ -163,9 +169,9 @@ void Select::sendReply(std::string msg, User &user){
 }
 
 Channel * Select::getChannelByName(std::string name){
-	std::vector<Channel *>::iterator it = this->_channels.begin();
-	for(; it != this->_channels.end(); it++) {
-		if((*it)->getChannelName() == name)
+	// std::vector<Channel *>::iterator it = this->_channels.begin();
+	for(std::vector<Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		if((*(*it)).getChannelName() == name)
 			return (*it);
 	}
 	return NULL;

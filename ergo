@@ -466,3 +466,5 @@ MODE #lobby b
 
 [server:6667]
 :testnet.ergo.chat 368 jfeuilla1 #lobby :End of list
+
+ 433 * e :Nickname is already in use
