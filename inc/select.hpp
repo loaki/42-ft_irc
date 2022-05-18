@@ -28,11 +28,12 @@ class Select {
         std::vector<User *> 		getUsers();
         std::vector<Channel *>      getAllChannel();
         std::vector<User *>         getUsersInchannel(std::string name);
-        void                       addChannel(std::string channelName);
+        Channel *                   getChannelByName(std::string name);
+        void                        addChannel(std::string channelName);
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 
         void    					clientDisconn(const int clientFd);
-        void                 sendReply(std::string msg, User *user);
+        void                 sendReply(std::string msg, User user);
 
     private:
     // private: method

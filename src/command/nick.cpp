@@ -59,7 +59,7 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 	}
 
     msg = user->getPrefix() + " NICK " + newnick + delimiter;//tmd
-	select.sendReply(msg, user);
+	select.sendReply(msg, *user);
     user->setNickname(newnick);
 	return msg;
 }

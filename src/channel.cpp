@@ -24,8 +24,8 @@ void	Channel::setChannelName(std::string name){ this->_channelName = name;}
 
 User*	Channel::getUserInchannel(std::string name){
 	std::vector<User *>::iterator it = this->_users.begin();
-	std::vector<User *>::iterator ite = this-> _users.end();
-	for(; it != ite; it++) {
+	// User * user = new User(-1);
+	for(; it != this-> _users.end(); it++) {
 		if((*it)->getNickname() == name)
 			return *it;
 	}

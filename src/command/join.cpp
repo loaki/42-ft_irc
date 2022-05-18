@@ -49,18 +49,20 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		std::cout <<"chan : "<< (*it)->getChannelName()<<std::endl;
 		if ((*it)->getChannelName() == channelname)
 		{
-			(*(*it)).addUser(user);
- 			std::vector<User *> chanUsers = (*it)->getUsers();
-			for (std::vector<User*>::iterator it2 = chanUsers.begin(); it2 < chanUsers.end(); it2++)
-			{
-				std::cout <<"nick : "<< (*it2)->getNickname() <<std::endl;
-				listname += (*it2)->getNickname();
-				if ((it2) == (chanUsers.end() - 1))
-					break;
-				listname += " ";
-			}
-
-		
+			// if ((*it)->getUserInchannel(user->getNickname())->getUserFd() == -1)
+			// {	
+				(*(*it)).addUser(user);
+				std::vector<User *> chanUsers = (*it)->getUsers();
+				for (std::vector<User*>::iterator it2 = chanUsers.begin(); it2 < chanUsers.end(); it2++)
+				{
+					std::cout <<"nick : "<< (*it2)->getNickname() <<std::endl;
+					listname += (*it2)->getNickname();
+					if ((it2) == (chanUsers.end() - 1))
+						break;
+					listname += " ";
+				}
+			// 	delete (*it)->getUserInchannel(user->getNickname());
+			// }
 		}
 	}
 	std::cout <<"listname : "<<listname<<std::endl;
@@ -72,7 +74,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 
 		if ((*it)->getUserFd() != user->getUserFd()) // && listname.find((*it)->getNickname()) = 0)
 		{
-			// select.sendReply(msg, user);
+			// select.sendReply(msg, *(*it));
 			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
@@ -82,13 +84,13 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		}
 		else
 		{
-			// select.sendReply(msg, user);
+			// select.sendReply(msg, *it);
 			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
 			//check ret
-			// select.sendReply(msgself1, user);
+			// select.sendReply(msgself1, *it);
 			ret = send((*it)->getUserFd(), msgself1.c_str(), msgself1.length(), 0);
 			//check ret
-			// select.sendReply(msgself2, user);
+			// select.sendReply(msgself2, *it);
 			ret = send((*it)->getUserFd(), msgself2.c_str(), msgself2.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
