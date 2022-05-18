@@ -72,6 +72,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 
 		if ((*it)->getUserFd() != user->getUserFd()) // && listname.find((*it)->getNickname()) = 0)
 		{
+			// select.sendReply(msg, user);
 			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
@@ -81,10 +82,13 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		}
 		else
 		{
+			// select.sendReply(msg, user);
 			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
 			//check ret
+			// select.sendReply(msgself1, user);
 			ret = send((*it)->getUserFd(), msgself1.c_str(), msgself1.length(), 0);
 			//check ret
+			// select.sendReply(msgself2, user);
 			ret = send((*it)->getUserFd(), msgself2.c_str(), msgself2.length(), 0);
 			if (ret == SYSCALL_ERR) {
 				std::cout << "[Send response failed]" << std::endl;
