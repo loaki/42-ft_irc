@@ -14,7 +14,6 @@ class Channel {
         Channel(std::string channelname);
         ~Channel();
     
-        
         void                setChannelName(std::string name);
         User*               getUserInchannel(std::string name);
         User*               getUserInchannel(int fd);

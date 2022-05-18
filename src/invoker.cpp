@@ -6,6 +6,7 @@
 #include "part.hpp"
 #include "privmsg.hpp"
 #include "join.hpp"
+#include "quit.hpp"
 
 namespace irc {
 
@@ -16,6 +17,7 @@ Invoker::Invoker() {
 	_commands.push_back(new Part());
 	_commands.push_back(new Privmsg()); 
 	_commands.push_back(new Join());
+	_commands.push_back(new Quit());
 }
 
 Invoker::~Invoker() {

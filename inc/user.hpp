@@ -10,9 +10,7 @@ class User {
 		User(int fd);
 		~User();
 
-		void				setId(std::vector<User *> users);
 		void				setName(std::vector<std::string> Buff);
-		std::string			craftId();
 
 		void 				setNickname(std::string name);
 		void				setUsername(std::string name);
@@ -21,9 +19,6 @@ class User {
 		void 				setJoinServer(bool join);
 		bool 				getJoinServer();
 		std::string			getPrefix();
-		//std::string 		sendMsg(std::string msg);
-
-		std::pair<size_t, int> const& 	getUserId() const;
 
 		std::string const&	getNickname()const;
 		std::string const& 	getUsername()const;
@@ -33,7 +28,6 @@ class User {
 
 	private:
 		int 							_fd;
-		std::pair<size_t, int>			_id; // .first = id .second = +i
 		std::string 					_nickname;
 		std::string 					_username;
 		std::string 					_hostname;

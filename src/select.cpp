@@ -144,8 +144,6 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 			users.back()->setNickname(nick);
 		}
 	}
-
-	(users.back())->setId(users);
 	(users.back())->setName(Buff);
 }
 
@@ -195,8 +193,8 @@ void    Select::handleReq(const int fd) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-
-		if (PasswordConnect(Buff)== true ) {
+std::cout << "BUFF SIZE ****** " <<(buff).size() << std::endl;
+		if (PasswordConnect(Buff)== true  && (buff).size() == 4 ) {
 			addNewUsr((this)->users, Buff);
 			std::string sendMsg = users.back()->getPrefix();
 			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());

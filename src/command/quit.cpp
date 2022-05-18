@@ -1,13 +1,13 @@
-#include "part.hpp"
+#include "quit.hpp"
 
 namespace irc {
 
-Part::Part() {
-    _name = "PART";
+Quit::Quit() {
+    _name = "QUIT";
 }
-Part::~Part() {}
+Quit::~Quit() {}
 
-std::string	Part::execute(std::string line, User *user, Select &select)
+std::string	Quit::execute(std::string line, User *user, Select &select)
 {
     (void)select;
     std::vector<std::string> v_cmd = irc::ft_split(line, " ");
@@ -17,13 +17,13 @@ std::string	Part::execute(std::string line, User *user, Select &select)
     {    return("err");}
 	std::string channelname = v_cmd[1];
 
-	std::string msg = user->getPrefix() + " " + line + " " + ":" + user->getNickname() + "\r\n";
+	std::string msg = user->getPrefix() + "QUIT" + " :Quit: leaving" + "\r\n";
 	std::vector<User *> users = select.getUsersInchannel(channelname);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 		select.sendReply(msg, *(*it));
 	}
 	select.getChannelByName(channelname)->removeUser(user);
-
+	select.clientDisconn(user->getUserFd());
 	return msg;
 }
 
