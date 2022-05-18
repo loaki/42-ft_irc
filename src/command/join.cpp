@@ -67,7 +67,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	std::string msgself1 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ channelname + " : @" + listname + "\r\n";
 	std::string msgself2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ channelname + " :End of /NAMES list"+"\r\n";
 	msg = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + line + "\r\n";
- 	std::vector<User *> users = select.getUsers();
+ 	std::vector<User *> users = select.getUsersInchannel(channelname);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 
 		if ((*it)->getUserFd() != user->getUserFd()) // && listname.find((*it)->getNickname()) = 0)

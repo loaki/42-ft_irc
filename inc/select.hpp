@@ -27,6 +27,7 @@ class Select {
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
         std::vector<Channel *>      getAllChannel();
+        std::vector<User *>         getUsersInchannel(std::string name);
         void                       addChannel(std::string channelName);
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
 

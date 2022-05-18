@@ -160,6 +160,16 @@ void Select::sendReply(std::string msg, User *user){
 	}
 }
 
+std::vector<User *> Select::getUsersInchannel(std::string name){
+	std::vector<Channel *>::iterator it = this->_channels.begin();
+	std::vector<User *> users;
+	for(; it != this->_channels.end(); it++) {
+		if((*it)->getChannelName() == name)
+			return ((*it)->getUsers());
+	}
+	return users;
+}
+
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
 
