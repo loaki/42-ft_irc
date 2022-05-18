@@ -22,8 +22,9 @@ std::string	Quit::execute(std::string line, User *user, Select &select)
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 		select.sendReply(msg, *(*it));
 	}
-	select.getChannelByName(channelname)->removeUser(user);
-	select.clientDisconn(user->getUserFd());
+	if (select.getChannelByName(channelname) != NULL)
+		select.getChannelByName(channelname)->removeUser(user);
+	// select.clientDisconn(user->getUserFd());
 	return msg;
 }
 
