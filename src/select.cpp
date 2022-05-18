@@ -149,7 +149,7 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 	(users.back())->setName(Buff);
 }
 
-void Select::sendReply(std::string msg, User user){
+void Select::sendReply(std::string msg, User &user){
 	int ret = -1;
 
 	ret = send(user.getUserFd(), msg.c_str(), msg.length(), 0);

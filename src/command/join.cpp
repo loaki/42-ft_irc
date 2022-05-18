@@ -23,7 +23,7 @@ bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 std::string Join::execute(std::string line, User *user, Select &select){
 	std::cout << "hello\n";
 
-	int ret = -1;
+	// int ret = -1;
 	std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
 	std::string channelname = v_cmd[1];
@@ -74,29 +74,29 @@ std::string Join::execute(std::string line, User *user, Select &select){
 
 		if ((*it)->getUserFd() != user->getUserFd()) // && listname.find((*it)->getNickname()) = 0)
 		{
-			// select.sendReply(msg, *(*it));
-			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
-			if (ret == SYSCALL_ERR) {
-				std::cout << "[Send response failed]" << std::endl;
-				select.clientDisconn(user->getUserFd());
-				return NULL;
-			}
+			select.sendReply(msg, *(*it));
+			// ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
+			// if (ret == SYSCALL_ERR) {
+			// 	std::cout << "[Send response failed]" << std::endl;
+			// 	select.clientDisconn(user->getUserFd());
+			// 	return NULL;
+			// }
 		}
 		else
 		{
-			// select.sendReply(msg, *it);
-			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
+			select.sendReply(msg, *(*it));
+			// ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
 			//check ret
-			// select.sendReply(msgself1, *it);
-			ret = send((*it)->getUserFd(), msgself1.c_str(), msgself1.length(), 0);
+			select.sendReply(msgself1, *(*it));
+			// ret = send((*it)->getUserFd(), msgself1.c_str(), msgself1.length(), 0);
 			//check ret
-			// select.sendReply(msgself2, *it);
-			ret = send((*it)->getUserFd(), msgself2.c_str(), msgself2.length(), 0);
-			if (ret == SYSCALL_ERR) {
-				std::cout << "[Send response failed]" << std::endl;
-				select.clientDisconn(user->getUserFd());
-				return NULL;
-			}
+			select.sendReply(msgself2, *(*it));
+			// ret = send((*it)->getUserFd(), msgself2.c_str(), msgself2.length(), 0);
+			// if (ret == SYSCALL_ERR) {
+			// 	std::cout << "[Send response failed]" << std::endl;
+			// 	select.clientDisconn(user->getUserFd());
+			// 	return NULL;
+			// }
 		}
 	}
 	return msg;

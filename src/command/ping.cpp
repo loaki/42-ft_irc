@@ -19,7 +19,7 @@ std::string	Ping::execute(std::string line, User * user, Select &select) {
         return msg;
     }
     msg = "PONG :" + v_cmd[1] + delimiter;
-    select.sendReply(msg, *user);
+    select.sendReply(msg, (*user));
 	// ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
 	// if (ret == SYSCALL_ERR) {
 	// 	std::cout << "[Send response failed]" << std::endl;
