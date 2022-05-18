@@ -15,11 +15,12 @@ std::string	Privmsg::execute(std::string line, User * user, Select &select) {
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 		if ((*it)->getUserFd() != user->getUserFd())
 			ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
+
 	}
 	if (ret == SYSCALL_ERR) {
 		std::cout << "[Send response failed]" << std::endl;
 		select.clientDisconn(user->getUserFd());
-		return NULL;
+		return "";
 	}
     return msg;
 }

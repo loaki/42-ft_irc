@@ -92,10 +92,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 				return NULL;
 			}
 		}
-			
 	}
-
-
 	return msg;
 	
 }
