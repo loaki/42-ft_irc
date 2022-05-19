@@ -22,7 +22,7 @@ class Command {
 		std::string			_name;
 		std::string			_description;
 		// Server*			_server;
-		User*		    	_sender;
+		//User*		    	_sender;
 		std::string      	_args;
 
     };

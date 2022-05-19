@@ -53,8 +53,8 @@
 #define RPL_BOUNCE(servername, port) " 005 :Try server " + servername + ", port " + port 
 
 //Command PASS and USER
-#define ERR_NEEDMOREPARAMS(command) " 461 * " + command + " :Not enough parameters"
-#define ERR_ALREADYREGISTRED()  " 462 * :Unauthorized command (already registered)"
+#define ERR_NEEDMOREPARAMS(command) " 461 * " + command +  " :Not enough parameters"
+#define ERR_ALREADYREGISTRED()  " 462 * :Unauthorized command (a lready registered)"
 
 //Command: NICK
 #define ERR_NONICKNAMEGIVEN() " 431 * :No nickname given" 
@@ -97,8 +97,8 @@
 #define ERR_CHANNELISFULL(channel)  " 471 * " + channel + " :Cannot join channel (+l)" //
 #define ERR_INVITEONLYCHAN(channel)  " 473 * " + channel + " :Cannot join channel (+i)" //
 #define ERR_BADCHANNELKEY(channel)  " 475 * " + channel + " :Cannot join channel (+k)" //
-#define ERR_NOSUCHCHANNEL(channel) " 403 * #" + channel + ":No such channel"
-#define ERR_BADCHANMASK (channel) " 476 * #" + channel + ":Bad Channel Mask"
+#define ERR_NOSUCHCHANNEL(channel) " 403 * " + channel + ":No such channel"
+#define ERR_BADCHANMASK(channel) " 476 * " + channel + ":Bad Channel Mask"
 #define ERR_TOOMANYTARGETS (target) " 407 * " target + " :Duplicate recipients. No message delivered" //
 #define ERR_TOOMANYCHANNELS(channel) " 405 * #" + channel + ":You have joined too many channels"
 #define RPL_TOPIC(channel, topic)  " 332 * " + channel + " :" + topic
@@ -109,7 +109,7 @@
 #define   ERR_NOTONCHANNEL(channel) " 442 * " + channel + ":You're not on that channel"
 
 //Channel mode message
-//#define ERR_NEEDMOREPARAMS    
+//#define ERR_NEEDMOREPARAMS     
 //#define ERR_CHANOPRIVSNEEDED 
 #define ERR_KEYSET(channel) " 467 * " + channel + " :Channel key already set"
 #define ERR_NOCHANMODES(channel) " 477 * " + channel + " :Channel doesn't support modes"       
@@ -150,10 +150,10 @@
 //#define ERR_NEEDMOREPARAMS()     
 //#define ERR_NOTONCHANNEL()      
 //#define ERR_CHANOPRIVSNEEDED()    
-#define RPL_INVITING(nick,channel) " 341 * " + nick + " " + channel
+#define RPL_INVITING(nick,channel) " 341 * " + channel + " " + nick
 #define ERR_NOSUCHNICK(nickname) " 401 * " + nickname + " :No such nick/channel"
 #define ERR_USERONCHANNEL(user, channel) " 443 * " + user + " " + channel + " :is already on channel"
-#define RPL_AWAY(nick) " 301 * " + nick + " :" + message
+#define RPL_AWAY(nick, message) " 301 * " + nick + " :" + message
 
 //Command: PRIVMSG
 //#define ERR_NOSUCHNICK()     
@@ -232,6 +232,15 @@
 #define RPL_NOUSERS() " 395 * " + ":Nobody logged in"   
 #define RPL_ENDOFUSERS() " 394 * " ":End of users"
 #define ERR_USERSDISABLED() " 446 * " + ":USERS has been disabled"
+
+
+//Command: kick
+//#define ERR_NEEDMOREPARAMS        
+//#define ERR_NOSUCHCHANNEL
+//#define ERR_BADCHANMASK                 
+//#define ERR_CHANOPRIVSNEEDED
+//#define ERR_USERNOTINCHANNEL            
+//#define ERR_NOTONCHANNEL
 // structure
 
 #endif

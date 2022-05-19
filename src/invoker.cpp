@@ -8,6 +8,7 @@
 #include "join.hpp"
 #include "list.hpp"
 #include "usercmd.hpp"
+#include "kick.hpp"
 
 namespace irc {
 
@@ -19,7 +20,7 @@ Invoker::Invoker() {
 	//_commands.push_back(new Privmsg()); 
 	_commands.push_back(new Join());
     _commands.push_back(new List());
-    _commands.push_back(new Usercmd());
+    _commands.push_back(new Kick());
 
 }
 

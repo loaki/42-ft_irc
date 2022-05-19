@@ -7,10 +7,11 @@ Ping::~Ping() {}
 
 std::string	Ping::execute(std::string line, User * user, Select &select) {
     std::string msg;
-    
+
     std::vector<std::string> v_cmd = ft_split(line, " ");
     if (v_cmd.size() < 2) {
-        msg = ERR_NOORIGIN();
+        msg = user->getPrefix();
+        msg += ERR_NOORIGIN();
         msg += delimiter;
         select.sendReply(msg, user);
         return msg;

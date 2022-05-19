@@ -159,6 +159,25 @@ void Select::sendReply(std::string msg, User *user){
 	}
 }
 
+Channel * Select::getChannelByName(std::string name){
+	for(std::vector<Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
+		if((*(*it)).getChannelName() == name)
+			return (*it);
+	}
+	return NULL;
+}
+
+
+std::vector<User *> Select::getUsersInchannel(std::string name){
+	std::vector<Channel *>::iterator it = this->_channels.begin();
+	std::vector<User *> users;
+	for(; it != this->_channels.end(); it++) {
+		if((*it)->getChannelName() == name)
+			return ((*it)->getUsers());
+	}
+	return users;
+}
+
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
 
@@ -173,7 +192,6 @@ void    Select::handleReq(const int fd) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-
 		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
 			std::string sendMsg = users.back()->getPrefix();

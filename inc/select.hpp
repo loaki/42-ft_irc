@@ -27,11 +27,12 @@ class Select {
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
         std::vector<Channel *>      getAllChannel();
-        void                       addChannel(std::string channelName);
+        void                        addChannel(std::string channelName);
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
-
         void    					clientDisconn(const int clientFd);
-        void                 sendReply(std::string msg, User *user);
+        void                        sendReply(std::string msg, User *user);
+        Channel *                   getChannelByName(std::string name);
+        std::vector<User *>         getUsersInchannel(std::string name);
 
     private:
     // private: method
@@ -42,6 +43,7 @@ class Select {
         void    					handleReq(const int fd);
         void    					sentToAll(const int fd,  std::string str);
 		std::vector<std::string> 	configBuff();
+       
 
     // private: attributs
         Socket              		_serverSocket;
