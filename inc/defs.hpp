@@ -52,7 +52,7 @@
 #define RPL_MYINFO(servername, version, umonde, cmonde) " 004 " + " " + servername + " " +version + " " + umond +  " " +cmonde       
 #define RPL_BOUNCE(servername, port) " 005 :Try server " + servername + ", port " + port 
 
-//Command PASS: USER
+//Command PASS and USER
 #define ERR_NEEDMOREPARAMS(command) " 461 * " + command + " :Not enough parameters"
 #define ERR_ALREADYREGISTRED()  " 462 * :Unauthorized command (already registered)"
 
@@ -194,7 +194,7 @@
 
 //Command: WHO
 //#define ERR_NOSUCHSERVER()
-#define RPL_WHOREPLY(channel, user, server, nick, state, real) " 352 * " + channel + " " + user + " " + " " + server + " " + nick + " " + state + " :0 " + real
+#define RPL_WHOREPLY(channel, user, server, nick, state, real) " 352 * " + channel + " " + user +  " " + server + " " + nick + " " + state + " :0 " + real
 #define RPL_ENDOFWHO(name) " 315 * " + name + " :End of /WHO list"
 
 //Command: WHOIS
@@ -224,7 +224,7 @@
 //#define ERR_NOORIGIN()    
 //#define ERR_NOSUCHSERVER()
 
-//Command: USERS   
+//Command: USERS 
 //#define ERR_NOSUCHSERVER()
 #define ERR_FILEERROR(op, file) " 424 * " + ":File error doing " + op + " on " + file
 #define RPL_USERSSTART() " 392 * " + ":UserID Terminal Host"

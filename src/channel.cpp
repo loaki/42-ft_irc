@@ -77,9 +77,4 @@ void	Channel::MsgToUser(User* user, std::string message){
 
 
 
-// void	Channel::MsgToAChannel(std::string message){
-
-// }
-
-
 }

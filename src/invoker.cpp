@@ -7,6 +7,7 @@
 #include "privmsg.hpp"
 #include "join.hpp"
 #include "list.hpp"
+#include "usercmd.hpp"
 
 namespace irc {
 
@@ -18,6 +19,7 @@ Invoker::Invoker() {
 	//_commands.push_back(new Privmsg()); 
 	_commands.push_back(new Join());
     _commands.push_back(new List());
+    _commands.push_back(new Usercmd());
 
 }
 
