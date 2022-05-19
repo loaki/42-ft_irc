@@ -44,38 +44,38 @@ namespace irc
 		if (v_cmd.size() != 4) {
 			std::string cmd = "KICK";
 			msg += ERR_NEEDMOREPARAMS(cmd) + delimiter;  // no params
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 			return msg;
 		}
 
 		if (checkChannelName(channelname) == false) {
 			msg += ERR_BADCHANMASK(channelname) + delimiter; //channel name wrong
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 			return msg;
 		}
 
 		if (isChannel(channelname, select) == false) {
 		 	msg += ERR_NOSUCHCHANNEL(channelname) + delimiter;  //no channel
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 			return msg;
 		}
 
 		if (userInChannel(channelname, nickname, select) == false) {
 			msg += ERR_USERNOTINCHANNEL(nickname, channelname) + delimiter; //no user
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 			return msg;
 		}
 
 		Channel *Channel = select.getChannelByName(channelname);
 		if (Channel->getAdmin()->getNickname() != user->getNickname()) { // not admin; 
 			msg += ERR_CHANOPRIVSNEEDED(channelname) + delimiter;
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 			return msg;
 		}
 
 		Channel->removeUser(nickname);
 		msg += " KICK " + channelname + " " + nickname + " " + user->getNickname();
-		select.sendReply(msg, user);
+		select.sendReply(msg, *user);
 		return msg;
 	}
 

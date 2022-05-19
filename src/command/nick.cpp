@@ -38,25 +38,24 @@ std::string	Nick::execute(std::string line, User *user, Select &select) {
 	//ERR_ERRONEUSNICKNAME: erro nickname
 	if (nameError(newnick) == false) {
 		msg += ERR_ERRONEUSNICKNAME(newnick) + delimiter;
-		select.sendReply(msg, user);
+		select.sendReply(msg, *user);
 		return msg;
 	}
 	//RR_NONICKNAMEGIVEN: don t nickname given
 	if (v_cmd.size() != 2 || newnick.length() == 0) {
 		msg += ERR_NONICKNAMEGIVEN();
 		msg += delimiter;
-		select.sendReply(msg, user);
+		select.sendReply(msg, *user);
 		return msg;
 	}
 	//ERR_NICKNAMEINUSE :aleardy use in user
 	if (nickinUse(newnick, select.getUsers()) == true) {
 		msg += ERR_NICKNAMEINUSE(newnick) + delimiter;
-		select.sendReply(msg, user);
+		select.sendReply(msg, *user);
 		return msg;
 	}
-	
-    msg +=  " NICK " + newnick + delimiter;
-	select.sendReply(msg, user);
+    msg = user->getPrefix() + " NICK " + newnick + delimiter;//tmd
+	select.sendReply(msg, *user);
     user->setNickname(newnick);
 	
 	return msg;

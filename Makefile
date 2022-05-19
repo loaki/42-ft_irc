@@ -21,11 +21,9 @@ SRCS := ./src/main.cpp \
 		./src/command/list.cpp \
 		./src/command/kick.cpp \
 		./src/invoker.cpp \
-		./src/channel.cpp 
-	
-
-		
-		
+		./src/channel.cpp \
+		./src/command/quit.cpp \
+		./src/command/invite.cpp
 
 OBJS := $(SRCS:%.cpp=%.o)
 

@@ -21,13 +21,13 @@ std::string List::execute(std::string line, User *user, Select &select){
 			msg = user->getPrefix();
 			msg += RPL_LIST((*it)->getChannelName(), std::to_string((*it)->getUsers().size()));
 			msg += delimiter;
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 
 			msg.clear();
 			msg = user->getPrefix();
 			msg += RPL_LISTEND();
 			msg += delimiter;
-			select.sendReply(msg, user);
+			select.sendReply(msg, *user);
 		}
 	}
 	return msg;

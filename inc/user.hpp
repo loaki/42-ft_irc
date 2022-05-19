@@ -1,18 +1,18 @@
 #ifndef USER_HPP
-# define USER_HPP
+#define USER_HPP
 
 #include "defs.hpp"
 
-namespace irc {
+namespace irc
+{
 
-class User {
+	class User
+	{
 	public:
 		User(int fd);
 		~User();
 
-		void				setId(std::vector<User *> users);
-		void				setName(std::vector<std::string> Buff);
-		std::string			craftId();
+		void setName(std::vector<std::string> Buff);
 
 		void 				setNickname(std::string name);
 		void				setUsername(std::string name);
@@ -22,25 +22,27 @@ class User {
 		bool 				getJoinServer();
 		std::string			getPrefix();
 
-		std::pair<size_t, int> const& 	getUserId() const;
 
-		std::string const&	getNickname()const;
-		std::string const& 	getUsername()const;
-		std::string const& 	getHostname()const;
-		int const& 			getUserFd()const;	
-		
+		void setAdmin(std::pair<std::string, bool> newAdmin); // admin setter
+		void addChannel(std::string channel); // add new channel to user after join
+
+		std::string const &getNickname() const;
+		std::string const &getUsername() const;
+		std::string const &getHostname() const;
+		std::string const &getChannelList() const; // get user-in channel list 
+		int const &getUserFd() const;
 
 	private:
-		int 							_fd;
-		std::pair<size_t, int>			_id; // .first = id .second = +i
-		std::string 					_nickname;
-		std::string 					_username;
-		std::string 					_hostname;
-		bool							_joinServer;
+		int _fd;
+		std::string _nickname;
+		std::string _username;
+		std::string _hostname;
+		bool _joinServer;
+		std::pair<std::string, bool> _channelAdmin; // user admin attributs
+		std::vector<std::string>		_onChannel;		// user on channels
 
-};
+	};
 
 }
-
 
 #endif

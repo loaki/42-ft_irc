@@ -1,15 +1,16 @@
-#ifndef PRIVMSG_HPP
-# define PRIVMSG_HPP
+#ifndef QUIT_HPP
+# define QUIT_HPP
 
 #include "defs.hpp"
 #include "select.hpp"
 #include "command.hpp"
+
 namespace irc {
 
-class Privmsg :public Command {
+class Quit :public Command {
     public:
-        Privmsg();
-        virtual ~Privmsg();
+        Quit();
+        virtual ~Quit();
 
         std::string execute(std::string line, User *user, Select &select);
 };

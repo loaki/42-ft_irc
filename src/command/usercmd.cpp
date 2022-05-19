@@ -16,13 +16,13 @@ Usercmd::~Usercmd(){}
 // 	if (v_cmd.size() != 4 && user->getJoinServer() == false) {
 // 		std::string cmd = "USER";
 // 		msg += ERR_NEEDMOREPARAMS(cmd) + delimiter;
-// 		select.sendReply(msg, user);
+// 		select.sendReply(msg, *user);
 // 		return msg;
 // 	}
 // 	if (user->getJoinServer() == true) {
 // 		msg += ERR_ALREADYREGISTRED();
 // 		msg += delimiter;
-// 		select.sendReply(msg, user);
+// 		select.sendReply(msg, *user);
 // 		return msg;
 // 	}
 // 	user->setUsername(v_cmd[1]);
@@ -30,7 +30,7 @@ Usercmd::~Usercmd(){}
 	
 // 	msg += RPL_WELCOME(user->getNickname(), user->getUsername(), user->getHostname());
 // 	msg += delimiter;
-// 	select.sendReply(msg, user);
+// 	select.sendReply(msg, *user);
 // 	user->setJoinServer(true);
 
 // 	return msg;

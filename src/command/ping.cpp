@@ -1,9 +1,10 @@
 #include "ping.hpp"
 
-namespace irc {
+namespace irc
+{
 
-Ping::Ping() { _name = "PING";}
-Ping::~Ping() {}
+    Ping::Ping() { _name = "PING"; }
+    Ping::~Ping() {}
 
 std::string	Ping::execute(std::string line, User * user, Select &select) {
     std::string msg;
@@ -13,13 +14,13 @@ std::string	Ping::execute(std::string line, User * user, Select &select) {
         msg = user->getPrefix();
         msg += ERR_NOORIGIN();
         msg += delimiter;
-        select.sendReply(msg, user);
+        select.sendReply(msg, *user);
         return msg;
 
     }
     msg = user->getPrefix() + " PONG :" + v_cmd[1] + delimiter;
-    select.sendReply(msg, user);
+    select.sendReply(msg, *user);
     return msg;
 }
 
-} 
+}

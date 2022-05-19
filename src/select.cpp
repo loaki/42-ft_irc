@@ -92,12 +92,21 @@ void    Select::clientDisconn(const int clientFd) {
 	close(clientFd);
 	FD_CLR(clientFd, &this->mainSet);   //delete fd of mainset
 
-	std::vector<int>::iterator it = this->clientfds.begin();
-	for (; it != this->clientfds.end(); it++) {
+	// std::vector<int>::iterator it = this->clientfds.begin();
+	for (std::vector<int>::iterator it = clientfds.begin(); it != clientfds.end(); it++) {
 		if (*it == clientFd)
-			break ;
+		{
+			clientfds.erase(it);
+			break ;}
 	}
-	this->clientfds.erase(it);
+	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+		if ((*(*it)).getUserFd() == clientFd)
+		{
+			delete (*it);
+			users.erase(it);
+			break ;
+		}
+	}
 }
 
 std::vector<std::string> Select::configBuff() {
@@ -121,7 +130,8 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	}
 	return false;
 }
-void                   Select::addChannel(std::string channelName) {
+
+void Select::addChannel(std::string channelName) {
 
 	_channels.push_back(new Channel(channelName));
 }
@@ -143,23 +153,23 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 			users.back()->setNickname(nick);
 		}
 	}
-
-	(users.back())->setId(users);
 	(users.back())->setName(Buff);
 }
 
-void Select::sendReply(std::string msg, User *user){
+void Select::sendReply(std::string msg, User &user){
 	int ret = -1;
 
-	ret = send(user->getUserFd(), msg.c_str(), msg.length(), 0);
+	ret = send(user.getUserFd(), msg.c_str(), msg.length(), 0);
+	std::cout<<"ret :"<<ret<<"\nmsg :"<<msg<<std::endl;
 	if (ret == SYSCALL_ERR) {
 		std::cout << "[Send response failed]" << std::endl;
-		this->clientDisconn(user->getUserFd());
+		this->clientDisconn(user.getUserFd());
 		return;
 	}
 }
 
 Channel * Select::getChannelByName(std::string name){
+	// std::vector<Channel *>::iterator it = this->_channels.begin();
 	for(std::vector<Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
 		if((*(*it)).getChannelName() == name)
 			return (*it);
@@ -180,10 +190,12 @@ std::vector<User *> Select::getUsersInchannel(std::string name){
 
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
+	// std::string s(this->buff);
 
 	bzero(this->buff, sizeof(this->buff));
 	ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
 	// std::cout << fd << std::endl;
+
 	std::cout << "\n ### client : \n" << this->buff << std::endl;
 	// debug
 	if (ret <= 0) { 
@@ -192,13 +204,15 @@ void    Select::handleReq(const int fd) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
+
+// std::cout << "BUFF SIZE ****** " << Buff.size() << std::endl;
 		if (PasswordConnect(Buff)== true ) {
 			addNewUsr((this)->users, Buff);
 			std::string sendMsg = users.back()->getPrefix();
 			sendMsg += RPL_WELCOME(users.back() ->getNickname(), users.back()->getUsername(), users.back()->getHostname());
 			sendMsg += delimiter;
 			std::cout << sendMsg << std::endl;
-			this->sendReply(sendMsg, users.back());
+			this->sendReply(sendMsg, *users.back());
 			users.back()->setJoinServer(true);
 		}
 		else {
