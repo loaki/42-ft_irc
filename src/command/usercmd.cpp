@@ -1,12 +1,12 @@
-#include "usercmd.hpp"
+// #include "usercmd.hpp"
 
-namespace irc {
+// namespace irc {
 
-Usercmd::Usercmd(){
-	_name = "USER";
-}
+// Usercmd::Usercmd(){
+// 	_name = "USER";
+// }
 
-Usercmd::~Usercmd(){}
+// Usercmd::~Usercmd(){}
 
 // std::string Usercmd::execute(std::string line, User *user, Select &select){
 // 	std::string msg;

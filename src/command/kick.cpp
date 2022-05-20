@@ -112,8 +112,4 @@ namespace irc
 		return msg;
 	}
 
-
-
-
-
 } // namespace irc
