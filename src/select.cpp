@@ -11,6 +11,12 @@ Select::~Select() {
 	for(; it != ite; it++)
 		delete(*it);
 	this->users.clear();
+
+	std::vector<Channel *>::iterator cit = this->_channels.begin();
+	std::vector<Channel *>::iterator cite = this->_channels.end();
+	for(; cit != cite; it++)
+		delete(*cit);
+	this->_channels.clear();
 }
 
 Select& Select::operator=(Select const& rhs) {
