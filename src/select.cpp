@@ -230,6 +230,7 @@ void    Select::handleReq(const int fd) {
 			users.back()->setJoinServer(true);
 		}
 		else {
+			if (users.back()->getJoinServer() == true) {
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
 				if (users[i]->getUserFd() == fd )
@@ -238,6 +239,7 @@ void    Select::handleReq(const int fd) {
 					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
 			
 				}
+			}
 			}
 		}
 	}
