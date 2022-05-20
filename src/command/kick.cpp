@@ -101,13 +101,14 @@ namespace irc
 
 		// to user admin :xueming!xuwang@127.0.0.1 KICK #aa xueming_ xueming
 		User *removeUser = channel->getUserInchannel(nickname);
-		channel->removeUser(removeUser);
 		msg += " KICK " + channelname + " " + nickname + " " + user->getNickname() + delimiter;
 		//to user remouve
 		if (removeUser != nullptr)
 			select.sendReply(msg, *removeUser);
 		//to admin
-		select.sendReply(msg, *user);
+		if (removeUser != user)
+			select.sendReply(msg, *user);
+		channel->removeUser(removeUser);
 		return msg;
 	}
 
