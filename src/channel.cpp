@@ -10,7 +10,7 @@ Channel::Channel(std::string channelname, User *admin):_admin(admin){
 
 Channel::Channel(std::string channelname):_channelName(channelname){}
 
-User *	Channel::getAdmin() {return this->_admin;}
+User 	*Channel::getAdmin() {return this->_admin;}
 
 Channel::Channel(){}
 
@@ -34,12 +34,11 @@ void	Channel::setChannelName(std::string name){
 
 User*	Channel::getUserInchannel(std::string name){
 	std::vector<User *>::iterator it = this->_users.begin();
-	// User * user = new User(-1);
-	for(; it != this-> _users.end(); it++) {
+	for(; it != this->_users.end(); it++) {
 		if((*it)->getNickname() == name)
 			return *it;
 	}
-	return NULL;
+	return nullptr;
 }
 
 User*	Channel::getUserInchannel(int fd){
@@ -58,7 +57,7 @@ void	Channel::addUser(User *user){
 
 void	Channel::removeUser(User *user){
 	std::vector<User *>::iterator it = this->_users.begin();
-	for (; it < this->_users.end(); it++) {
+	for (; it != this->_users.end(); it++) {
 		if ((*it) == user) {
 			delete (*it);
 			this->_users.erase(it);
@@ -67,18 +66,6 @@ void	Channel::removeUser(User *user){
 	}
 }
 
-void	Channel::removeUser(std::string name){
-	std::vector<User *>::iterator it = this->_users.begin();
-	for (; it < this->_users.end(); it++) {
-		if ((*it)->getNickname() == name) {
-			delete (*it);
-			this->_users.erase(it);
-			return ;
-		}
-		else
-			it++;
-	}
-}
 
 void	Channel::printAllUsers(){
 	std::vector<User *>::const_iterator it = this->_users.begin();

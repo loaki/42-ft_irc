@@ -25,7 +25,6 @@ class Channel {
        
         void                addUser(User *user);
         void                removeUser(User *user);
-        void                removeUser(std::string name);
         void                printAllUsers();
         bool                isUser(User *user);
         bool	            isUser(std::string name);

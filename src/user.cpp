@@ -6,7 +6,7 @@ User::User(int fd): _fd(fd), _nickname(), _username(){}
 
 User::~User(){}
 
-void			User::setName(std::vector<std::string> Buff) {
+void User::setName(std::vector<std::string> Buff) {
 
 	for (std::vector<std::string>::iterator it = Buff.begin(); it != Buff.end(); it++) {
 		if ((*it).find("USER") != std::string::npos) 

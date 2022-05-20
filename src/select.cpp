@@ -131,7 +131,7 @@ bool Select::PasswordConnect(std::vector<std::string> buff){
 	return false;
 }
 
-void Select::addChannel(std::string channelName) {
+void Select::addChannel(std::string channelName) { 
 
 	_channels.push_back(new Channel(channelName));
 }
@@ -160,7 +160,6 @@ void Select::sendReply(std::string msg, User &user){
 	int ret = -1;
 
 	ret = send(user.getUserFd(), msg.c_str(), msg.length(), 0);
-	std::cout<<"ret :"<<ret<<"\nmsg :"<<msg<<std::endl;
 	if (ret == SYSCALL_ERR) {
 		std::cout << "[Send response failed]" << std::endl;
 		this->clientDisconn(user.getUserFd());
@@ -171,7 +170,7 @@ void Select::sendReply(std::string msg, User &user){
 Channel * Select::getChannelByName(std::string name){
 	// std::vector<Channel *>::iterator it = this->_channels.begin();
 	for(std::vector<Channel *>::iterator it = this->_channels.begin(); it != this->_channels.end(); it++) {
-		if((*(*it)).getChannelName() == name)
+		if((*it)->getChannelName() == name)
 			return (*it);
 	}
 	return NULL;
@@ -186,6 +185,15 @@ std::vector<User *> Select::getUsersInchannel(std::string name){
 			return ((*it)->getUsers());
 	}
 	return users;
+}
+
+bool Select::userInVec(std::string name) {
+	std::vector<User *>::iterator it = users.begin();
+		for(; it != users.end(); it++) {
+			if ((*it)->getNickname() == name)
+				return true;
+		}
+	return false;
 }
 
 void    Select::handleReq(const int fd) {
@@ -206,7 +214,7 @@ void    Select::handleReq(const int fd) {
 		std::vector<std::string> Buff = configBuff();
 
 // std::cout << "BUFF SIZE ****** " << Buff.size() << std::endl;
-		if (PasswordConnect(Buff)== true ) {
+		if (PasswordConnect(Buff)== true && users.back()->getJoinServer() == false) {
 			addNewUsr((this)->users, Buff);
 			std::string sendMsg = users.back()->getPrefix();
 			sendMsg += RPL_WELCOME(users.back() ->getNickname(), users.back()->getUsername(), users.back()->getHostname());

@@ -113,7 +113,7 @@
 //#define ERR_CHANOPRIVSNEEDED 
 #define ERR_KEYSET(channel) " 467 * " + channel + " :Channel key already set"
 #define ERR_NOCHANMODES(channel) " 477 * " + channel + " :Channel doesn't support modes"       
-#define ERR_USERNOTINCHANNEL(nick, channel) " 441 * " + nick + " #" + channel + ":They aren't on that channel"    
+#define ERR_USERNOTINCHANNEL(nick, channel) " 441 * " + nick + " " + channel + ":They aren't on that channel"    
 #define ERR_UNKNOWNMODE(str) " 472 * " + str + " :is unknown mode char to me"
 #define RPL_CHANNELMODEIS(channel, mode, params) " 324 * " + channel + " " + mode + " " + params
 #define RPL_BANLIST(channel, banip)  " 367 * " + channel + " " + banip            

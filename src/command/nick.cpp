@@ -24,7 +24,7 @@ bool	Nick::nameError(std::string name){
 		return false;
 		
 	for(size_t i = 0; i < name.size(); i++){
-		if (!isalnum(name[i]))
+		if (!isalnum(name[i]) && name[i] != '_')
 			return false;
 	}
 	return true;
