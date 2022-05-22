@@ -337,9 +337,12 @@ bool	Select::needChunk() {
 bool	Select::ifJoinServer(int fd) {
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
+		std::cout << "check join fd: " << (*it)->getUserFd() << "compare with: " << fd << std::endl;
+		std::cout << "check join cd: " << (*it)->getJoinServer() << std::endl;
 		if ((*it)->getUserFd() == fd && (*it)->getJoinServer() == true)
 			return true;
 	}
+	std::cout << "Can't execute cmd\n";
 	return false;
 }
 
@@ -359,17 +362,14 @@ void    Select::handleReq(const int fd) {
 	}
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
-		std::cout << "BUFF SIZE ****** " << Buff.size() << std::endl;
+		std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
+		std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
 			addNewUsr(fd, Buff);
+			std::cout<<"****1"<<std::endl;
 		}
-
-		if (this->chunkConnect(Buff) && this->needChunk() == true) {
-			this->addNewUsrChunk(fd, Buff);
-			return ;
-		}
-
-		if (ifJoinServer(fd) == true) {
+		else if (ifJoinServer(fd) == true) {
+			std::cout<<"****3"<<std::endl;
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
 				if (users[i]->getUserFd() == fd )
@@ -380,6 +380,12 @@ void    Select::handleReq(const int fd) {
 				}
 			}
 		}
+		if (this->chunkConnect(Buff) && this->needChunk() == true) {
+			std::cout<<"****2"<<std::endl;
+			this->addNewUsrChunk(fd, Buff);
+			return ;
+		}
+
 	}
 }
 

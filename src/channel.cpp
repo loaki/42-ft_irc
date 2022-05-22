@@ -15,11 +15,6 @@ User 	*Channel::getAdmin() {return this->_admin;}
 Channel::Channel(){}
 
 Channel::~Channel(){
-	std::vector<User *>::iterator it = this->_users.begin();
-	std::vector<User *>::iterator ite = this-> _users.end();
-	for(; it != ite; it++) 
-		delete *it;
-	this->_users.clear();
 }
 
 std::vector<User *>	Channel::getUsers(){ return this->_users;}
@@ -58,8 +53,8 @@ void	Channel::addUser(User *user){
 void	Channel::removeUser(User *user){
 	std::vector<User *>::iterator it = this->_users.begin();
 	for (; it != this->_users.end(); it++) {
-		if ((*it) == user) {
-			delete (*it);
+		if ((*it)->getUserFd() == user->getUserFd()) {
+			std::cout<<"removed\n";
 			this->_users.erase(it);
 			return ;
 		}
@@ -76,7 +71,7 @@ void	Channel::printAllUsers(){
 bool	Channel::isUser(User *user){
 	std::vector<User *>::const_iterator it = this->_users.begin();
 	for (; it != this->_users.end(); it++) {
-		if (*it == user)
+		if ((*it)->getUserFd() == user->getUserFd())
 			return true;
 	}
 	return false;
