@@ -85,9 +85,9 @@ void    Select::clientConn() { //get client fd
 		exitFailure("accept failed");
 
 	User *newuser = new User(clientConnFd);
+	newuser->setNickname("");
 	newuser->setHostname(std::string(inet_ntoa(clientAddr.sin_addr)));
 	newuser->setJoinServer(false);
-	// std::cout<<"hostname: "<<newuser->getHostname()<<std::endl; 
 	this->users.push_back(newuser);// add new user
 	this->clientfds.push_back(clientConnFd); //add new fd
 	FD_SET(clientConnFd, &this->mainSet);  //add new clientfd to mainset
@@ -146,14 +146,19 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
+	
 	for(; it != Buff.end(); it++) {
 		if ((*it).find("NICK") != std::string::npos) 
 		{
 			nick = (*it).substr(5);
 			for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 				if ((*it)->getNickname() == nick) {
-					nick = nick+'_';
-					it = users.begin();
+					// nick = nick+'_';
+					// it = users.begin();
+					std::string msg = ":";
+					msg += ERR_NICKNAMEINUSE(nick);
+					std::cout << "MESSAGE USER FALSE: " << msg << std::endl;
+					send(0, msg.c_str(), msg.length(), 0) ;
 				}
 			}
 			users.back()->setNickname(nick);
@@ -207,7 +212,7 @@ void    Select::handleReq(const int fd) {
 	// std::string s(this->buff);
 
 	bzero(this->buff, sizeof(this->buff));
-	ret = recv(fd, this->buff, MAX_BUFF, 0);   //rece message form clientfd
+	ret = recv(fd, this->buff, MAX_BUFF, 0);   //recv message form clientfd
 	// std::cout << fd << std::endl;
 
 	std::cout << "\n ### client : \n" << this->buff << std::endl;
@@ -223,23 +228,25 @@ void    Select::handleReq(const int fd) {
 		if (PasswordConnect(Buff)== true && users.back()->getJoinServer() == false) {
 			addNewUsr((this)->users, Buff);
 			std::string sendMsg = users.back()->getPrefix();
-			sendMsg += RPL_WELCOME(users.back() ->getNickname(), users.back()->getUsername(), users.back()->getHostname());
+			if (users.back()->getNickname() == "")
+				return;
+			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
 			sendMsg += delimiter;
-			std::cout << sendMsg << std::endl;
+			std::cout << "SEND MSG: " << sendMsg << std::endl;
 			this->sendReply(sendMsg, *users.back());
 			users.back()->setJoinServer(true);
 		}
 		else {
 			if (users.back()->getJoinServer() == true) {
-			Invoker _Invoker;
-			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd )
-				{
-					std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-			
+				Invoker _Invoker;
+				for (unsigned int i = 0; i < users.size(); i++) {
+					if (users[i]->getUserFd() == fd )
+					{
+						std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
+						std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+				
+					}
 				}
-			}
 			}
 		}
 	}

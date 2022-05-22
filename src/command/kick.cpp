@@ -25,7 +25,7 @@ namespace irc
 			if((*it)->getChannelName() == name)
 				return *it;
 		}
-		return nullptr;
+		return NULL;
 	}
 
 	bool Kick::userInChannel(std::string channelname, std::string name, Select &select){
@@ -86,14 +86,15 @@ namespace irc
 
 		
 		Channel *channel = getChannel(channelname, select);
-		// if (channel->getAdmin()->getNickname() != user->getNickname()) { // not admin; 
-		// 	msg += ERR_CHANOPRIVSNEEDED(channelname) + delimiter;
-		// 	select.sendReply(msg, *user);
-		// 	return msg;
-		// }
+		std::vector<User *> users = channel->getUsers();
+		if ((users.front())->getNickname() != user->getNickname()) { // not admin; 
+			msg += ERR_CHANOPRIVSNEEDED(channelname) + delimiter;
+			select.sendReply(msg, *user);
+			return msg;
+		}
 
 		std::cout << "channel name: " << channel->getChannelName() << std::endl;
-		std::vector<User *> users = channel->getUsers();
+		// std::vector<User *> users = channel->getUsers();
 		std::vector<User *>::iterator it = users.begin();
 		std::vector<User *>::iterator ite = users.end();
 		for(; it!=ite; it++)
@@ -103,7 +104,7 @@ namespace irc
 		User *removeUser = channel->getUserInchannel(nickname);
 		msg += " KICK " + channelname + " " + nickname + " " + user->getNickname() + delimiter;
 		//to user remouve
-		if (removeUser != nullptr)
+		if (removeUser != NULL)
 			select.sendReply(msg, *removeUser);
 		//to admin
 		if (removeUser != user)

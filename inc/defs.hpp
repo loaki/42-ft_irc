@@ -121,7 +121,7 @@
 #define RPL_EXCEPTLIST(channel, mask)  " 348 * " + channel + " " + mask  
 #define RPL_ENDOFEXCEPTLIST(channel) " 349 * " + channel + " :End of channel exception list"
 #define RPL_INVITELIST (channel, inviter)  " 346 * " + channel + " " + inviter       
-#define RPL_ENDOFINVITELIST(channel) " 347 * "channel + " :End of channel invite list"
+#define RPL_ENDOFINVITELIST(channel) " 347 * " + channel + " :End of channel invite list"
 #define RPL_UNIQOPIS(channel, nick) " 325 * " + channel + " " + nick
 
 //command: TOPIC
@@ -130,7 +130,7 @@
 //#define RPL_TOPIC()    
 //#define ERR_NOCHANMODES()
 #define RPL_NOTOPIC(channel) " 331 * " + channel + " :No topic is set"
-#define ERR_CHANOPRIVSNEEDED(channel) " 482 * #" + channel + ":You're not channel operator"
+#define ERR_CHANOPRIVSNEEDED(channel) " 482 * " + channel + ":You're not channel operator"
 
 
 
