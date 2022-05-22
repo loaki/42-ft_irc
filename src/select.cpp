@@ -177,12 +177,12 @@ void		Select::addNewUsr(std::vector<std::string> Buff) {
 			nick = (*it).substr(5);
 			for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 				if ((*it)->getNickname() == nick) {
-					// nick = nick+'_';
-					// it = users.begin();
-					std::string msg = ":";
-					msg += ERR_NICKNAMEINUSE(nick);
-					std::cout << "MESSAGE USER FALSE: " << msg << std::endl;
-					send(0, msg.c_str(), msg.length(), 0) ;
+					nick = nick + '_';
+					it = users.begin();
+					// std::string msg = ":";
+					// msg += ERR_NICKNAMEINUSE(nick);
+					// std::cout << "MESSAGE USER FALSE: " << msg << std::endl;
+					// send(0, msg.c_str(), msg.length(), 0) ;
 				}
 			}
 			users.back()->setNickname(nick);
