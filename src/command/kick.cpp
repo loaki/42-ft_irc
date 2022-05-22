@@ -86,14 +86,15 @@ namespace irc
 
 		
 		Channel *channel = getChannel(channelname, select);
-		// if (channel->getAdmin()->getNickname() != user->getNickname()) { // not admin; 
-		// 	msg += ERR_CHANOPRIVSNEEDED(channelname) + delimiter;
-		// 	select.sendReply(msg, *user);
-		// 	return msg;
-		// }
+		std::vector<User *> users = channel->getUsers();
+		if ((users.front())->getNickname() != user->getNickname()) { // not admin; 
+			msg += ERR_CHANOPRIVSNEEDED(channelname) + delimiter;
+			select.sendReply(msg, *user);
+			return msg;
+		}
 
 		std::cout << "channel name: " << channel->getChannelName() << std::endl;
-		std::vector<User *> users = channel->getUsers();
+		// std::vector<User *> users = channel->getUsers();
 		std::vector<User *>::iterator it = users.begin();
 		std::vector<User *>::iterator ite = users.end();
 		for(; it!=ite; it++)

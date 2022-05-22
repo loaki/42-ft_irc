@@ -130,7 +130,7 @@
 //#define RPL_TOPIC()    
 //#define ERR_NOCHANMODES()
 #define RPL_NOTOPIC(channel) " 331 * " + channel + " :No topic is set"
-#define ERR_CHANOPRIVSNEEDED(channel) " 482 * #" + channel + ":You're not channel operator"
+#define ERR_CHANOPRIVSNEEDED(channel) " 482 * " + channel + ":You're not channel operator"
 
 
 
