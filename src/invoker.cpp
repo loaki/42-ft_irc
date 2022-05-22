@@ -9,6 +9,7 @@
 #include "kick.hpp"
 #include "quit.hpp"
 #include "invite.hpp"
+#include "notice.hpp"
 
 namespace irc {
 
@@ -22,6 +23,7 @@ Invoker::Invoker() {
     _commands.push_back(new Kick());
 	_commands.push_back(new Quit());
     _commands.push_back(new Invite());
+    _commands.push_back(new Notice());
 }
 
 Invoker::~Invoker() {

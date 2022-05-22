@@ -38,7 +38,7 @@ User*	Channel::getUserInchannel(std::string name){
 		if((*it)->getNickname() == name)
 			return *it;
 	}
-	return nullptr;
+	return NULL;
 }
 
 User*	Channel::getUserInchannel(int fd){
