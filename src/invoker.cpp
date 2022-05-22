@@ -6,7 +6,6 @@
 #include "part.hpp"
 #include "privmsg.hpp"
 #include "join.hpp"
-#include "list.hpp"
 #include "usercmd.hpp"
 #include "kick.hpp"
 #include "quit.hpp"
@@ -21,7 +20,6 @@ Invoker::Invoker() {
 	_commands.push_back(new Part());
 	_commands.push_back(new Privmsg()); 
 	_commands.push_back(new Join());
-    //_commands.push_back(new List());
     _commands.push_back(new Kick());
 	_commands.push_back(new Quit());
     _commands.push_back(new Invite());

@@ -224,13 +224,15 @@ void    Select::handleReq(const int fd) {
 			users.back()->setJoinServer(true);
 		}
 		else {
-			Invoker _Invoker;
-			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd )
-				{
-					std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-			
+			if (users.back()->getJoinServer() == true) {
+				Invoker _Invoker;
+				for (unsigned int i = 0; i < users.size(); i++) {
+					if (users[i]->getUserFd() == fd )
+					{
+						std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
+						std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+				
+					}
 				}
 			}
 		}
