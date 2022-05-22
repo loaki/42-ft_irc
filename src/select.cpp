@@ -337,7 +337,7 @@ bool	Select::needChunk() {
 bool	Select::ifJoinServer(int fd) {
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
-		if ((*it)->getJoinServer() == true)
+		if ((*it)->getUserFd() == fd && (*it)->getJoinServer() == true)
 			return true;
 	}
 	return false;
