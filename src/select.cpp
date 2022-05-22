@@ -166,32 +166,50 @@ bool	Select::checkNameInVec(std::vector<std::string> buff){
 	return false;
 }
 
-void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
-
-	std::string nick; 
+void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
+	bool to_set = true;
+	std::string nick;
+	User	*user = NULL;
 	std::vector<std::string>::iterator it = Buff.begin();
 	
+	for (std::vector<User *>::iterator uit = users.begin(); uit != users.end(); uit++) {
+		if ((*uit)->getUserFd() == fd) {
+			user = *uit;
+			break ;
+		}
+	}
+
 	for(; it != Buff.end(); it++) {
 		if ((*it).find("NICK") != std::string::npos) 
 		{
 			nick = (*it).substr(5);
 			for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 				if ((*it)->getNickname() == nick) {
-					// nick = nick+'_';
-					// it = users.begin();
 					std::string msg = ":";
 					msg += ERR_NICKNAMEINUSE(nick);
-					std::cout << "MESSAGE USER FALSE: " << msg << std::endl;
-					send(0, msg.c_str(), msg.length(), 0) ;
+					std::cout << "normal MESSAGE USER FALSE: " << msg << std::endl;
+					send(user->getUserFd(), msg.c_str(), msg.length(), 0) ;
+					to_set = false;
 				}
 			}
-			users.back()->setNickname(nick);
+			if (to_set)
+				user->setNickname(nick);
 		}
 	}
-	(users.back())->setName(Buff);
+	user->setName(Buff);
+	if (user->getNickname() != "" && user->getUsername() != "" ) {
+		user->setChunk(false);
+		std::string sendMsg = user->getPrefix();
+		sendMsg += RPL_WELCOME(user->getNickname(), user->getUsername(), user->getHostname());
+		sendMsg += delimiter;
+		std::cout << sendMsg << std::endl;
+		this->sendReply(sendMsg, *user);
+		user->setJoinServer(true);
+	}
 }
 
-void		Select::addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std::string> Buff) {
+void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff) {
+	bool	to_set = true;
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
 	User	*user = NULL;
@@ -208,11 +226,15 @@ void		Select::addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std:
 				nick = (*it).substr(5);
 				for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 					if ((*it)->getNickname() == nick) {
-						nick = nick + '_';
-						it = users.begin();
+						std::string msg = ":";
+						msg += ERR_NICKNAMEINUSE(nick);
+						std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
+						send(fd, msg.c_str(), msg.length(), 0) ;
+						to_set = false;
 					}
 				}
-				user->setNickname(nick);
+				if (to_set)
+					user->setNickname(nick);
 			}
 			if (it->find("PASS") != std::string::npos)
 				user->setPass(it->substr(5));
@@ -227,6 +249,7 @@ void		Select::addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std:
 			std::cout << sendMsg << std::endl;
 			this->sendReply(sendMsg, *user);
 			user->setJoinServer(true);
+			user->setChunk(false);
 		}
 	}
 }
@@ -311,6 +334,15 @@ bool	Select::needChunk() {
 	return false;
 }
 
+bool	Select::ifJoinServer(int fd) {
+	std::vector<User *>::iterator it = users.begin();
+	for(; it != users.end(); it++) {
+		if ((*it)->getJoinServer() == true)
+			return true;
+	}
+	return false;
+}
+
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
 	// std::string s(this->buff);
@@ -328,30 +360,23 @@ void    Select::handleReq(const int fd) {
 	else {  //set msg to vec
 		std::vector<std::string> Buff = configBuff();
 		std::cout << "BUFF SIZE ****** " << Buff.size() << std::endl;
-		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && users.back()->getJoinServer() == false) {
-			addNewUsr((this)->users, Buff);
-			std::string sendMsg = users.back()->getPrefix();
-			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
-			sendMsg += delimiter;
-			std::cout << "SEND MSG: " << sendMsg << std::endl;
-			this->sendReply(sendMsg, *users.back());
-			users.back()->setJoinServer(true);
-			users.back()->setChunk(false);
+		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
+			addNewUsr(fd, Buff);
 		}
-		else if (this->chunkConnect(Buff) && this->needChunk() == true) {
-			this->addNewUsrChunk(fd, (this)->users, Buff);
+
+		if (this->chunkConnect(Buff) && this->needChunk() == true) {
+			this->addNewUsrChunk(fd, Buff);
 			return ;
 		}
-		else {
-			if (users.back()->getJoinServer() == true) {
-				Invoker _Invoker;
-				for (unsigned int i = 0; i < users.size(); i++) {
-					if (users[i]->getUserFd() == fd )
-					{
-						std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-						std::cout << "\n  ### server :\n" << sendMsg << std::endl;
-				
-					}
+
+		if (ifJoinServer(fd) == true) {
+			Invoker _Invoker;
+			for (unsigned int i = 0; i < users.size(); i++) {
+				if (users[i]->getUserFd() == fd )
+				{
+					std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
+					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+			
 				}
 			}
 		}

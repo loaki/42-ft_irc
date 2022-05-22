@@ -32,8 +32,8 @@ class Select {
         std::vector<User *>         getUsersInchannel(std::string name);
         Channel *                   getChannelByName(std::string name);
         void                        addChannel(std::string channelName);
-		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
-        void		                addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std::string> Buff);
+		void						addNewUsr(int fd, std::vector<std::string> Buff);
+        void		                addNewUsrChunk(int fd, std::vector<std::string> Buff);
         void    					clientDisconn(const int clientFd);
         void                        sendReply(std::string msg, User &user);
         bool                        userInVec(std::string name);
@@ -43,6 +43,7 @@ class Select {
         bool                        chunkConnect(std::vector<std::string> buff);
         bool	                    checkNameInVec(std::vector<std::string> buff);
         bool                        needChunk();
+		bool						ifJoinServer(int fd);
     private:
     // private: method
         int     					max_fd();
