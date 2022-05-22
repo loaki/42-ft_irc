@@ -2,7 +2,8 @@
 
 namespace irc {
 
-User::User(int fd): _fd(fd), _nickname(), _username(){}
+User::User(int fd): _fd(fd), _nickname(), _username(), _chunk(true) {
+}
 
 User::~User(){}
 
@@ -43,8 +44,16 @@ void User::setHostname(std::string hostname){
 	this->_hostname = hostname;
 }
 
+void User::setPass(std::string pass){
+	this->_pass = pass;
+}
+
 void User::setUserFd(int fd){
 	this->_fd = fd;
+}
+
+void	User::setChunk(bool chunk) {
+	this->_chunk = chunk;
 }
 
 void User::setJoinServer(bool join) {
@@ -58,6 +67,10 @@ std::string const& User::getNickname()const{return this->_nickname;}
 std::string const& User::getUsername()const{ return this->_username;}
 
 std::string const& User::getHostname()const{ return this->_hostname;}
+
+std::string const& User::getPass()const{ return this->_pass;}
+
+bool const&	User::getChunk()const { return this->_chunk; }
 
 int const& User::getUserFd()const {return this->_fd;}
 

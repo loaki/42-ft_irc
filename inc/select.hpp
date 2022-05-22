@@ -23,6 +23,8 @@ class Select {
         ~Select();
         Select& operator=(Select const& rhs);
 
+        int y;
+
     // public: method
         void    					serverStart(const short& port, const std::string&  password);
         std::vector<User *> 		getUsers();
@@ -31,10 +33,16 @@ class Select {
         Channel *                   getChannelByName(std::string name);
         void                        addChannel(std::string channelName);
 		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
+        void		                addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std::string> Buff);
         void    					clientDisconn(const int clientFd);
         void                        sendReply(std::string msg, User &user);
         bool                        userInVec(std::string name);
-
+        bool                        userInVec(int fd);
+        bool 	                    checkNameInBuff(std::vector<std::string> buff, std::string name);
+        bool                        competeConnect(std::vector<std::string> buff);
+        bool                        chunkConnect(std::vector<std::string> buff);
+        bool	                    checkNameInVec(std::vector<std::string> buff);
+        bool                        needChunk();
     private:
     // private: method
         int     					max_fd();

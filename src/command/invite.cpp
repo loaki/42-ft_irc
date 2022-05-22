@@ -3,6 +3,7 @@
 // ERR_NOSUCHNICK       -> ok
 // ERR_NOTONCHANNEL
 // ERR_USERONCHANNEL
+// ERR_CHANOPRIVSNEEDED :You're not channel operator
 // RPL_INVITING         -> ok
 
 namespace irc {
@@ -11,7 +12,7 @@ namespace irc {
     Invite::Invite() { _name = "INVITE"; }
     Invite::~Invite() {}
     
-     bool Invite::_SuchNick(std::string to,  Select &select) {
+     bool Invite::suchNick(std::string to,  Select &select) {
         int fd = -1;
         
         std::vector<User *> users = select.getUsers();
@@ -59,14 +60,14 @@ namespace irc {
 
         return msg3;
     }
-     // bool Invite::_OnChannel(std::string channel, User * user) {
-
+    // bool Invite::onChannel(std::string channel, User * user) {
+       
     // }
 
-    // std::string Invite::_userOnCha(User * user) {
-
+    // std::string Invite::userOnChanel(User * user) {
+            
     // }
-    
+
     std::string Invite::execute(std::string line, User *user, Select &select) {
         std::string msg;
         
@@ -75,13 +76,17 @@ namespace irc {
         std::string inviteName = v_cmd[1];
         std::string inviteCha = v_cmd[2];
 
-        if ((this->_SuchNick(inviteName, select)) == false) {
+        if ((this->suchNick(inviteName, select)) == false) {
             msg = user->getPrefix();
             msg += ERR_NOSUCHNICK(user->getNickname(), inviteName);
             msg += delimiter;
             select.sendReply(msg, *user);
             return msg;
         }
+        //if (inChannel(inviteCha, user))
+        //if (userInChane(user)) {
+        //     ERR_USERONCHANNEL
+        // }
 
         return this->_inviting(inviteName, inviteCha, user, select);
     }

@@ -25,7 +25,7 @@ namespace irc
 			if((*it)->getChannelName() == name)
 				return *it;
 		}
-		return nullptr;
+		return NULL;
 	}
 
 	bool Kick::userInChannel(std::string channelname, std::string name, Select &select){
@@ -104,7 +104,7 @@ namespace irc
 		channel->removeUser(removeUser);
 		msg += " KICK " + channelname + " " + nickname + " " + user->getNickname() + delimiter;
 		//to user remouve
-		if (removeUser != nullptr)
+		if (removeUser != NULL)
 			select.sendReply(msg, *removeUser);
 		//to admin
 		select.sendReply(msg, *user);
