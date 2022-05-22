@@ -32,8 +32,8 @@ class Select {
         std::vector<User *>         getUsersInchannel(std::string name);
         Channel *                   getChannelByName(std::string name);
         void                        addChannel(std::string channelName);
-		void						addNewUsr(std::vector<User *> users, std::vector<std::string> Buff);
-        void		                addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std::string> Buff);
+		void						addNewUsr(std::vector<std::string> Buff);
+        void		                addNewUsrChunk(int fd, std::vector<std::string> Buff);
         void    					clientDisconn(const int clientFd);
         void                        sendReply(std::string msg, User &user);
         bool                        userInVec(std::string name);

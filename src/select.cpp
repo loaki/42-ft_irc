@@ -166,7 +166,7 @@ bool	Select::checkNameInVec(std::vector<std::string> buff){
 	return false;
 }
 
-void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff) {
+void		Select::addNewUsr(std::vector<std::string> Buff) {
 
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
@@ -186,7 +186,7 @@ void		Select::addNewUsr(std::vector<User *> users, std::vector<std::string> Buff
 	(users.back())->setName(Buff);
 }
 
-void		Select::addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std::string> Buff) {
+void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff) {
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
 	User	*user = NULL;
@@ -205,6 +205,7 @@ void		Select::addNewUsrChunk(int fd, std::vector<User *> users, std::vector<std:
 					if ((*it)->getNickname() == nick) {
 						nick = nick + '_';
 						it = users.begin();
+						break ;
 					}
 				}
 				user->setNickname(nick);
@@ -324,7 +325,7 @@ void    Select::handleReq(const int fd) {
 		std::vector<std::string> Buff = configBuff();
 		std::cout << "BUFF SIZE ****** " << Buff.size() << std::endl;
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && users.back()->getJoinServer() == false) {
-			addNewUsr((this)->users, Buff);
+			addNewUsr(Buff);
 			std::string sendMsg = users.back()->getPrefix();
 			sendMsg += RPL_WELCOME(users.back()->getNickname(), users.back()->getUsername(), users.back()->getHostname());
 			sendMsg += delimiter;
@@ -334,7 +335,7 @@ void    Select::handleReq(const int fd) {
 			users.back()->setChunk(false);
 		}
 		else if (this->chunkConnect(Buff) && this->needChunk() == true) {
-			this->addNewUsrChunk(fd, (this)->users, Buff);
+			this->addNewUsrChunk(fd, Buff);
 			return ;
 		}
 		else {
