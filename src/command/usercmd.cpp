@@ -38,5 +38,5 @@
 
 
 
-}
+//}
 //USER <username> <hostname> <servername> <realname>

@@ -149,10 +149,9 @@
 //Command: INVITE
 //#define ERR_NEEDMOREPARAMS()     
 //#define ERR_NOTONCHANNEL()      
-//#define ERR_CHANOPRIVSNEEDED()
+//#define ERR_CHANOPRIVSNEEDED()  
 #define RPL_INVITING(from, to, channel) " 341 " + from + " " + to + " " + channel
 #define ERR_NOSUCHNICK(from, to) " 401 " + from + " " + to + " :No such nick"
-// #define ERR_NOTONCHANNEL()
 #define ERR_USERONCHANNEL(user, channel) " 443 * " + user + " " + channel + " :is already on channel"
 // #define RPL_AWAY(nick) " 301 * " + nick + " :" + message
 

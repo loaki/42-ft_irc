@@ -1,9 +1,9 @@
 // #ifndef USERCMD_HPP
 // # define USERCMD_HPP
 
-// // #include "defs.hpp"
-// // #include "select.hpp"
-// // #include "command.hpp"
+// #include "defs.hpp"
+// #include "select.hpp"
+// #include "command.hpp"
 
 // namespace irc {
 
@@ -17,7 +17,7 @@
 // };
 
 
-//}
+// }
 
 
-//#endif 
+// #endif 
