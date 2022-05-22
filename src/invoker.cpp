@@ -6,6 +6,7 @@
 #include "part.hpp"
 #include "privmsg.hpp"
 #include "join.hpp"
+#include "usercmd.hpp"
 #include "kick.hpp"
 #include "quit.hpp"
 #include "invite.hpp"

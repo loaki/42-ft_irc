@@ -19,9 +19,9 @@ namespace irc {
 
         private:
             std::string _inviting(std::string to, std::string channel, User * user, Select &select);
-            std::string _noSuchNick(std::string to, User * user, Select &select);
-            // std::string _notOnCha(std::string channel, User * user);
-            // std::string _userOnCha(User * user);
+            bool suchNick(std::string to, Select &select);
+            bool onChannel(std::string channel, User * user);
+             bool userOnChannel(User * user);
     };
 
 }
