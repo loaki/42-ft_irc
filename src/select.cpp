@@ -372,6 +372,7 @@ void    Select::handleReq(const int fd) {
 			}
 		}
 		if (this->chunkConnect(Buff) && this->needChunk() == true) {
+			// msg already name exist call 2 time ... need debug this
 			std::cout<<"****2"<<std::endl;
 			this->addNewUsrChunk(fd, Buff);
 			return ;
