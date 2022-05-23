@@ -1,11 +1,5 @@
 #include "invite.hpp"
 
-// ERR_NOSUCHNICK       -> ok
-// ERR_NOTONCHANNEL
-// ERR_USERONCHANNEL
-// ERR_CHANOPRIVSNEEDED :You're not channel operator
-// RPL_INVITING         -> ok
-
 namespace irc {
 
 // public
@@ -60,13 +54,20 @@ namespace irc {
 
         return msg3;
     }
-    // bool Invite::onChannel(std::string channel, User * user) {
-       
-    // }
 
-    // std::string Invite::userOnChanel(User * user) {
-            
-    // }
+    bool Invite::adminOnChannel(Channel *chan, std::string name) {
+        return chan->isUser(name);
+    }
+
+    bool Invite::userOnChannel(Channel *chan, std::string name) {
+        return chan->isUser(name);
+    }
+
+    bool Invite::isAdmin(Channel *chan, std::string name){
+        if (chan->getAdmin()->getNickname()== name)
+            return true;
+        return false;
+    }
 
     std::string Invite::execute(std::string line, User *user, Select &select) {
         std::string msg;
@@ -76,17 +77,24 @@ namespace irc {
         std::string inviteName = v_cmd[1];
         std::string inviteCha = v_cmd[2];
 
-        if ((this->suchNick(inviteName, select)) == false) {
+        Channel *chan = select.getChannelByName(inviteCha);
+
+        if ((this->suchNick(inviteName, select)) == false) {  //ok
             msg = user->getPrefix();
             msg += ERR_NOSUCHNICK(user->getNickname(), inviteName);
             msg += delimiter;
             select.sendReply(msg, *user);
             return msg;
         }
-        //if (inChannel(inviteCha, user))
-        //if (userInChane(user)) {
-        //     ERR_USERONCHANNEL
-        // }
+  
+        //is already on channel
+        if (userOnChannel(chan, inviteName) == true) {  //ok
+            msg = user->getPrefix();
+            msg += ERR_USERONCHANNEL(inviteName, inviteCha);
+            msg += delimiter;
+            select.sendReply(msg, *user);
+            return msg;
+        }
 
         return this->_inviting(inviteName, inviteCha, user, select);
     }

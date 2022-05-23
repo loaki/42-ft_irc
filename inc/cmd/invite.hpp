@@ -3,6 +3,7 @@
 
 #include "defs.hpp"
 #include "command.hpp"
+#include "select.hpp"
 
 // ERR_NOSUCHNICK
 // ERR_NOTONCHANNEL
@@ -20,8 +21,9 @@ namespace irc {
         private:
             std::string _inviting(std::string to, std::string channel, User * user, Select &select);
             bool suchNick(std::string to, Select &select);
-            bool onChannel(std::string channel, User * user);
-             bool userOnChannel(User * user);
+            bool adminOnChannel(Channel *chan, std::string name);
+            bool userOnChannel(Channel *chan, std::string name);
+            bool isAdmin(Channel *chan, std::string name);
     };
 
 }
