@@ -7,6 +7,7 @@
 #include "command.hpp"
 #include "channel.hpp"
 #include "invoker.hpp"
+#include "bot.hpp"
 
 namespace irc {
 // ns begin

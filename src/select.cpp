@@ -345,11 +345,9 @@ bool	Select::ifJoinServer(int fd) {
 
 void    Select::handleReq(const int fd) {
 	int	ret = -1;
-	// std::string s(this->buff);
 
 	bzero(this->buff, sizeof(this->buff));
 	ret = recv(fd, this->buff, MAX_BUFF, 0);   //recv message form clientfd
-	// std::cout << fd << std::endl;
 
 	std::cout << "\n ### client : \n" << this->buff << std::endl;
 	// debug

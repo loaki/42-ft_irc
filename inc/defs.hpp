@@ -41,6 +41,7 @@
 # define INVALID_FD -1
 # define SYSCALL_ERR -1
 # define delimiter "\r\n"
+# define BOTCREATE 1
 
 /*
 ** Reply + ERROR
