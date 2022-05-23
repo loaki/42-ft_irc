@@ -23,7 +23,8 @@ SRCS := ./src/main.cpp \
 		./src/channel.cpp \
 		./src/command/quit.cpp \
 		./src/command/notice.cpp \
-		./src/command/invite.cpp
+		./src/command/invite.cpp \
+		./src/command/ban.cpp \
 
 OBJS := $(SRCS:%.cpp=%.o)
 

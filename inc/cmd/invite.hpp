@@ -5,9 +5,6 @@
 #include "command.hpp"
 #include "select.hpp"
 
-// ERR_NOSUCHNICK
-// ERR_NOTONCHANNEL
-// ERR_USERONCHANNEL
 
 namespace irc {
     

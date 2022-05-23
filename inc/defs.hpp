@@ -243,4 +243,9 @@
 //#define ERR_NOTONCHANNEL
 // structure
 
+//command :ban
+474
+no nick
+482
+353
 #endif
