@@ -114,6 +114,11 @@ void    Select::clientConn() { //get client fd
 	clientConnFd = accept(this->_serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
 	if (clientConnFd == SYSCALL_ERR)
 		exitFailure("accept failed");
+
+	if (fcntl(clientConnFd, F_SETFL, O_NONBLOCK) == SYSCALL_ERR) {
+        close(clientConnFd);
+        exitFailure("fcntl failed");
+    }
 	
 	User *newuser = new User(clientConnFd);
 	newuser->setNickname("");
@@ -223,7 +228,7 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 	}
 }
 
-void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff) {
+void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff, bool withComplete) {
 	bool	to_set = true;
 	std::string nick; 
 	std::vector<std::string>::iterator it = Buff.begin();
@@ -239,17 +244,19 @@ void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff) {
 			if ((*it).find("NICK") != std::string::npos) 
 			{
 				nick = (*it).substr(5);
-				for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-					if ((*it)->getNickname() == nick) {
-						std::string msg = ":";
-						msg += ERR_NICKNAMEINUSE(nick);
-						std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
-						send(fd, msg.c_str(), msg.length(), 0) ;
-						to_set = false;
+				if (withComplete == false) {
+					for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
+						if ((*it)->getNickname() == nick) {
+							std::string msg = ":";
+							msg += ERR_NICKNAMEINUSE(nick);
+							std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
+							send(fd, msg.c_str(), msg.length(), 0) ;
+							to_set = false;
+						}
 					}
+					if (to_set)
+						user->setNickname(nick);
 				}
-				if (to_set)
-					user->setNickname(nick);
 			}
 			if (it->find("PASS") != std::string::npos)
 				user->setPass(it->substr(5));
@@ -338,12 +345,12 @@ bool	Select::chunkConnect(std::vector<std::string> buff) {
 	return false;
 }
 
-bool	Select::needChunk() {
+bool	Select::needChunk(int fd) {
 	if (this->users.size() == 0)
 		return false;
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
-		if ((*it)->getChunk() == true)
+		if ((*it)->getUserFd() == fd && (*it)->getChunk() == true)
 			return true;
 	}
 	return false;
@@ -390,6 +397,8 @@ void    Select::handleReq(const int fd) {
 		return;
 	} 
 	else {  //set msg to vec
+		bool	to_execute = true;
+		bool	with_complete = false;
 		std::vector<std::string> Buff = configBuff();
 		std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
 		std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
@@ -412,8 +421,18 @@ void    Select::handleReq(const int fd) {
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
 			addNewUsr(fd, Buff);
 			std::cout<<"****1"<<std::endl;
+			to_execute = false;
+			with_complete = true;
 		}
-		else if (ifJoinServer(fd) == true) {
+
+		if (this->chunkConnect(Buff) && this->needChunk(fd) == true && ifJoinServer(fd) == false) {
+			// msg already name exist call 2 time ... need debug this
+			std::cout<<"****2"<<std::endl;
+			this->addNewUsrChunk(fd, Buff, with_complete);
+			to_execute = false;
+		}
+
+		if (to_execute == true && ifJoinServer(fd) == true) {
 			std::cout<<"****3"<<std::endl;
 			// Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
@@ -424,11 +443,6 @@ void    Select::handleReq(const int fd) {
 			
 				}
 			}
-		}
-		if (this->chunkConnect(Buff) && this->needChunk() == true) {
-			std::cout<<"****2"<<std::endl;
-			this->addNewUsrChunk(fd, Buff);
-			return ;
 		}
 
 	}
