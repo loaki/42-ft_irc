@@ -27,10 +27,21 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		msg += delimiter;
 		return msg;
 	}
+
+	
+	if (user->isBan(channelname) == true) {
+		msg = user->getPrefix();
+		std::string ban = user->getNickname();
+		msg += ERR_BANNEDFROMCHAN(channelname, ban);
+		msg += delimiter;
+		select.sendReply(msg, *user);
+		return msg;
+	} 
+
+
 	std::string listname = "";
  	std::vector<Channel *> channels = select.getAllChannel();
-	if (select.getChannelByName(channelname) == NULL)
-	{
+	if (select.getChannelByName(channelname) == NULL){
 		select.addChannel(channelname);
 	}
 	channels = select.getAllChannel();
@@ -38,13 +49,13 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	{
 		if ((*(*it)).getChannelName() == channelname)
 		{
-			std::cout <<"chan : "<< (*(*it)).getChannelName()<<std::endl;
+			//std::cout <<"chan : "<< (*(*it)).getChannelName()<<std::endl;
 			if ((*(*it)).getUserInchannel(user->getNickname()) == NULL)
 				(*(*it)).addUser(user);
 			std::vector<User *> chanUsers = (*(*it)).getUsers();
 			for (std::vector<User*>::iterator it2 = chanUsers.begin(); it2 < chanUsers.end(); it2++)
 			{
-				std::cout <<"nick : "<< (*(*it2)).getNickname() <<std::endl;
+				//std::cout <<"nick : "<< (*(*it2)).getNickname() <<std::endl;
 				listname += (*(*it2)).getNickname();
 				if ((it2) == (chanUsers.end() - 1))
 					break;
@@ -52,7 +63,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 			}
 		}
 	}
-	std::cout <<"listname : "<<listname<<std::endl;
+	//std::cout <<"listname : "<<listname<<std::endl;
 	std::string msgself1 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ channelname + " : @" + listname + "\r\n";
 	std::string msgself2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ channelname + " :End of /NAMES list"+"\r\n";
 	msg = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + line + "\r\n";

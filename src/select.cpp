@@ -178,7 +178,7 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 				if ((*it)->getNickname() == nick) {
 					std::string msg = ":";
 					msg += ERR_NICKNAMEINUSE(nick);
-					std::cout << "normal MESSAGE USER FALSE: " << msg << std::endl;
+					//std::cout << "normal MESSAGE USER FALSE: " << msg << std::endl;
 					send(user->getUserFd(), msg.c_str(), msg.length(), 0) ;
 					to_set = false;
 				}
@@ -193,7 +193,7 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 		std::string sendMsg = user->getPrefix();
 		sendMsg += RPL_WELCOME(user->getNickname(), user->getUsername(), user->getHostname());
 		sendMsg += delimiter;
-		std::cout << sendMsg << std::endl;
+		//std::cout << sendMsg << std::endl;
 		this->sendReply(sendMsg, *user);
 		user->setJoinServer(true);
 	}
@@ -220,7 +220,7 @@ void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff, bool withCom
 						if ((*it)->getNickname() == nick) {
 							std::string msg = ":";
 							msg += ERR_NICKNAMEINUSE(nick);
-							std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
+							//std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
 							send(fd, msg.c_str(), msg.length(), 0) ;
 							to_set = false;
 						}
@@ -252,7 +252,7 @@ void Select::sendReply(std::string msg, User &user){
 
 	ret = send(user.getUserFd(), msg.c_str(), msg.length(), 0);
 	if (ret == SYSCALL_ERR) {
-		std::cout << "[Send response failed]" << std::endl;
+		//std::cout << "[Send response failed]" << std::endl;
 		this->clientDisconn(user.getUserFd());
 		return;
 	}
@@ -279,6 +279,8 @@ std::vector<User *> Select::getUsersInchannel(std::string name){
 }
 
 bool Select::userInVec(std::string name) {
+	if (this->users.size() == 0)
+		return false;
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
 		if ((*it)->getNickname() == name)
@@ -287,15 +289,15 @@ bool Select::userInVec(std::string name) {
 	return false;
 }
 
-bool Select::userInVec(int fd) {
+User *Select::getUserInVec(std::string name) {
 	if (this->users.size() == 0)
-		return false;
+		return NULL;
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
-		if ((*it)->getUserFd() == fd)
-			return true;
+		if ((*it)->getNickname() == name)
+			return *it;
 	}
-	return false;
+	return NULL;
 }
 
 bool	Select::competeConnect(std::vector<std::string> buff) {
@@ -330,12 +332,12 @@ bool	Select::needChunk(int fd) {
 bool	Select::ifJoinServer(int fd) {
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
-		std::cout << "check join fd: " << (*it)->getUserFd() << "compare with: " << fd << std::endl;
-		std::cout << "check join cd: " << (*it)->getJoinServer() << std::endl;
+		//std::cout << "check join fd: " << (*it)->getUserFd() << "compare with: " << fd << std::endl;
+		//std::cout << "check join cd: " << (*it)->getJoinServer() << std::endl;
 		if ((*it)->getUserFd() == fd && (*it)->getJoinServer() == true)
 			return true;
 	}
-	std::cout << "Can't execute cmd\n";
+	//std::cout << "Can't execute cmd\n";
 	return false;
 }
 
@@ -355,24 +357,24 @@ void    Select::handleReq(const int fd) {
 		bool	to_execute = true;
 		bool	with_complete = false;
 		std::vector<std::string> Buff = configBuff();
-		std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
-		std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
+		// std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
+		// std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
 			addNewUsr(fd, Buff);
-			std::cout<<"****1"<<std::endl;
+			//std::cout<<"****1"<<std::endl;
 			to_execute = false;
 			with_complete = true;
 		}
 
 		if (this->chunkConnect(Buff) && this->needChunk(fd) == true && ifJoinServer(fd) == false) {
 			// msg already name exist call 2 time ... need debug this
-			std::cout<<"****2"<<std::endl;
+			//std::cout<<"****2"<<std::endl;
 			this->addNewUsrChunk(fd, Buff, with_complete);
 			to_execute = false;
 		}
 
 		if (to_execute == true && ifJoinServer(fd) == true) {
-			std::cout<<"****3"<<std::endl;
+			//std::cout<<"****3"<<std::endl;
 			Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
 				if (users[i]->getUserFd() == fd )

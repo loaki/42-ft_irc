@@ -33,6 +33,9 @@ namespace irc
 		bool const&			getChunk() const;
 		std::string const&	getChannelList() const; // get user-in channel list 
 		int const&			getUserFd() const;
+		std::vector<std::string> getBanChan();
+		void 				setBanList(std::string name);
+		bool 				isBan(std::string name);
 
 	private:
 		int 						_fd;
@@ -40,9 +43,9 @@ namespace irc
 		std::string 				_username;
 		std::string 				_hostname;
 		bool 						_joinServer;
-		std::vector<std::string>	_inChannel;		// user on channels
 		bool						_chunk;
 		std::string					_pass;
+		std::vector<std::string>	_banChanlist;
 	};
 
 }

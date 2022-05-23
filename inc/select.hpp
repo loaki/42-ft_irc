@@ -38,7 +38,7 @@ class Select {
         void    					clientDisconn(const int clientFd);
         void                        sendReply(std::string msg, User &user);
         bool                        userInVec(std::string name);
-        bool                        userInVec(int fd);
+        User *                      getUserInVec(std::string name);
         bool 	                    checkNameInBuff(std::vector<std::string> buff, std::string name);
         bool                        competeConnect(std::vector<std::string> buff);
         bool                        chunkConnect(std::vector<std::string> buff);

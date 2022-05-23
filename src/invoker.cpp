@@ -11,6 +11,7 @@
 #include "quit.hpp"
 #include "invite.hpp"
 #include "notice.hpp"
+#include "mode.hpp"
 
 namespace irc {
 
@@ -25,7 +26,9 @@ Invoker::Invoker() {
 	_commands.push_back(new Quit());
     _commands.push_back(new Invite());
     _commands.push_back(new Notice());
+    _commands.push_back(new Mode());
 }
+
 
 Invoker::~Invoker() {
 	std::vector<Command*>::iterator it;
@@ -37,17 +40,6 @@ Invoker::~Invoker() {
 
 std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select &select)
 {
-    // commands["NICK"] = cmd_nick._nick;
-    // std::vector<std::string>::iterator it = Buff.begin();
-    // for(;it != Buff.end(); it++) {
-    //     std::vector<std::string> cmd = irc::ft_split(*it, " ");
-    //     if  (commands.find(cmd[0]) != commands.end())
-    //     {
-    //         //std::cout << "cmd:" << (commands[cmd[0]](*it, user))<<std::endl;
-    //         return (commands[cmd[0]](*it, user, select));
-    //     }
-    // }
-    // return ("invalid command");
     std::string msg;
     std::vector<std::string>::iterator it = Buff.begin();
     for(;it != Buff.end(); it++) {
@@ -61,10 +53,6 @@ std::string Invoker::parser(std::vector<std::string> Buff, User * user, Select &
         }
     }
     return msg;
-
-        
-    // }
-   
 }
 
 }

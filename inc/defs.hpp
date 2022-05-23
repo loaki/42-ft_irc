@@ -94,7 +94,7 @@
 //Command: JOIN
 //#define ERR_NEEDMOREPARAMS()
 //#define ERR_UNAVAILRESOURCE()
-#define ERR_BANNEDFROMCHAN(channel)  " 474 * " + channel + " :Cannot join channel (+b)"
+#define ERR_BANNEDFROMCHAN(channel, ban)  " 474 " + ban + " " + channel + " :Cannot join channel (+b)"
 #define ERR_CHANNELISFULL(channel)  " 471 * " + channel + " :Cannot join channel (+l)" //
 #define ERR_INVITEONLYCHAN(channel)  " 473 * " + channel + " :Cannot join channel (+i)" //
 #define ERR_BADCHANNELKEY(channel)  " 475 * " + channel + " :Cannot join channel (+k)" //
@@ -245,8 +245,8 @@
 // structure
 
 //command :ban
-474
-no nick
-482
-353
+// 474
+// no nick
+// 482
+// 353
 #endif

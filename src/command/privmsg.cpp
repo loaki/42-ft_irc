@@ -22,7 +22,7 @@ namespace irc
 				int ret = -1;
 
 				ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
-				std::cout << "ret :" << ret << "\nmsg :" << msg << std::endl;
+				//std::cout << "ret :" << ret << "\nmsg :" << msg << std::endl;
 				if (ret == SYSCALL_ERR)
 				{
 					std::cout << "[Send response failed]" << std::endl;

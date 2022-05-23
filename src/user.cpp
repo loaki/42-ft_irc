@@ -2,7 +2,7 @@
 
 namespace irc {
 
-User::User(int fd): _fd(fd), _nickname(), _username(), _chunk(true) {
+User::User(int fd): _fd(fd), _nickname(), _username(), _chunk(true), _banChanlist() {
 }
 
 User::~User(){}
@@ -14,7 +14,7 @@ void User::setName(std::vector<std::string> Buff) {
 		{
 			std::string temp = (*it).substr(5);
 			int end = temp.find(" ");
-			std::cout << "User name: " << temp.substr(0, end) << std::endl;
+			//std::cout << "User name: " << temp.substr(0, end) << std::endl;
 			this->setUsername(temp.substr(0, end));
 		}
 	}
@@ -61,6 +61,23 @@ void User::setJoinServer(bool join) {
 }
 
 bool User::getJoinServer(){ return this->_joinServer;}
+
+void User::setBanList(std::string name) {
+	this->_banChanlist.push_back(name);
+}
+
+
+
+bool User::isBan(std::string name){
+	std::vector<std::string>::iterator it = this->_banChanlist.begin();
+	for(; it != this->_banChanlist.end(); it++) {
+		if (*it == name)
+			return true;
+	}
+	return false;
+}
+
+std::vector<std::string> User::getBanChan(){return this->_banChanlist;}
 
 std::string const& User::getNickname()const{return this->_nickname;}
 
