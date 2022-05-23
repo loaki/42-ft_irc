@@ -1,57 +1,41 @@
-// #include "bot.hpp"
+#include "bot.hpp"
 
-// namespace irc {
+namespace irc {
 
-// Bot::Bot(int fd): _fd(fd), _botname(), _username(), _chunk(true) {
-// }
+Bot::Bot(int fd, std::string pass) : User(fd) {
+	setNickname("MrBot");
+	setUsername("MrBot");
+	setPass(pass);
+}
 
-// Bot::~Bot(){}
+Bot::~Bot(){}
 
-// void Bot::setName(std::vector<std::string> Buff) {
+void Bot::addBot(Select *sel) {
+	(void)sel;
 
-	
-// }
+	std::vector<std::string> Info(3);
+	Info[0] = "NICK " + getNickname();
+	Info[1] = "PASS " + getPass();
+	Info[2] = "USER " + getUsername() + " " + getUsername() + " " + getHostname();
+	// for (std::vector<std::string>::iterator it = Info.begin(); it != Info.end(); it++) {
+	// 	std::cout << "INFO: " << *it << std::endl;
+	// }
+	sel->addNewUsr(getUserFd(), Info);
+	bool ret = sel->ifJoinServer(getUserFd());
+	std::cout << "IS JOIN SERVER RETURN : " << ret << std::endl;
+	// Join join;
 
-// std::string			User::getPrefix(){
-// 	std::string prefix;
+	// std::string ChannelAdd = "JOIN #botChan\r\n";
+	// std::string msg = join.execute(ChannelAdd, this, *sel);
+	// std::cout << "BOT MESSAGE ****** " << msg << std::endl;
+};
 
-// 	prefix += ":";
-// 	prefix += this->_botname;
-// 	prefix += "!";
-// 	prefix += this->_username;
-// 	prefix += "@";
-// 	prefix += this->_hostname;
-// 	return prefix;
-// }
+	// Command join;
 
-// void User::setBotname(std::string name){
-// 	this->_botname = name;
-// }
+	// std::string ChannelAdd = "JOIN #botChan\r\n";
+	// std::string msg = join.execute(ChannelAdd, this, *sel);
 
+	// Channel botC = (*sel).getChannelByName("#botChan");
+	// std::cout << "BOT MESSAGE ****** " << msg << "IS CHAN NAME::::: " << botC->printAllUsers() << std::endl;
 
-// void User::setUserFd(int fd){
-// 	this->_fd = fd;
-// }
-
-// void	User::setChunk(bool chunk) {
-// 	this->_chunk = chunk;
-// }
-
-// void User::setJoinServer(bool join) {
-// 	this->_joinServer = join;
-// }
-
-// bool User::getJoinServer(){ return this->_joinServer;}
-
-// std::string const& User::getbotname()const{return this->_botname;}
-
-// std::string const& User::getHostname()const{ return this->_hostname;}
-
-// std::string const& User::getPass()const{ return this->_pass;}
-
-// bool const&	User::getChunk()const { return this->_chunk; }
-
-// int const& User::getBotFd()const {return this->_fd;}
-
-
-// }
+}

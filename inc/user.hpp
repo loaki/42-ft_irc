@@ -34,7 +34,7 @@ namespace irc
 		std::string const&	getChannelList() const; // get user-in channel list 
 		int const&			getUserFd() const;
 
-	private:
+	protected:
 		int 						_fd;
 		std::string 				_nickname;
 		std::string 				_username;

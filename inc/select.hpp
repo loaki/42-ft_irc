@@ -24,7 +24,9 @@ class Select {
         ~Select();
         Select& operator=(Select const& rhs);
 
-        int y;
+		bool						botIsCon;
+		bool						hasJoined;
+		int							botFD;
 
     // public: method
         void    					serverStart(const short& port, const std::string&  password);
@@ -44,6 +46,8 @@ class Select {
         bool                        chunkConnect(std::vector<std::string> buff);
         bool                        needChunk();
 		bool						ifJoinServer(int fd);
+
+		void						botConn(std::string pass);
     private:
     // private: method
         int     					max_fd();
@@ -66,6 +70,7 @@ class Select {
         char                		buff[4096];
 		std::vector<Channel *>		_channels;
 		//Invoker					_Invoker;
+
 
        
 };

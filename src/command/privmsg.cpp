@@ -29,6 +29,13 @@ namespace irc
 					select.clientDisconn((*it)->getUserFd());
 					return NULL;
 				}
+				if ((*it)->getUserFd() == select.botFD) {
+
+					std::string msgR = ":" + (*it)->getNickname() + "!" + (*it)->getUsername() + "@" + (*it)->getHostname() + " " + "** TAAAK JE SUIS UN ROBOT **" + "\r\n";
+					ret = send (user->getUserFd(), msgR.c_str(), msgR.length(), 0);
+					std::cout << "ROBOT ret :" << ret << "\nmsg :" << msg << std::endl;
+
+				}
 			}
 			// select.sendReply(msg, *(*it));
 		}
