@@ -83,6 +83,11 @@ void    Select::clientConn() { //get client fd
 	clientConnFd = accept(this->_serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
 	if (clientConnFd == SYSCALL_ERR)
 		exitFailure("accept failed");
+
+	if (fcntl(clientConnFd, F_SETFL, O_NONBLOCK) == SYSCALL_ERR) {
+        close(clientConnFd);
+        exitFailure("fcntl failed");
+    }
 	
 	User *newuser = new User(clientConnFd);
 	newuser->setNickname("");
