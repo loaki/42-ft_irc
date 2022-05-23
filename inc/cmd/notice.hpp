@@ -4,6 +4,7 @@
 #include "defs.hpp"
 #include "select.hpp"
 #include "command.hpp"
+
 namespace irc {
 
 class Notice :public Command {

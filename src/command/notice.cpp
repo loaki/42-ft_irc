@@ -1,5 +1,4 @@
 #include "notice.hpp"
-#include "select.hpp"
 
 namespace irc
 {
