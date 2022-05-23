@@ -7,6 +7,7 @@
 #include "command.hpp"
 #include "channel.hpp"
 #include "invoker.hpp"
+#include "bot.hpp"
 
 namespace irc {
 // ns begin
@@ -33,7 +34,7 @@ class Select {
         Channel *                   getChannelByName(std::string name);
         void                        addChannel(std::string channelName);
 		void						addNewUsr(int fd, std::vector<std::string> Buff);
-        void		                addNewUsrChunk(int fd, std::vector<std::string> Buff);
+        void		                addNewUsrChunk(int fd, std::vector<std::string> Buff, bool withComplete);
         void    					clientDisconn(const int clientFd);
         void                        sendReply(std::string msg, User &user);
         bool                        userInVec(std::string name);
@@ -41,7 +42,7 @@ class Select {
         bool 	                    checkNameInBuff(std::vector<std::string> buff, std::string name);
         bool                        competeConnect(std::vector<std::string> buff);
         bool                        chunkConnect(std::vector<std::string> buff);
-        bool                        needChunk();
+        bool                        needChunk(int fd);
 		bool						ifJoinServer(int fd);
     private:
     // private: method
