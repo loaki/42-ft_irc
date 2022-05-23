@@ -152,20 +152,6 @@ bool	Select::checkNameInBuff(std::vector<std::string> buff, std::string name){
 	return false;
 }
 
-
-bool	Select::checkNameInVec(std::vector<std::string> buff){
-	std::vector<std::string>::iterator it = buff.begin();
-	std::vector<std::string>::iterator ite = buff.end();
-	for(; it != ite; it++) {
-		if ((*it).find("NICK") != std::string::npos){	
-			std::string nick = (*it).substr(5);
-			if(userInVec(nick) == true)
-				return true;
-		}
-	}
-	return false;
-}
-
 void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 	bool to_set = true;
 	std::string nick;

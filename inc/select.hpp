@@ -41,7 +41,6 @@ class Select {
         bool 	                    checkNameInBuff(std::vector<std::string> buff, std::string name);
         bool                        competeConnect(std::vector<std::string> buff);
         bool                        chunkConnect(std::vector<std::string> buff);
-        bool	                    checkNameInVec(std::vector<std::string> buff);
         bool                        needChunk();
 		bool						ifJoinServer(int fd);
     private:

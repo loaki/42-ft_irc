@@ -55,18 +55,8 @@ namespace irc {
         return msg3;
     }
 
-    bool Invite::adminOnChannel(Channel *chan, std::string name) {
-        return chan->isUser(name);
-    }
-
     bool Invite::userOnChannel(Channel *chan, std::string name) {
         return chan->isUser(name);
-    }
-
-    bool Invite::isAdmin(Channel *chan, std::string name){
-        if (chan->getAdmin()->getNickname()== name)
-            return true;
-        return false;
     }
 
     std::string Invite::execute(std::string line, User *user, Select &select) {
