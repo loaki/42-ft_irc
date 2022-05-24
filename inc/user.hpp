@@ -37,7 +37,7 @@ namespace irc
 		void 				setBanList(std::string name);
 		bool 				isBan(std::string channelname);
 
-	private:
+	protected:
 		int 						_fd;
 		std::string 				_nickname;
 		std::string 				_username;

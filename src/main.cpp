@@ -10,7 +10,9 @@ int main(int ac, char **av) {
     }
     
     irc::Select select;
+	if (BOTCREATE)
+		select.botIsCon = false;
     select.serverStart(atoi(av[1]), av[2]);
-    
+
     return (0);
 }

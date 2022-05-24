@@ -41,7 +41,7 @@
 # define INVALID_FD -1
 # define SYSCALL_ERR -1
 # define delimiter "\r\n"
-# define BOTCREATE 1
+# define BOTCREATE 0
 
 /*
 ** Reply + ERROR
@@ -65,7 +65,7 @@
 #define ERR_UNAVAILRESOURCE(nick) " 437 *" + nick + " :" + nick + " is temporarily unavailable"  //???
 #define ERR_RESTRICTED() " 484 * :Your connection is restricted!"
 
-// Command: OPER                               
+// Command: OPER
 //#define ERR_NEEDMOREPARAMS()
 #define RPL_YOUREOPER() " 381 * " + ":You are now an IRC operator" 
 #define ERR_PASSWDMISMATCH() " 464 * :Password incorrect"
