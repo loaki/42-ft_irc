@@ -15,7 +15,7 @@ class Channel {
         Channel(std::string channelname);
         ~Channel();
     
-        User *	            getAdmin();
+       User *	            getAdmin(); //
         void                setChannelName(std::string name);
         User*               getUserInchannel(std::string name);
         User*               getUserInchannel(int fd);
@@ -37,7 +37,7 @@ class Channel {
         std::string         _channelName;
         std::vector<User *> _users;
         std::string         _topic;
-        User *              _admin;
+        User *              _admin;  //
         Channel();
 
 };
