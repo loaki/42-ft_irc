@@ -32,7 +32,7 @@ class Channel {
         void                MsgToUser(User* user, std::string message);
 		void                MsgToChannel(std::string message);
         bool	            isChannelName(std::string channelName);
-
+       
     private:
         std::string         _channelName;
         std::vector<User *> _users;

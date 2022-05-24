@@ -41,16 +41,22 @@ std::string Mode::execute(std::string line, User *user, Select &select){
 			select.sendReply(msg, *user);
 			return msg;
 		}
-		//已经ban了 或者ban自己 697 alredy contains
-		
+		User *banUser = select.getUserInVec(ban);
+		// alredy ban
+		if (banUser != NULL && banUser->isBan(chan) == true) {
+			msg += user->getPrefix();
+			msg += " 697 " + user->getNickname() + " " + chan + " " + ban + " b " + " :";
+			msg += "Channel " + chan + " list already contains " + ban + delimiter;
+			select.sendReply(msg, *user);
+			return msg;
+		}
 		
 		// to user admin
 		msg = user->getPrefix();
 		msg += " " + line + "!*@*" + delimiter;
 		select.sendReply(msg, *user);
-
 		//to user b,  not admis send
-		User *banUser = select.getUserInVec(ban);
+		//User *banUser = select.getUserInVec(ban);
 		if (banUser != NULL && isAdmin(select, chan, ban) == false) {  //is admin not send 
 			banUser->setBanList(chan);
 			select.sendReply(msg, *banUser);

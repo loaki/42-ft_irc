@@ -68,10 +68,10 @@ void User::setBanList(std::string name) {
 
 
 
-bool User::isBan(std::string name){
+bool User::isBan(std::string channelname){
 	std::vector<std::string>::iterator it = this->_banChanlist.begin();
 	for(; it != this->_banChanlist.end(); it++) {
-		if (*it == name)
+		if (*it == channelname)
 			return true;
 	}
 	return false;

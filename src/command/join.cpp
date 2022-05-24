@@ -17,7 +17,7 @@ bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 }
 
 std::string Join::execute(std::string line, User *user, Select &select){
-	std::cout << "hello\n";
+	// std::cout << "hello\n";
 
 	std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
@@ -28,6 +28,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		return msg;
 	}
 
+	
 	
 	if (user->isBan(channelname) == true) {
 		msg = user->getPrefix();

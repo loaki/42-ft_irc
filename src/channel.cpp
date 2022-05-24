@@ -61,13 +61,6 @@ void	Channel::removeUser(User *user){
 	}
 }
 
-
-// void	Channel::printAllUsers(){
-// 	std::vector<User *>::const_iterator it = this->_users.begin();
-// 	for (; it != this->_users.end(); it++) 
-// 		//std::cout << "nickname: " << (*it)->getNickname() << " fd: " << (*it)->getUserFd() << std::endl;
-// }
-
 bool	Channel::isUser(User *user){
 	std::vector<User *>::const_iterator it = this->_users.begin();
 	for (; it != this->_users.end(); it++) {
