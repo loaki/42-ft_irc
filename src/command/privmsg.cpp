@@ -16,14 +16,13 @@ namespace irc
 			if (*it == msg)
 				return("H.I. Bzzz");
 		}
-		const char * q[] = {":what", ":how", ":are", ":do", ":est", ":quel", ":quelle", ":comment"};
-		std::vector<std::string> quest(q, q+8);
-		for (std::vector<std::string>::iterator it = quest.begin(); it != quest.end(); it++)
-		{
-			if (*it == msg)
-				return("Stop asking stupid questions. Beep Boop");
+		if (msg.find('?') != std::string::npos ) {
+			return ("https://www.google.fr/search?q="+msg.erase(0,1));
 		}
-		return ("");
+		if (msg.find("transfer" != std::string::npos)) {
+			return ("https://unsplash.com/photos/odxB5oIG_iA/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8ZnJlZXxlbnwwfHx8fDE2NTM0ODE4NDc&force=true");
+		}
+		return("Stop saying stupid things. Beep Boop");
 	}
 
 	std::string Privmsg::execute(std::string line, User *user, Select &select)
