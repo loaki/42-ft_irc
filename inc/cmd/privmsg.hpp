@@ -12,6 +12,8 @@ class Privmsg :public Command {
         virtual ~Privmsg();
 
         std::string execute(std::string line, User *user, Select &select);
+       	std::string botResponse(std::string msg);
+
 };
 
 }
