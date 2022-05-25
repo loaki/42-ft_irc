@@ -17,6 +17,13 @@ namespace irc
 		std::vector<User *> users = select.getUsersInchannel(channelname);
 		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++)
 		{
+			int ret = -1;
+			std::cout<<v_cmd[2]<<std::endl;
+			if(channelname == "#botchan" && v_cmd[2]==":hello")
+			{
+				std::string msgR = ":robot!robot@127.0.0.1 PRIVMSG #botchan :** Beep Boop **\r\n";
+				ret = send (user->getUserFd(), msgR.c_str(), msgR.length(), 0);
+			}
 			if ((*it)->getUserFd() != user->getUserFd())
 			{
 				int ret = -1;
@@ -28,13 +35,6 @@ namespace irc
 					std::cout << "[Send response failed]" << std::endl;
 					select.clientDisconn((*it)->getUserFd());
 					return NULL;
-				}
-				if ((*it)->getUserFd() == select.botFD) {
-
-					std::string msgR = ":" + (*it)->getNickname() + "!" + (*it)->getUsername() + "@" + (*it)->getHostname() + " " + "** TAAAK JE SUIS UN ROBOT **" + "\r\n";
-					ret = send (user->getUserFd(), msgR.c_str(), msgR.length(), 0);
-					std::cout << "ROBOT ret :" << ret << "\nmsg :" << msg << std::endl;
-
 				}
 			}
 			// select.sendReply(msg, *(*it));

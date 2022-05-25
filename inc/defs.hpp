@@ -41,7 +41,6 @@
 # define INVALID_FD -1
 # define SYSCALL_ERR -1
 # define delimiter "\r\n"
-# define BOTCREATE 0
 
 /*
 ** Reply + ERROR
@@ -131,7 +130,7 @@
 //#define RPL_TOPIC()    
 //#define ERR_NOCHANMODES()
 #define RPL_NOTOPIC(channel) " 331 * " + channel + " :No topic is set"
-#define ERR_CHANOPRIVSNEEDED(channel) " 482 * " + channel + ":You're not channel operator"
+#define ERR_CHANOPRIVSNEEDED(channel) " 482 * " + channel + " :You're not channel operator"
 
 
 

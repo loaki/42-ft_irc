@@ -25,7 +25,6 @@ SRCS := ./src/main.cpp \
 		./src/command/notice.cpp \
 		./src/command/invite.cpp \
 		./src/command/mode.cpp \
-		./src/bot.cpp
 
 OBJS := $(SRCS:%.cpp=%.o)
 

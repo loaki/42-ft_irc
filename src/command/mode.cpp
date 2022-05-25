@@ -53,7 +53,7 @@ std::string Mode::execute(std::string line, User *user, Select &select){
 		
 		// to user admin
 		msg = user->getPrefix();
-		msg += " " + line + "!*@*" + delimiter;
+		msg += " " + line + "1"+delimiter;
 		select.sendReply(msg, *user);
 		//to user b,  not admis send
 		//User *banUser = select.getUserInVec(ban);

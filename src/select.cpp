@@ -50,11 +50,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 
 		for (int fd = 0; fd <= this->max_fd(); fd++) {
 			if (FD_ISSET(fd, &this->rSet)) {    // which fd event
-				if (BOTCREATE && !botIsCon) {
-					botConn(password);
-					break;
-				}
-				else if (fd == this->_serverSocket.getServerFd()) { //connect:new client connect 
+				if (fd == this->_serverSocket.getServerFd()) { //connect:new client connect 
 					this->clientConn();
 					break ;
 				}
@@ -65,32 +61,6 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 			}
 		}
 	}
-}
-
-void Select::botConn(std::string pass) {
-
-	int                 clientConnFd = -1;
-	struct sockaddr_in	clientAddr;
-	socklen_t			len = sizeof(clientAddr);
-
-	clientConnFd = accept(this->_serverSocket.getServerFd(), (struct sockaddr *)&clientAddr, &len);
-	if (clientConnFd == SYSCALL_ERR)
-	{	exitFailure("accept failed");}
-	
-	Bot * newuser = new Bot(clientConnFd, pass);
-	newuser->setHostname(std::string(inet_ntoa(clientAddr.sin_addr)));
-	newuser->setJoinServer(false);
-
-	this->users.push_back(newuser);// add new user
-	this->clientfds.push_back(clientConnFd); //add new fd
-	FD_SET(clientConnFd, &this->mainSet);  //add new clientfd to mainset
-
-
-	newuser->addBot(this);
-	
-	botFD = clientConnFd;
-	botIsCon = true;
-	hasJoined = false;
 }
 
 // private: get max fd
@@ -204,7 +174,7 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 		{
 			nick = (*it).substr(5);
 			for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-				if ((*it)->getNickname() == nick && fd != botFD) {
+				if ((*it)->getNickname() == nick) {
 					std::string msg = ":";
 					msg += ERR_NICKNAMEINUSE(nick);
 					//std::cout << "normal MESSAGE USER FALSE: " << msg << std::endl;
@@ -382,22 +352,6 @@ void    Select::handleReq(const int fd) {
 		this->clientDisconn(fd);
 		return ;
 	}
-	else if (fd == botFD && !hasJoined) {
-		// std::vector<std::string> C(1);
-		std::string msg = "JOIN #botChan";
-		for (unsigned int i = 0; i < users.size(); i++) {
-			if (users[i]->getUserFd() == fd )
-			{
-				// std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-				int ret = -1;
-				ret = send(fd, msg.c_str(), msg.length(), 0);
-				std::cout << "\n  ### BOT ***** server :\n" << ret << std::endl;
-			}
-		}
-		hasJoined = true;
-		bzero(this->buff, sizeof(this->buff));
-		return;
-	} 
 	else {  //set msg to vec
 		bool	to_execute = true;
 		bool	with_complete = false;
@@ -407,21 +361,6 @@ void    Select::handleReq(const int fd) {
 		std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
 		std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
 		Invoker _Invoker; 
-		if (fd == botFD && !hasJoined) {
-			// std::vector<std::string> C(1);
-			std::string msg = "JOIN #botChan";
-			for (unsigned int i = 0; i < users.size(); i++) {
-				if (users[i]->getUserFd() == fd )
-				{
-					// std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-					int ret = -1;
-					ret = send(fd, msg.c_str(), msg.length(), 0);
-					std::cout << "\n  ### BOT ***** server :\n" << ret << std::endl;
-				}
-			}
-			hasJoined = true;
-		} 
-		
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
 			addNewUsr(fd, Buff);
 			//std::cout<<"****1"<<std::endl;

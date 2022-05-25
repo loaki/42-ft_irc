@@ -7,7 +7,6 @@
 #include "command.hpp"
 #include "channel.hpp"
 #include "invoker.hpp"
-#include "bot.hpp"
 
 namespace irc {
 // ns begin
@@ -23,10 +22,6 @@ class Select {
         Select(Select const& src);
         ~Select();
         Select& operator=(Select const& rhs);
-
-		bool						botIsCon;
-		bool						hasJoined;
-		int							botFD;
 
     // public: method
         void    					serverStart(const short& port, const std::string&  password);
@@ -47,7 +42,6 @@ class Select {
         bool                        needChunk(int fd);
 		bool						ifJoinServer(int fd);
 
-		void						botConn(std::string pass);
     private:
     // private: method
         int     					max_fd();
