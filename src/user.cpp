@@ -66,11 +66,23 @@ void User::setBanList(std::string name) {
 	this->_banChanlist.push_back(name);
 }
 
+void User::unsetBanList(std::string name) {
+	// int i = 0;
+	for (std::vector<std::string>::iterator it = this->_banChanlist.begin(); it != this->_banChanlist.end(); it++) {
+		std::cout <<"unnbanned :"<< *it <<"|"<< name<<std::endl;
+		if ((*it) == name)
+		{
+			this->_banChanlist.erase(it);
+			break;
+		}
+	}
 
+}
 
 bool User::isBan(std::string channelname){
 	std::vector<std::string>::iterator it = this->_banChanlist.begin();
 	for(; it != this->_banChanlist.end(); it++) {
+		std::cout << "channel name ++++++++ " << channelname << "it ++++++ " <<(*it) << std::endl;
 		if (*it == channelname)
 			return true;
 	}

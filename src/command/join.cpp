@@ -31,6 +31,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	
 	
 	if (user->isBan(channelname) == true) {
+		std::cout << "====================== IS BAN =======================\n";
 		msg = user->getPrefix();
 		std::string ban = user->getNickname();
 		msg += ERR_BANNEDFROMCHAN(channelname, ban);

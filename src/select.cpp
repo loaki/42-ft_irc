@@ -294,7 +294,7 @@ User *Select::getUserInVec(std::string name) {
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
 		if ((*it)->getNickname() == name)
-			return *it;
+			return (*it);
 	}
 	return NULL;
 }

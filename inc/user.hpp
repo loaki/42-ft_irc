@@ -36,6 +36,7 @@ namespace irc
 		std::vector<std::string> getBanChan();
 		void 				setBanList(std::string name);
 		bool 				isBan(std::string channelname);
+		void 				unsetBanList(std::string name);
 
 	protected:
 		int 						_fd;
