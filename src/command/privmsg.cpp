@@ -9,8 +9,8 @@ namespace irc
 
 	std::string Privmsg::botResponse(std::string msg)
 	{
-		const char * h[] = {":hello", ":hi", ":salut", ":hola", "yo"};
-		std::vector<std::string> hello(h, h+5);
+		const char * h[] = {":hello", ":hi", ":salut", ":hola", "yo", ":bonjour", ":bonsoir"};
+		std::vector<std::string> hello(h, h+7);
 		for (std::vector<std::string>::iterator it = hello.begin(); it != hello.end(); it++)
 		{
 			if (*it == msg)
