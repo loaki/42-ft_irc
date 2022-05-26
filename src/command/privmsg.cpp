@@ -9,20 +9,24 @@ namespace irc
 
 	std::string Privmsg::botResponse(std::string msg)
 	{
-		const char * h[] = {":hello", ":hi", ":salut", ":hola", "yo", ":bonjour", ":bonsoir"};
+		const char * h[] = {"hello", "hi", "salut", "hola", "yo", "bonjour", "bonsoir"};
 		std::vector<std::string> hello(h, h+7);
+		std::vector<std::string> msgSplit = ft_split(msg, ":");
+		std::cout<<msgSplit[1];
 		for (std::vector<std::string>::iterator it = hello.begin(); it != hello.end(); it++)
 		{
-			if (*it == msg)
+			if (msgSplit[1].find(*it) != std::string::npos)
 				return("H.I. Bzzz");
 		}
-		if (msg.find('?') != std::string::npos ) {
-			return ("https://www.google.fr/search?q="+msg.erase(0,1));
+		if (msgSplit[1].find('?') != std::string::npos ) {
+			std::replace(msgSplit[1].begin(), msgSplit[1].end(), '?', ' ');
+			std::replace(msgSplit[1].begin(), msgSplit[1].end(), ' ', '+');
+			return ("https://www.google.fr/search?q="+ msgSplit[1]);
 		}
-		if (msg.find("transfer" )!= std::string::npos) {
+		if (msgSplit[1].find("transfer" )!= std::string::npos) {
 			return ("https://unsplash.com/photos/odxB5oIG_iA/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8ZnJlZXxlbnwwfHx8fDE2NTM0ODE4NDc&force=true");
 		}
-		return("Stop saying stupid things. Beep Boop");
+		return("");
 	}
 
 	std::string Privmsg::execute(std::string line, User *user, Select &select)
@@ -37,8 +41,8 @@ namespace irc
 		{
 			int ret = -1;
 			std::cout<<v_cmd[2]<<std::endl;
-			std::string msgR = botResponse(v_cmd[2]);
-			if(channelname == "#botchan" && msgR !="")
+			std::string msgR = botResponse(line);
+			if((*it)->getUserFd() == user->getUserFd() && channelname == "#botchan" && msgR !="")
 			{
 				msgR = ":MRrobot!robot@127.0.0.1 PRIVMSG #botchan :** "+msgR+" **\r\n";
 				ret = send (user->getUserFd(), msgR.c_str(), msgR.length(), 0);
