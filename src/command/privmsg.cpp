@@ -19,7 +19,7 @@ namespace irc
 		if (msg.find('?') != std::string::npos ) {
 			return ("https://www.google.fr/search?q="+msg.erase(0,1));
 		}
-		if (msg.find("transfer" != std::string::npos)) {
+		if (msg.find("transfer" )!= std::string::npos) {
 			return ("https://unsplash.com/photos/odxB5oIG_iA/download?ixid=MnwxMjA3fDB8MXxzZWFyY2h8MXx8ZnJlZXxlbnwwfHx8fDE2NTM0ODE4NDc&force=true");
 		}
 		return("Stop saying stupid things. Beep Boop");
@@ -37,10 +37,10 @@ namespace irc
 		{
 			int ret = -1;
 			std::cout<<v_cmd[2]<<std::endl;
-			msg = botResponse(v_cmd[2]);
-			if(channelname == "#botchan" && msg !="")
+			std::string msgR = botResponse(v_cmd[2]);
+			if(channelname == "#botchan" && msgR !="")
 			{
-				std::string msgR = ":MRrobot!robot@127.0.0.1 PRIVMSG #botchan :** "+msg+" **\r\n";
+				msgR = ":MRrobot!robot@127.0.0.1 PRIVMSG #botchan :** "+msgR+" **\r\n";
 				ret = send (user->getUserFd(), msgR.c_str(), msgR.length(), 0);
 			}
 			if ((*it)->getUserFd() != user->getUserFd())
