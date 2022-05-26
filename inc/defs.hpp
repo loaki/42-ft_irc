@@ -32,6 +32,8 @@
 #include "utils.hpp"
 // #include "user.hpp"
 
+extern bool active;
+
 # define NONE    "\e[0m"
 # define RED     "\e[1;31m"
 # define GREEN   "\e[1;32m"
@@ -232,7 +234,6 @@
 #define RPL_NOUSERS() " 395 * " + ":Nobody logged in"   
 #define RPL_ENDOFUSERS() " 394 * " ":End of users"
 #define ERR_USERSDISABLED() " 446 * " + ":USERS has been disabled"
-
 
 //Command: kick
 //#define ERR_NEEDMOREPARAMS        

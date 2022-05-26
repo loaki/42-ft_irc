@@ -8,3 +8,10 @@ MODE #a +b *!*u@uvi6ia39jkvvi.oragono
 
 [server:6667]
 :jfeuilla_!~u@uvi6ia39jkvvi.oragono MODE #a +b *!*u@uvi6ia39jkvvi.oragono
+
+
+[client:8888]
+JOIN #a
+
+[server:6667]
+:testnet.ergo.chat 474 jfeuilla #a :Cannot join channel (+b)

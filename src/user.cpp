@@ -5,7 +5,9 @@ namespace irc {
 User::User(int fd): _fd(fd), _nickname(), _username(), _chunk(true), _banChanlist() {
 }
 
-User::~User(){}
+User::~User() {
+	
+}
 
 void User::setName(std::vector<std::string> Buff) {
 
@@ -14,7 +16,6 @@ void User::setName(std::vector<std::string> Buff) {
 		{
 			std::string temp = (*it).substr(5);
 			int end = temp.find(" ");
-			//std::cout << "User name: " << temp.substr(0, end) << std::endl;
 			this->setUsername(temp.substr(0, end));
 		}
 	}
@@ -69,7 +70,6 @@ void User::setBanList(std::string name) {
 void User::unsetBanList(std::string name) {
 	// int i = 0;
 	for (std::vector<std::string>::iterator it = this->_banChanlist.begin(); it != this->_banChanlist.end(); it++) {
-		std::cout <<"unnbanned :"<< *it <<"|"<< name<<std::endl;
 		if ((*it) == name)
 		{
 			this->_banChanlist.erase(it);
@@ -82,7 +82,6 @@ void User::unsetBanList(std::string name) {
 bool User::isBan(std::string channelname){
 	std::vector<std::string>::iterator it = this->_banChanlist.begin();
 	for(; it != this->_banChanlist.end(); it++) {
-		std::cout << "channel name ++++++++ " << channelname << "it ++++++ " <<(*it) << std::endl;
 		if (*it == channelname)
 			return true;
 	}

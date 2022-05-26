@@ -31,9 +31,7 @@ OBJS := $(SRCS:%.cpp=%.o)
 $(NAME): $(OBJS)
 		@echo "compiler>>>>>>>>" 
 		@$(CC) $(CFLAGES) $(OBJS) -o $@ 
-		@echo "IRC done!"
-		@./$(NAME) 8080 123
-		
+		@echo "IRC done!"		
 
 all: $(NAME)
 

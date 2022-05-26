@@ -20,12 +20,9 @@ std::string	Part::execute(std::string line, User *user, Select &select)
 	std::string msg = user->getPrefix() + " " + line + " " + ":" + user->getNickname() + "\r\n";
 	std::vector<User *> users = select.getUsersInchannel(channelname);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
-		// select.sendReply(msg, *(*it));
-
 		int ret = -1;
 
 		ret = send((*it)->getUserFd(), msg.c_str(), msg.length(), 0);
-		//std::cout<<"ret PART :"<<ret<<"\nmsg :"<<msg<<std::endl;
 		if (ret == SYSCALL_ERR) {
 			std::cout << "[Send response failed]" << std::endl;
 			select.clientDisconn((*it)->getUserFd());

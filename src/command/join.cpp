@@ -17,8 +17,6 @@ bool Join::ChannelExist(std::string name, std::vector<Channel *> channels){
 }
 
 std::string Join::execute(std::string line, User *user, Select &select){
-	// std::cout << "hello\n";
-
 	std::string msg;
     std::vector<std::string> v_cmd = ft_split(line, " ");
 	std::string channelname = v_cmd[1];
@@ -28,10 +26,7 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		return msg;
 	}
 
-	
-	
 	if (user->isBan(channelname) == true) {
-		std::cout << "====================== IS BAN =======================\n";
 		msg = user->getPrefix();
 		std::string ban = user->getNickname();
 		msg += ERR_BANNEDFROMCHAN(channelname, ban);
@@ -39,7 +34,6 @@ std::string Join::execute(std::string line, User *user, Select &select){
 		select.sendReply(msg, *user);
 		return msg;
 	} 
-
 
 	std::string listname = "";
  	std::vector<Channel *> channels = select.getAllChannel();
@@ -51,13 +45,11 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	{
 		if ((*(*it)).getChannelName() == channelname)
 		{
-			//std::cout <<"chan : "<< (*(*it)).getChannelName()<<std::endl;
 			if ((*(*it)).getUserInchannel(user->getNickname()) == NULL)
 				(*(*it)).addUser(user);
 			std::vector<User *> chanUsers = (*(*it)).getUsers();
 			for (std::vector<User*>::iterator it2 = chanUsers.begin(); it2 < chanUsers.end(); it2++)
 			{
-				//std::cout <<"nick : "<< (*(*it2)).getNickname() <<std::endl;
 				listname += (*(*it2)).getNickname();
 				if ((it2) == (chanUsers.end() - 1))
 					break;
@@ -65,14 +57,13 @@ std::string Join::execute(std::string line, User *user, Select &select){
 			}
 		}
 	}
-	//std::cout <<"listname : "<<listname<<std::endl;
 	std::string msgself1 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 353 " + user->getNickname() +" = "+ channelname + " : @" + listname + "\r\n";
 	std::string msgself2 = ":" + user->getNickname() + "!" + user->getUsername()+ "@" +user->getHostname() + " 366 " + user->getNickname() +" "+ channelname + " :End of /NAMES list"+"\r\n";
 	msg = ":" + user->getNickname() + "!" + user->getUsername() + "@" + user->getHostname() + " " + line + "\r\n";
  	std::vector<User *> users = select.getUsersInchannel(channelname);
 	for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 
-		if ((*(*it)).getUserFd() != user->getUserFd()) // && listname.find((*(*it)).getNickname()) = 0)
+		if ((*(*it)).getUserFd() != user->getUserFd())
 		{
 			select.sendReply(msg, *(*it));
 		}
@@ -86,10 +77,5 @@ std::string Join::execute(std::string line, User *user, Select &select){
 	return msg;
 	
 }
-
-
-/*If a JOIN is successful,(using RPL_TOPIC) and
-   the list of users who are on the channel (using RPL_NAMREPLY), which
-   MUST include the user joining.*/
 
 }

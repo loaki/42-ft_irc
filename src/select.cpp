@@ -14,7 +14,7 @@ Select::~Select() {
 
 	std::vector<Channel *>::iterator cit = this->_channels.begin();
 	std::vector<Channel *>::iterator cite = this->_channels.end();
-	for(; cit != cite; it++)
+	for(; cit != cite; cit++)
 		delete(*cit);
 	this->_channels.clear();
 }
@@ -40,7 +40,7 @@ void    Select::serverStart(const short& port, const std::string&  password) {
 	FD_ZERO(&this->mainSet); 
 	FD_SET(this->_serverSocket.getServerFd(), &this->mainSet);//SET servfd to mainset
 
-	for(;;) {
+	while(active == true) {
 		this->rSet = this->mainSet;
 		int event = select(this->max_fd() + 1, &this->rSet, NULL, NULL, NULL);
 		if (event < 0) {
@@ -177,7 +177,6 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 				if ((*it)->getNickname() == nick) {
 					std::string msg = ":";
 					msg += ERR_NICKNAMEINUSE(nick);
-					//std::cout << "normal MESSAGE USER FALSE: " << msg << std::endl;
 					send(user->getUserFd(), msg.c_str(), msg.length(), 0) ;
 					to_set = false;
 				}
@@ -192,7 +191,6 @@ void		Select::addNewUsr(int fd, std::vector<std::string> Buff) {
 		std::string sendMsg = user->getPrefix();
 		sendMsg += RPL_WELCOME(user->getNickname(), user->getUsername(), user->getHostname());
 		sendMsg += delimiter;
-		//std::cout << sendMsg << std::endl;
 		this->sendReply(sendMsg, *user);
 		user->setJoinServer(true);
 	}
@@ -219,7 +217,6 @@ void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff, bool withCom
 						if ((*it)->getNickname() == nick) {
 							std::string msg = ":";
 							msg += ERR_NICKNAMEINUSE(nick);
-							//std::cout << "in chunk MESSAGE USER FALSE: " << msg << std::endl;
 							send(fd, msg.c_str(), msg.length(), 0) ;
 							to_set = false;
 						}
@@ -238,7 +235,6 @@ void		Select::addNewUsrChunk(int fd, std::vector<std::string> Buff, bool withCom
 			std::string sendMsg = user->getPrefix();
 			sendMsg += RPL_WELCOME(user->getNickname(), user->getUsername(), user->getHostname());
 			sendMsg += delimiter;
-			std::cout << sendMsg << std::endl;
 			this->sendReply(sendMsg, *user);
 			user->setJoinServer(true);
 			user->setChunk(false);
@@ -251,7 +247,6 @@ void Select::sendReply(std::string msg, User &user){
 
 	ret = send(user.getUserFd(), msg.c_str(), msg.length(), 0);
 	if (ret == SYSCALL_ERR) {
-		//std::cout << "[Send response failed]" << std::endl;
 		this->clientDisconn(user.getUserFd());
 		return;
 	}
@@ -331,12 +326,9 @@ bool	Select::needChunk(int fd) {
 bool	Select::ifJoinServer(int fd) {
 	std::vector<User *>::iterator it = users.begin();
 	for(; it != users.end(); it++) {
-		//std::cout << "check join fd: " << (*it)->getUserFd() << "compare with: " << fd << std::endl;
-		//std::cout << "check join cd: " << (*it)->getJoinServer() << std::endl;
 		if ((*it)->getUserFd() == fd && (*it)->getJoinServer() == true)
 			return true;
 	}
-	//std::cout << "Can't execute cmd\n";
 	return false;
 }
 
@@ -346,7 +338,7 @@ void    Select::handleReq(const int fd) {
 	bzero(this->buff, sizeof(this->buff));
 	ret = recv(fd, this->buff, MAX_BUFF, 0);   //recv message form clientfd
 
-	std::cout << "\n ### client : \n" << this->buff << std::endl;
+	std::cout << "\n### client : \n" << this->buff << std::endl;
 	// debug
 	if (ret <= 0) { 
 		this->clientDisconn(fd);
@@ -356,35 +348,25 @@ void    Select::handleReq(const int fd) {
 		bool	to_execute = true;
 		bool	with_complete = false;
 		std::vector<std::string> Buff = configBuff();
-		// std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
-		// std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
-		std::cout << "BUFF SIZE: " << Buff.size() << std::endl;
-		std::cout << "cmd: " << Buff[0] << "with fd: " << fd << std::endl;
 		Invoker _Invoker; 
 		if (this->competeConnect(Buff) && PasswordConnect(Buff)== true && ifJoinServer(fd) == false) {
 			addNewUsr(fd, Buff);
-			//std::cout<<"****1"<<std::endl;
 			to_execute = false;
 			with_complete = true;
 		}
 
 		if (this->chunkConnect(Buff) && this->needChunk(fd) == true && ifJoinServer(fd) == false) {
-			// msg already name exist call 2 time ... need debug this
-			//std::cout<<"****2"<<std::endl;
 			this->addNewUsrChunk(fd, Buff, with_complete);
 			to_execute = false;
 		}
 
 		if (to_execute == true && ifJoinServer(fd) == true) {
-			//std::cout<<"****3"<<std::endl;
 			Invoker _Invoker;
-			std::cout<<"****3"<<std::endl;
-			// Invoker _Invoker;
 			for (unsigned int i = 0; i < users.size(); i++) {
 				if (users[i]->getUserFd() == fd )
 				{
 					std::string sendMsg =  _Invoker.parser(Buff, users[i], *this);
-					std::cout << "\n  ### server :\n" << sendMsg << std::endl;
+					std::cout << "\n### server :\n" << sendMsg << std::endl;
 			
 				}
 			}

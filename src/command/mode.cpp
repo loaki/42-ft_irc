@@ -44,7 +44,6 @@ std::string Mode::execute(std::string line, User *user, Select &select){
 			return msg;
 		}
 		User *banUser = select.getUserInVec(v_cmd[3]);
-		std::cout << "USER +++++++++++++++++++++++++ " <<(v_cmd[3]) << "." << std::endl;
 		// alredy ban
 		if (banUser != NULL && banUser->isBan(chan) == true) {
 			msg += user->getPrefix();
@@ -55,18 +54,13 @@ std::string Mode::execute(std::string line, User *user, Select &select){
 		}
 		
 		// to user admin
-
 		std::vector<User *> users = select.getUsersInchannel(v_cmd[1]);
 		for (std::vector<User *>::iterator it = users.begin(); it != users.end(); it++) {
 			msg = user->getPrefix();
 			msg += " " + v_cmd[0] + " " + v_cmd[1] + " " + v_cmd[2] + " " + ban + delimiter;
 			select.sendReply(msg, *(*it));
 		}
-		// banUser->setBanList(chan);
-		//to user b,  not admis send
-		//User *banUser = select.getUserInVec(ban);
 		if (banUser != NULL && isAdmin(select, chan, ban) == false) {  //is admin not send 
-			std::cout << "HELLO WORLD\n";
 			banUser->setBanList(chan);
 			select.sendReply(msg, *banUser);
 		}
@@ -91,7 +85,6 @@ std::string Mode::execute(std::string line, User *user, Select &select){
 		if (banUser != NULL && isAdmin(select, chan, ban) == false) {  //is admin not send 
 			banUser->unsetBanList(chan);
 			select.sendReply(msg, *banUser);
-			std::cout << "CHECCK REPLY **************************" << std::endl;
 		}
 		return msg;
 	}

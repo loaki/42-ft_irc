@@ -17,7 +17,6 @@ namespace irc
 		return false;
 	}
 
-
 	Channel *Kick::getChannel(std::string name, Select &select){
 		std::vector<Channel *> channel = select.getAllChannel();
 		std::vector<Channel *>::iterator it = channel.begin();
@@ -49,8 +48,6 @@ namespace irc
 		std::vector<std::string> v_cmd = ft_split(line, " ");
 		std::string channelname = v_cmd[1];
 		std::string nickname = v_cmd[2];
-
-		std::cout << v_cmd.size() << std::endl;
 
 		if (v_cmd.size() != 4) {
 			std::string cmd = "KICK";
@@ -84,7 +81,6 @@ namespace irc
 			return msg;
 		}
 
-		
 		Channel *channel = getChannel(channelname, select);
 		std::vector<User *> users = channel->getUsers();
 		if ((users.front())->getNickname() != user->getNickname()) { // not admin; 
@@ -93,14 +89,6 @@ namespace irc
 			return msg;
 		}
 
-		std::cout << "channel name: " << channel->getChannelName() << std::endl;
-		// std::vector<User *> users = channel->getUsers();
-		std::vector<User *>::iterator it = users.begin();
-		std::vector<User *>::iterator ite = users.end();
-		for(; it!=ite; it++)
-			std::cout << "user in channel: " <<  (*it)->getNickname() << std::endl;
-
-		// to user admin :xueming!xuwang@127.0.0.1 KICK #aa xueming_ xueming
 		User *removeUser = channel->getUserInchannel(nickname);
 		msg += " KICK " + channelname + " " + nickname + " " + user->getNickname() + delimiter;
 		//to user remouve
